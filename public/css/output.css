@@ -204,8 +204,14 @@
     border-style: var(--tw-border-style);
     border-width: 4px;
   }
+  .border-\[\#000000\] {
+    border-color: #000000;
+  }
   .border-\[\#a6a6a6\] {
     border-color: #a6a6a6;
+  }
+  .border-\[\#ebebeb\] {
+    border-color: #ebebeb;
   }
   .bg-\[\#ebebeb\] {
     background-color: #ebebeb;
