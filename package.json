@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "npx tailwindcss -i src/input.css -o public/css/output.css --watch"
+    "build:css": "npx tailwindcss -i src/input.css -o public/css/output.css --watch",
+    "stage:css": "git add ./public/css/output.css"
   },
   "type": "commonjs",
   "keywords": [],
