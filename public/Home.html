@@ -20,9 +20,9 @@
 
     <!-- Internal CSS -->
     <style>
-        .Navigation{
+        /* .Navigation{
             box-shadow: 0px 4px 14px 0px rgba(0,0,0,0.25);
-        }
+        } */
 
         nav button{
             font-family: "Jersey 25", sans-serif;
@@ -32,9 +32,7 @@
             font-family: "Pixelify Sans", sans-serif;
         }
 
-        .Key-svg{
-            display: inline;
-        }
+
 
         .spin-hamburger{
             /* animation: name duration timing-function delay iteration-count direction fill-mode; */
@@ -46,11 +44,11 @@
         }
 
         .show-links{
-            animation: show-links 1s ease-out 1 forwards;
+            animation: show-links 2s ease-in 1 forwards;
         }
 
         .hide-links{
-            animation: hide-links 1s ease-out 1 forwards;
+            animation: hide-links 2s ease-in 1 forwards;
         }
 
 
@@ -73,19 +71,21 @@
 
         @keyframes show-links {
             from{
-                max-height: 62px;
+                height: 62px;
             }
             to{
-                max-height: 250px;
+                height: 200px;
+                overflow: visible;
             }    
         }
 
         @keyframes hide-links {
             from{
-                max-height: 250px;
+                height: 200px;
+                overflow: visible;
             }
             to{
-                max-height: 62px;
+                height: 62px;
             }    
         }
 
@@ -94,15 +94,15 @@
     </style>
 </head>
 <body>
-    <div class="Navigation flex justify-start p-0 m-0 h-[62px] max-h-[62px] w-[100%] max-w-[100%] bg-[#fcff31] hide-links overflow-hidden">
-        <nav class=" w-[430px] max-w-[100%] py-[2px] px-[12px]">
-            <div class="hamburger-btn h-[80%] w-1/6">
+    <div class="flex justify-start p-0 m-0 w-[100%] max-w-[100%] bg-[#fcff31] ">
+        <nav class="Navigation h-[62px] w-[430px] max-w-[100%] py-[2px] px-[12px] hide-links overflow-hidden">
+            <div class="hamburger-btn h-[60px] w-1/6 box-content">
                 <svg width="60" height="60" viewBox="0 0 69 69" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.6701 22.0515H58.3299M10.6701 34.8556H58.3299M10.6701 47.6598H58.3299" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>                    
             </div>
 
-            <div class="nav-links w-[100%] mt-[6px] overflow-hidden">
+            <div class="nav-links w-[100%] mt-[6px]">
                 <div class="My-vault px-[10px]">
                     <a href="#" class="text-black decoration-[none]"><button class="navigation-button px-[0px] py-[5px] text-[18px]">My Vault</button></a>
                 </div>
