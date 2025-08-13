@@ -401,9 +401,44 @@
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
   }
+  .sm\:h-\[300px\] {
+    @media (width >= 40rem) {
+      height: 300px;
+    }
+  }
+  .sm\:h-\[335px\] {
+    @media (width >= 40rem) {
+      height: 335px;
+    }
+  }
+  .sm\:w-\[335px\] {
+    @media (width >= 40rem) {
+      width: 335px;
+    }
+  }
+  .sm\:w-\[340px\] {
+    @media (width >= 40rem) {
+      width: 340px;
+    }
+  }
   .sm\:text-\[25px\] {
     @media (width >= 40rem) {
       font-size: 25px;
+    }
+  }
+  .md\:h-\[101px\] {
+    @media (width >= 48rem) {
+      height: 101px;
+    }
+  }
+  .md\:h-\[300px\] {
+    @media (width >= 48rem) {
+      height: 300px;
+    }
+  }
+  .md\:w-\[340px\] {
+    @media (width >= 48rem) {
+      width: 340px;
     }
   }
   .md\:w-\[399px\] {
