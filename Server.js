@@ -16,6 +16,14 @@ app.get("/", (req, res)=>{
     res.sendFile("Home.html", {root: publicDir})
 })
 
+app.get("/sign-in", (req, res)=>{
+    res.render("Onboarding", {title: "Login"})
+})
+
+app.get("/sign-up", (req, res)=>{
+    res.render("Onboarding", {title: "Sign up"})
+})
+
 app.listen(port, ()=>{
     console.log(`App listening on PORT:${port}`)
 })
