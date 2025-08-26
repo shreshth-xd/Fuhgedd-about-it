@@ -13,7 +13,7 @@ app.set("views", "./Views")
 app.set("view engine", "ejs")
 
 app.get("/", (req, res)=>{
-    res.sendFile("Home.html", {root: publicDir})
+    res.sendFile("Home.html")
 })
 
 app.get("/sign-in", (req, res)=>{
