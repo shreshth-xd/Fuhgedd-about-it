@@ -13,15 +13,15 @@ app.set("views", "./Views")
 app.set("view engine", "ejs")
 
 app.get("/", (req, res)=>{
-    res.sendFile("Home.html")
+    res.sendFile("Home.html", {root: publicDir})
 })
 
 app.get("/sign-in", (req, res)=>{
-    res.render("Onboarding", {title: "Login"})
+    res.render("Onboarding", {title: "Login", showSignIn: true, showSignUp: false})
 })
 
 app.get("/sign-up", (req, res)=>{
-    res.render("Onboarding", {title: "Sign up"})
+    res.render("Onboarding", {title: "Sign up", showSignUp: true, showSignIn: false})
 })
 
 app.listen(port, ()=>{
