@@ -24,9 +24,9 @@ app.get("/sign-up", (req, res)=>{
     res.render("Onboarding", {title: "Sign up", showSignUp: true, showSignIn: false})
 })
 
-app.get("/*", (req, res)=>{
-    
-})
+// app.get("*", (req, res)=>{
+//     res.send("Page unavailable")
+// })
 
 app.listen(port, ()=>{
     console.log(`App listening on PORT:${port}`)
