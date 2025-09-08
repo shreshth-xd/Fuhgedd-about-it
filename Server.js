@@ -3,12 +3,13 @@ const path = require("node:path");
 const fs = require("node:fs");
 const crypto = require("crypto");
 const app = express();
+const mongoose = require("mongoose");
 
 const port = 3000;
 const publicDir = path.join(__dirname, "public");
+// const connect = mongoose.connect()
 
 app.use(express.static("public")) // Accesing Public folder
-
 app.set("views", "./Views")
 app.set("view engine", "ejs")
 
