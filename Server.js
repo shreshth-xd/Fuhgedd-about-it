@@ -7,7 +7,16 @@ const mongoose = require("mongoose");
 
 const port = 3000;
 const publicDir = path.join(__dirname, "public");
-// const connect = mongoose.connect()
+
+async function connectDB(){
+    try{
+        const connection = await mongoose.connect("mongodb://localhost:27017/VaultboxDB");
+        console.log("Connection with VaultboxDB is made successfully")
+    }catch(error){
+        console.log(error)
+    }
+}
+
 
 app.use(express.static("public")) // Accesing Public folder
 app.set("views", "./Views")
