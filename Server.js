@@ -17,6 +17,8 @@ async function connectDB(){
     }
 }
 
+connectDB();
+
 
 app.use(express.static("public")) // Accesing Public folder
 app.set("views", "./Views")
