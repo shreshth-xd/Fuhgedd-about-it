@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+25&family=Pixelify+Sans:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jersey+25&display=swap');
+
+nav button{
+    font-family: "Jersey 25", sans-serif;
+}
+
+.pitching-line{
+    font-family: "Pixelify Sans", sans-serif;
+}
+
+.Key-svg{
+    display: inline;
+}
