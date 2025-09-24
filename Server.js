@@ -20,7 +20,7 @@ async function connectDB(){
 connectDB();
 
 
-app.use(express.static(publicDir)) // Accesing Public folder
+app.use(express.static("public")) // Accesing Public folder
 app.use(express.json());
 app.set("views", "./Views")
 app.set("view engine", "ejs")
