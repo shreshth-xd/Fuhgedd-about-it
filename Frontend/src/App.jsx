@@ -1,5 +1,5 @@
 import { useState } from "react"
-import "../dist/css/output.css"
+import "../../public/css/output.css"
 import "./App.css"
 
 const app = () => {
@@ -11,7 +11,7 @@ const app = () => {
                 <div className="hamburger-btn justify-self-center"><svg width="69" height="69" viewBox="0 0 69 69" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.6701 22.0515H58.3299M10.6701 34.8556H58.3299M10.6701 47.6598H58.3299" stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                    </div>
+                </div>
             </div>
             <div className="My-vault hidden sm:block">
                 <a href="#" className="text-black decoration-[none]"><button className="navigation-button px-[36px] py-[13px] border-[#000000] rounded-[36px] text-[20px]">My Vault</button></a>
@@ -153,7 +153,7 @@ const app = () => {
         </svg>                        
     </div>
 
-        </>
+    </>
     )
 }
 
