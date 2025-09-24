@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tailwindcss -i TailwindInput.css -o ./dist/css/output.css --minify",
     "lint": "eslint .",
     "preview": "vite preview"
   },
