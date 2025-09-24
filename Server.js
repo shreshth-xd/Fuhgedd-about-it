@@ -6,8 +6,9 @@ const app = express();
 const mongoose = require("mongoose");
 
 const port = 3000;
-const publicDir = path.join(__dirname, "public");
+const publicDir = path.join(__dirname, "Frontend/dist");
 
+// Connecting to VaultDB
 async function connectDB(){
     try{
         const connection = await mongoose.connect("mongodb://localhost:27017/VaultboxDB");
@@ -16,16 +17,16 @@ async function connectDB(){
         console.log(error)
     }
 }
-
 connectDB();
 
 
-app.use(express.static("public")) // Accesing Public folder
+app.use(express.static(publicDir)) // Accesing Public folder
+app.use(express.json());
 app.set("views", "./Views")
 app.set("view engine", "ejs")
 
 app.get("/", (req, res)=>{
-    res.sendFile("Home.html", {root: publicDir})
+    res.sendFile("index.html", {root: publicDir})
 })
 
 app.get("/sign-in", (req, res)=>{
