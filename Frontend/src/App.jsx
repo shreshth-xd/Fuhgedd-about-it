@@ -1,14 +1,25 @@
 import { useState } from "react"
+import { createBrowserRouter, RouterProvider } from "react-router";
+
 import "../../public/css/output.css"
 import "./App.css"
 
 import Navbar from "./Components/Nav-bar";
 import Footer from "./Components/Footer";
+import MainPage from "./Components/MainPage";
+
+const router  = createBrowserRouter([
+    {
+        path: "/app",
+        element: <MainPage/>
+    }
+]);
 
 const app = () => {
     return(
     <>
     <Navbar/>
+    <RouterProvider router={router}/>
 
     <div className="opening w-[100%] sm:w-[100%] h-[auto] mt-[50px] sm:mt-[105px] p-0 flex items-center justify-center sm:justify-around lg:justify-center xl:justify-center md:justify-around text-center sm:text-left">
         <h1 className="pitching-line hidden sm:block sm:text-black sm:text-[25px] md:text-[31px] lg:text-[36px] xl:text-[41px] sm:w-[526px] md:w-[399px] lg:w-[425px] sm:h-[184px]">All your credentials at one place   <svg className="Key-svg" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
