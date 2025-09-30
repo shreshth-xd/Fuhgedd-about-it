@@ -3,8 +3,13 @@ const path = require("node:path");
 const fs = require("node:fs");
 const crypto = require("crypto");
 const app = express();
-const mongoose = require("mongoose");
 
+const mongoose = require("mongoose");
+const user = require("./Models/User.mjs");
+const vault = require("./Models/Vault.mjs");
+const cred = require("./Models/Cred.mjs");
+
+// Constants
 const port = 3000;
 const publicDir = path.join(__dirname, "Frontend/dist");
 
