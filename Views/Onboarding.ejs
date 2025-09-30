@@ -52,7 +52,7 @@
                     <input type="email" autocomplete="email" id="email" class="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5">
     
                     <label for="new-password" class="text-xl">Create a new password</label>
-                    <input type="password" id="new-password" class="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5">
+                    <input type="password" id="password" class="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5">
                     
                     <label for="new-password" class="text-xl">Confirm your new password</label>
                     <input type="password" id="confirmedPassword" class="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5">
@@ -62,8 +62,8 @@
                 </div>
 
                 <div class="buttons flex justify-between items-center w-2/4 mx-auto mb-6">
-                    <a href="/app" class="list-none">
-                        <button type="submit" class="p-2 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px] flex justify-center items-center">
+                    <a href="http://localhost:5173/app" class="list-none">
+                        <button type="button" class="p-2 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px] flex justify-center items-center">
                             Submit
                         </button>                
                     </a>
@@ -101,8 +101,8 @@
                 </div>
 
                 <div class="buttons flex justify-between items-center w-1/4 mx-auto mb-6 gap-x-2">
-                <a href="/app" class="list-none">
-                    <button type="button" class="p-2 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px] flex justify-center items-center">
+                <a href="http://localhost:5173/app" class="list-none">
+                    <button type="button" onclick="signUp()" class="p-2 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px] flex justify-center items-center">
                         Submit
                     </button>                
                 </a>
@@ -136,7 +136,35 @@
             </defs>
         </svg>
     </div>
-        
+    
+    
+    <script>
+        let username = document.getElementById("username").value;
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+
+        let dataPayload = {
+            "username":username,
+            "email":email,
+            "password":password
+        }
+
+        let signUp = () =>{
+            fetch("http://localhost:3000/sign-up", {
+                method: "post",
+                headers:{
+                    "Content-type": "application/json"
+                },
+                body:JSON.stringify(dataPayload)
+            }).then((res)=>{
+                return res.json()
+            }).then((data)=>{
+                console.log(data)
+            }).catch((error)=>{
+                console.log(error)
+            })
+        }
+    </script>
 
 </body>
 </html>
