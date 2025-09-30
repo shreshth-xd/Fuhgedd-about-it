@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const app = express();
 
 const mongoose = require("mongoose");
-const User = require("./Models/User.mjs");
+const {User} = require("./Models/User.mjs");
 const vault = require("./Models/Vault.mjs");
 const cred = require("./Models/Cred.mjs");
 
@@ -43,10 +43,16 @@ app.get("/sign-up", (req, res)=>{
 })
 
 app.post("/sign-up", async (req, res)=>{
-    const {username, email, password} = req.body;
-    let user = new User({"username":username, "email":email, "password":password})
-    await User.save()
-    res.json({"Status":"Received successfully"})
+    try{
+        console.log(req.body)
+        const {username, email, password} = req.body;
+        let user = new User({"username":username, "email":email, "password":password})
+        await user.save()
+        res.json({"Status":"Received successfully"})
+    }catch (err) {
+        console.error(err);
+        res.status(500).json({ Status: "Error saving user", error: err.message });
+    }
 })
 
 app.get("/app", (req, res)=>{
