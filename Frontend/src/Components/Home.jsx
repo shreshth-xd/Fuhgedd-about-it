@@ -15,7 +15,7 @@ const Home = () => {
     <Navbar/>
 
 
-    <div className="opening w-[100%] sm:w-[100%] h-[auto] mt-[50px] sm:mt-[105px] p-0 flex items-center justify-center sm:justify-around lg:justify-center xl:justify-center md:justify-around text-center sm:text-left">
+    <div className="opening w-[100%] sm:w-[100%] h-[auto] mt-[50px] sm:mt-[105px] p-0 flex items-center justify-center sm:justify-around lg:justify-center xl:justify-around md:justify-around text-center sm:text-left">
         <h1 className="pitching-line hidden sm:block sm:text-black sm:text-[25px] md:text-[31px] lg:text-[36px] xl:text-[41px] sm:w-[526px] md:w-[399px] lg:w-[425px] sm:h-[184px]">All your credentials at one place   <svg className="Key-svg" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M42 4L38 8M38 8L44 14L37 21L31 15M38 8L31 15M22.78 23.22C23.8127 24.2389 24.6336 25.4521 25.1955 26.7896C25.7574 28.1271 26.0492 29.5625 26.0541 31.0133C26.0589 32.464 25.7768 33.9014 25.2238 35.2426C24.6709 36.5838 23.8581 37.8025 22.8323 38.8283C21.8065 39.8541 20.5878 40.6669 19.2466 41.2198C17.9054 41.7728 16.468 42.0549 15.0173 42.0501C13.5665 42.0452 12.1311 41.7534 10.7936 41.1915C9.45608 40.6296 8.24293 39.8087 7.224 38.776C5.22026 36.7014 4.11152 33.9228 4.13659 31.0386C4.16165 28.1544 5.31851 25.3955 7.358 23.356C9.39748 21.3165 12.1564 20.1596 15.0406 20.1346C17.9248 20.1095 20.7034 21.2183 22.778 23.222L22.78 23.22ZM22.78 23.22L31 15" stroke="#1E1E1E" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
