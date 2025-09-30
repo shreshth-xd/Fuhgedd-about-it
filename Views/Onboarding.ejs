@@ -63,7 +63,7 @@
 
                 <div class="buttons flex justify-between items-center w-2/4 mx-auto mb-6">
                     <a href="http://localhost:5173/app" class="list-none">
-                        <button type="button" class="p-2 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px] flex justify-center items-center">
+                        <button type="button" id="submit" class="p-2 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px] flex justify-center items-center">
                             Submit
                         </button>                
                     </a>
@@ -139,17 +139,19 @@
     
     
     <script>
-        let username = document.getElementById("username").value;
-        let email = document.getElementById("email").value;
-        let password = document.getElementById("password").value;
-
-        let dataPayload = {
-            "username":username,
-            "email":email,
-            "password":password
-        }
-
         let signUp = () =>{
+            let username = document.getElementById("username").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            
+            let dataPayload = {
+                "username":username,
+                "email":email,
+                "password":password
+            }
+
+            console.log(dataPayload)
+
             fetch("http://localhost:3000/sign-up", {
                 method: "post",
                 headers:{
@@ -164,6 +166,8 @@
                 console.log(error)
             })
         }
+
+        document.getElementById("submit").addEventListener("click", signUp);
     </script>
 
 </body>
