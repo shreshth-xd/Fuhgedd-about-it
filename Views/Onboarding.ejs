@@ -90,11 +90,11 @@
 
                 <div class="fields flex flex-col gap-y-2.5 relative mt-10 mb-4 px-10">
                     <label for="username" class="text-xl">Username</label>
-                    <input type="text" autocomplete="username" id="username" class="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5">
+                    <input type="text" autocomplete="username" id="username1" class="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5">
     
     
                     <label for="new-password" class="text-xl">Password</label>
-                    <input type="password" name="" id="new-password" class="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5">
+                    <input type="password" name="" id="password1" class="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5">
                     <p class="form-btn xl:h-[35px] xl:w-full mt-1 text-sm">Don't have an account?
                         <a href="/sign-up" class="h-full w-full text-blue-600 decoration-solid decoration-blue-500">Click here</a>
                     </p>
@@ -102,7 +102,7 @@
 
                 <div class="buttons flex justify-between items-center w-1/4 mx-auto mb-6 gap-x-2">
                 <a href="http://localhost:5173/app" class="list-none">
-                    <button type="button" onclick="signUp()" class="p-2 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px] flex justify-center items-center">
+                    <button type="button" id="SubmitSignIn" class="p-2 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px] flex justify-center items-center">
                         Submit
                     </button>                
                 </a>
@@ -167,7 +167,35 @@
             })
         }
 
+        let signIn = () =>{
+            let username1 = document.getElementById("username1").value;
+            let password1 = document.getElementById("password1").value;
+            
+            let dataPayload = {
+                "username":username1,
+                "password":password1
+            }
+
+            console.log(dataPayload)
+
+            fetch("http://localhost:3000/sign-up", {
+                method: "post",
+                headers:{
+                    "Content-type": "application/json"
+                },
+                body:JSON.stringify(dataPayload)
+            }).then((res)=>{
+                return res.json()
+            }).then((data)=>{
+                console.log(data)
+            }).catch((error)=>{
+                console.log(error)
+            })
+        }
+
+        
         document.getElementById("submit").addEventListener("click", signUp);
+        document.getElementById("SubmitSignIn").addEventListener("click", signIn);
     </script>
 
 </body>
