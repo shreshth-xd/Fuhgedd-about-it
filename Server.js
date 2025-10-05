@@ -3,6 +3,7 @@ const path = require("node:path");
 const fs = require("node:fs");
 const crypto = require("crypto");
 const app = express();
+const cors = require("cors")
 
 const mongoose = require("mongoose");
 const {User} = require("./Models/User.mjs");
@@ -27,6 +28,8 @@ connectDB();
 
 app.use(express.static("public")) // Accesing Public folder
 app.use(express.json());
+app.use(cors({origin: "http://localhost:5173"}))
+
 app.set("views", "./Views")
 app.set("view engine", "ejs")
 
@@ -44,7 +47,6 @@ app.get("/sign-up", (req, res)=>{
 
 app.post("/sign-up", async (req, res)=>{
     try{
-        console.log(req.body)
         const {username, email, password} = req.body;
         let user = new User({"username":username, "email":email, "password":password})
         await user.save()
