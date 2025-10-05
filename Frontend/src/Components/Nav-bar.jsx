@@ -40,14 +40,14 @@ const Navbar = () => {
                         </button>
                     </a>
 
-                    <a href="http://localhost:3000/sign-in"
+                    <a href="/api/sign-in"
                         className="text-black decoration-[none]">
                         <button className="navigation-button px-[36px] py-[13px] border-[#000000] rounded-[36px] text-[20px]">
                             Sign In
                         </button>
                     </a>
 
-                    <a href="http://localhost:3000/sign-up"
+                    <a href="/api/sign-up"
                         className="text-black decoration-[none]">
                         <button className="navigation-button px-[36px] py-[13px] border-[#000000] rounded-[36px] text-[20px]">
                             Sign Up
