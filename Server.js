@@ -57,7 +57,7 @@ app.post("/sign-up", async (req, res)=>{
     }
 })
 
-/*
+
 app.post("/sign-in", async (req, res)=>{
     try{
         console.log(req.body)
@@ -68,7 +68,6 @@ app.post("/sign-in", async (req, res)=>{
         res.status(500).json({ Status: "Error in logging the user", err});
     }
 })
-*/
 
 app.get("/app", (req, res)=>{
     res.sendFile("index.html", {root: publicDir})
