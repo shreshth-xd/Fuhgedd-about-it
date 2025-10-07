@@ -4,7 +4,11 @@ import "../../../public/css/output.css";
 const MainPage = () =>{
     return(
         <div>
-            <h1>This is the main page</h1>
+            <nav className="w-10/12 p-2.5 ">
+                <div className="primary-buttons">
+
+                </div>
+            </nav>
         </div>
     );
 }
