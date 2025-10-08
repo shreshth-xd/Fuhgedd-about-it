@@ -45,29 +45,33 @@ app.get("/sign-up", (req, res)=>{
     res.render("Onboarding", {title: "Sign up", showSignUp: true, showSignIn: false})
 })
 
-app.post("/sign-up", async (req, res)=>{
-    try{
-        const {username, email, password} = req.body;
-        let user = new User({"username":username, "email":email, "password":password})
-        await user.save()
-        res.json({"Status":"Received successfully"})
-    }catch (err) {
-        console.error(err);
-        res.status(500).json({ Status: "Error saving user", error: err.message });
-    }
-})
 
+// These two endpoints are to sign up a user on the app and save their credentials on "Users" collection
+// These two will be soon migrated to the routers directory
 
-app.post("/sign-in", async (req, res)=>{
-    try{
-        console.log(req.body)
-        const {username, password} = req.body;
-        User.find()
-    }catch (err) {
-        console.error(err);
-        res.status(500).json({ Status: "Error in logging the user", err});
-    }
-})
+// app.post("/sign-up", async (req, res)=>{
+//     try{
+//         const {username, email, password} = req.body;
+//         let user = new User({"username":username, "email":email, "password":password})
+//         await user.save()
+//         res.json({"Status":"Received successfully"})
+//     }catch (err) {
+//         console.error(err);
+//         res.status(500).json({ Status: "Error saving user", error: err.message });
+//     }
+// })
+
+// app.post("/sign-in", async (req, res)=>{
+//     try{
+//         console.log(req.body)
+//         const {username, password} = req.body;
+//         User.find()
+//     }catch (err) {
+//         console.error(err);
+//         res.status(500).json({ Status: "Error in logging the user", err});
+//     }
+// })
+
 
 app.get("/app", (req, res)=>{
     res.sendFile("index.html", {root: publicDir})
