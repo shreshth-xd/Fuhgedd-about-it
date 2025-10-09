@@ -72,17 +72,6 @@ app.get("/sign-up", (req, res)=>{
 //     }
 // })
 
-// app.post("/sign-in", async (req, res)=>{
-//     try{
-//         console.log(req.body)
-//         const {username, password} = req.body;
-//         User.find()
-//     }catch (err) {
-//         console.error(err);
-//         res.status(500).json({ Status: "Error in logging the user", err});
-//     }
-// })
-
 
 app.get("/app", (req, res)=>{
     res.sendFile("index.html", {root: publicDir})
