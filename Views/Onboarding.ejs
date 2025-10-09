@@ -139,7 +139,7 @@
     
     
     <script>
-        let signUp = () =>{
+        const signUp = () =>{
             let username = document.getElementById("username").value;
             let email = document.getElementById("email").value;
             let password = document.getElementById("password").value;
@@ -150,7 +150,7 @@
                 "password":password
             }
 
-            fetch("http://localhost:3000/sign-up", {
+            fetch("http://localhost:3000/user/sign-up", {
                 method: "post",
                 headers:{
                     "Content-type": "application/json"
@@ -164,9 +164,34 @@
                 console.log(error)
             })
         }
+
+        const signIn = () =>{
+            let username = document.getElementById("username1").value;
+            let password = document.getElementById("password1").value;
+
+            let dataPayload = {
+                "username":username,
+                "password":password
+            }
+
+            fetch("http://localhost:3000/user/sign-in", {
+            method: "post",
+            headers:{
+                "Content-type": "application/json"
+            },
+            body:JSON.stringify(dataPayload)
+            }).then((res)=>{
+                return res.json()
+            }).then((data)=>{
+                console.log(data)
+            }).catch((error)=>{
+                console.log(error)
+            })
+
+        }
         
         document.getElementById("submit").addEventListener("click", signUp);
-        // document.getElementById("SubmitSignIn").addEventListener("click", signIn);
+        document.getElementById("SubmitSignIn").addEventListener("click", signIn);
     </script>
 
 </body>
