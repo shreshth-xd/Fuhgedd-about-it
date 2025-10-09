@@ -1,4 +1,5 @@
 const {User} = require("../Models/User.mjs")
+const publicDir = path.join(__dirname, "Frontend/dist");
 
 async function signUp(req, res){
     try{
@@ -11,6 +12,22 @@ async function signUp(req, res){
     }
 }
 
+async function signIn(req, res){
+    try{
+        const {username, password} = req.body;
+        let isUser = await User.findOne({username, password})
+        if(!isUser){
+            res.render("Onboarding", {title: "Login", showSignIn: true, showSignUp: false})
+        }else{
+            res.sendFile("index.html", {root: publicDir})
+        }
+    }catch(error){
+        console.log(error)
+    }
+}
+
+
+
 module.exports = {
-    signUp
+    signUp, signIn
 }
