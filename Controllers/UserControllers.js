@@ -1,3 +1,4 @@
+const path = require("node:path")
 const {User} = require("../Models/User.mjs")
 const publicDir = path.join(__dirname, "Frontend/dist");
 
