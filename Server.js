@@ -48,13 +48,13 @@ app.get("/", (req, res)=>{
     res.sendFile("index.html", {root: publicDir})
 })
 
-app.get("/sign-in", (req, res)=>{
-    res.render("Onboarding", {title: "Login", showSignIn: true, showSignUp: false})
-})
+// app.get("/sign-in", (req, res)=>{
+//     res.render("Onboarding", {title: "Login", showSignIn: true, showSignUp: false})
+// })
 
-app.get("/sign-up", (req, res)=>{
-    res.render("Onboarding", {title: "Sign up", showSignUp: true, showSignIn: false})
-})
+// app.get("/sign-up", (req, res)=>{
+//     res.render("Onboarding", {title: "Sign up", showSignUp: true, showSignIn: false})
+// })
 
 
 // These two endpoints are to sign up a user on the app and save their credentials on "Users" collection
