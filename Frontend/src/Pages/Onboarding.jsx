@@ -1,0 +1,131 @@
+// import React, { useState } from "react";
+// import { useLocation } from "react-router-dom";
+
+// const AuthForm = () => {
+//     const location = useLocation();
+//     const isSignUp = location.pathname.includes("sign-up");
+//     const isSignIn = location.pathname.includes("sign-in");
+
+//     const [username, setUsername] = useState("");
+//     const [email, setEmail] = useState("");
+//     const [password, setPassword] = useState("");
+//     const [confirmedPassword, setConfirmedPassword] = useState("");
+
+//     const handleSignUp = async () => {
+//         const dataPayload = { username, email, password };
+//         try {
+//             const res = await fetch("http://localhost:3000/user/sign-up", {
+//                 method: "POST",
+//                 headers: { "Content-Type": "application/json" },
+//                 body: JSON.stringify(dataPayload),
+//             });
+//             const data = await res.json();
+//             console.log(data);
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     };
+
+//     const handleSignIn = async () => {
+//         const dataPayload = { username, password };
+//         try {
+//             const res = await fetch("http://localhost:3000/user/sign-in", {
+//                 method: "POST",
+//                 headers: { "Content-Type": "application/json" },
+//                 body: JSON.stringify(dataPayload),
+//             });
+//             const data = await res.json();
+//             console.log(data);
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     };
+
+//     return (
+//         <div className="form-parent my-0 xl:h-[650] w-[100%] mx-auto flex justify-center relative z-10 top-[-20px]">
+//             <form className="form h-auto w-3/4 md:w-2/4 bg-[#f3f3f3] text-black flex flex-col rounded-[15px] relative p-0.5">
+//                 <div className="form-heading w-3/4 h-8 mx-auto flex justify-center items-center mt-10">
+//                     <svg width="80" height="80" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+//                             <path d="M48 8C53.5333 8 58.7173 9.05067 63.552 11.152C68.3867 13.2533 72.6187 16.12 76.248 19.752C79.8773 23.384 82.744 27.6173 84.848 32.452C86.952 37.2867 88.0027 42.4693 88 48C88 53.4667 86.9493 58.6333 84.848 63.5C82.7467 68.3667 79.88 72.6173 76.248 76.252C72.616 79.8867 68.3827 82.7533 63.548 84.852C58.7133 86.9507 53.5307 88 48 88C42.5333 88 37.3667 86.9493 32.5 84.848C27.6333 82.7467 23.384 79.88 19.752 76.248C16.12 72.616 13.2533 68.3667 11.152 63.5C9.05067 58.6333 8 53.4667 8 48C8 42.4667 9.05067 37.284 11.152 32.452C13.2533 27.62 16.12 23.3867 19.752 19.752C23.384 16.1173 27.6333 13.2507 32.5 11.152C37.3667 9.05333 42.5333 8.00267 48 8ZM48 80C56.8667 80 64.4173 76.884 70.652 70.652C76.8867 64.42 80.0027 56.8693 80 48C79.9973 39.1307 76.8813 31.58 70.652 25.348C64.4227 19.116 56.872 16 48 16C39.128 16 31.5773 19.1173 25.348 25.352C19.1187 31.5867 16.0027 39.136 16 48C15.9973 56.864 19.1147 64.4147 25.352 70.652C31.5893 76.8893 39.1387 80.0053 48 80ZM40 28C40 30.2 40.784 32.084 42.352 33.652C43.92 35.22 45.8027 36.0027 48 36C50.1973 35.9973 52.0813 35.2147 53.652 33.652C55.2227 32.0893 56.0053 30.2053 56 28C55.9947 25.7947 55.212 23.912 53.652 22.352C52.092 20.792 50.208 20.008 48 20C45.792 19.992 43.9093 20.776 42.352 22.352C40.7947 23.928 40.0107 25.8107 40 28ZM48 40C43.6 40 39.5 40.7173 35.7 42.152C31.9 43.5867 30 46.2027 30 50V66C30 69.8 31.9 72.384 35.7 73.752C39.5 75.12 43.6 75.8027 48 75.8C49.1333 75.8 50.084 75.416 50.852 74.648C51.62 73.88 52.0027 72.9307 52 71.8C51.9973 70.6693 51.6133 69.72 50.848 68.952C50.0827 68.184 49.1333 67.8 48 67.8C46.6667 67.8 45.3507 67.7 44.052 67.5C42.7533 67.3 41.5027 66.9333 40.3 66.4C39.5667 66.0667 39.1 65.5507 38.9 64.852C38.7 64.1533 38.8333 63.536 39.3 63C40.4333 61.8667 41.7667 61.084 43.3 60.652C44.8333 60.22 46.4 60.0027 48 60C50.4667 60 52.7507 60.4333 54.852 61.3C56.9533 62.1667 58.0027 63.6667 58 65.8V69.2C58 70 58.284 70.7 58.852 71.3C59.42 71.9 60.1027 72.2 60.9 72.2C62.4333 72.2 63.6667 71.5667 64.6 70.3C65.5333 69.0333 66 67.6 66 66V50C66 46.2 64.1 43.5827 60.3 42.148C56.5 40.7133 52.4 39.9973 48 40ZM48 58C46.6 58 45.416 57.516 44.448 56.548C43.48 55.58 42.9973 54.3973 43 53C43.0027 51.6027 43.4867 50.4187 44.452 49.448C45.4173 48.4773 46.6 47.9947 48 48C49.4 48.0053 50.584 48.4893 51.552 49.452C52.52 50.4147 53.0027 51.5973 53 53C52.9973 54.4027 52.5133 55.5867 51.548 56.552C50.5827 57.5173 49.4 58 48 58Z" fill="black"/>
+//                     </svg>
+//                     <p class="text-2xl hidden sm:block">Create a new vault</p>
+//                 </div>
+
+//                 <div className="fields flex flex-col gap-y-2.5 relative mt-10 mb-4 px-10">
+//                     <label className="text-xl">Username</label>
+//                     <input
+//                         type="text"
+//                         value={username}
+//                         onChange={(e) => setUsername(e.target.value)}
+//                         className="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5"
+//                     />
+
+//                     {isSignUp && (
+//                         <>
+//                             <label className="text-xl">E-mail</label>
+//                             <input
+//                                 type="email"
+//                                 value={email}
+//                                 onChange={(e) => setEmail(e.target.value)}
+//                                 className="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5"
+//                             />
+
+//                             <label className="text-xl">Confirm your password</label>
+//                             <input
+//                                 type="password"
+//                                 value={confirmedPassword}
+//                                 onChange={(e) => setConfirmedPassword(e.target.value)}
+//                                 className="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5"
+//                             />
+//                         </>
+//                     )}
+
+//                     <label className="text-xl">Password</label>
+//                     <input
+//                         type="password"
+//                         value={password}
+//                         onChange={(e) => setPassword(e.target.value)}
+//                         className="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5"
+//                     />
+
+//                     <p className="form-btn xl:h-[35px] xl:w-full mt-1 text-sm">
+//                         {isSignUp ? (
+//                             <>
+//                                 Already have an account?{" "}
+//                                 <a href="/sign-in" className="text-blue-600">
+//                                     Click here
+//                                 </a>
+//                             </>
+//                         ) : (
+//                             <>
+//                                 Don't have an account?{" "}
+//                                 <a href="/sign-up" className="text-blue-600">
+//                                     Click here
+//                                 </a>
+//                             </>
+//                         )}
+//                     </p>
+//                 </div>
+
+//                 <div className="buttons flex justify-between items-center w-2/4 mx-auto mb-6 gap-x-2">
+//                     <button
+//                         type="button"
+//                         onClick={isSignUp ? handleSignUp : handleSignIn}
+//                         className="p-2 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px] flex justify-center items-center"
+//                     >
+//                         Submit
+//                     </button>
+
+//                     <button
+//                         type="reset"
+//                         className="p-2 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px] flex justify-center items-center"
+//                     >
+//                         Reset
+//                     </button>
+//                 </div>
+//             </form>
+//         </div>
+//     );
+// };
+
+// export default AuthForm;
