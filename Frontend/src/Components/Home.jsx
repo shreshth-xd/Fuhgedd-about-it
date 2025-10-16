@@ -4,8 +4,8 @@ import "../../../public/css/output.css"
 import "./Home.css"
 
 import Navbar from "./Nav-bar";
-import Footer from "./Footer";
-import MainPage from "./MainPage";
+import Footer from "./Footer"
+
 
 
 
