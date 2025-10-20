@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const userSchema = new mongoose.Schema({
+    _id:Schema.Types.ObjectId,
     username: {
         type: String,
         required: true,
@@ -15,6 +16,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength:8
+    },
+    vaults:{
+        type: Schema.Types.ObjectId,
+        ref: "vault"
     }
 }, {timestamps: true})
 
