@@ -19,6 +19,8 @@ const port = 3000;
 const publicDir = path.join(__dirname, "Frontend/dist");
 
 
+// Routes
+const userRoute = require("./Routers/UsersRouter")
 
 
 // Connecting to VaultDB
@@ -32,8 +34,6 @@ async function connectDB(){
 }
 connectDB();
 
-// Routes
-const userRoute = require("./Routers/UsersRouter")
 
 app.use(express.static("public")) // Accesing Public folder
 app.use(express.json());
