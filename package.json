@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "npx tailwindcss -i src/input.css -o public/css/output.css --watch",
-    "stage:css": "git add ./public/css/output.css"
+    "stage:css": "git add ./public/css/output.css",
+    "start": "npx nodemon Server.js"
   },
   "type": "commonjs",
   "keywords": [],
@@ -14,9 +15,11 @@
   "description": "",
   "dependencies": {
     "@tailwindcss/cli": "^4.1.11",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.0",
     "multer": "^2.0.2",
     "nodemon": "^3.1.10",
