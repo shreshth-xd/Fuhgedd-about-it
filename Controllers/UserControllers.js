@@ -23,7 +23,7 @@ async function signIn(req, res){
         if(!user || !(await bcrypt.compare(password, user.password))){
             res.status(404).json({"Status":"Invalid username or password"})
         }else{
-            const token = setUser({id: user._id, username: user.username})
+            const token = setUser({_id: user._id, username: user.username})
             res.cookie("JWT_token", token, {
                 maxAge: 15 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
