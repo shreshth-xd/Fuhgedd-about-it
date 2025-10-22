@@ -38,6 +38,7 @@ connectDB();
 
 
 // Applying middlewares, routes and dotenv config
+app.use(cookieParser())
 app.use(express.static("public")) // Accesing Public folder
 app.use(express.json());
 app.use(cors({origin: "http://localhost:5173"}))
@@ -45,7 +46,6 @@ app.use("/user", userRoute)
 app.use("/vault", vaultRoute)
 app.set("views", "./Views")
 app.set("view engine", "ejs")
-app.use(cookieParser())
 
 app.get("/", (req, res)=>{
     res.sendFile("index.html", {root: publicDir})
