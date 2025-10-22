@@ -6,7 +6,7 @@ async function RestrictToLoggedInUsersOnly(req, res, next){
     if(!token) res.redirect("http://localhost:5173/sign-in")
     
     try{
-        let decodedPayload = jwt.verify(token, process.env.JWT_secret)
+        let decodedPayload = jwt.verify(token, process.env.JWT_SIG)
         req.user = decodedPayload;
         next()
     }catch(error){
