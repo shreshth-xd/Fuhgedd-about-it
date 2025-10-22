@@ -41,7 +41,7 @@ connectDB();
 app.use(cookieParser())
 app.use(express.static("public")) // Accesing Public folder
 app.use(express.json());
-app.use(cors({origin: "http://localhost:5173"}))
+app.use(cors({origin: "http://localhost:5173", credentials: true}))
 app.use("/user", userRoute)
 app.use("/vault", vaultRoute)
 app.set("views", "./Views")
