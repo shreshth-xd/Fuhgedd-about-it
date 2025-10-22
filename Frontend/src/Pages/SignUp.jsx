@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import ErrorBox from "../Components/PopUp";
 
 const SignUp = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmedPassword, setConfirmedPassword] = useState("");
+    const [isErrorBoxOpen, setIsErrorBoxOpen] = useState(false);
+    const [errMessage, setErrMessage] = useState();
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -25,7 +28,9 @@ const SignUp = () => {
             if (res.ok) {
                 window.location.href = "/app";
             } else {
-                alert("Sign-up failed. Try again!");
+                const ErrorResponse = await res.json();
+                setErrMessage(ErrorResponse.Status || "Sign up failed")
+                setIsErrorBoxOpen(true);
             }
         } catch (error) {
             console.error(error);
@@ -68,11 +73,19 @@ const SignUp = () => {
                     </div>
 
                     <div className="buttons flex justify-between items-center w-2/4 mx-auto mb-6 gap-x-2">
-                        <button type="submit" className="p-1.5 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px]">Submit</button>
-                        <button type="reset" className="p-1.5 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px]">Reset</button>
+                        <button type="submit" className="p-1.5 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px]">Submit</button>
+                        <button type="reset" className="p-1.5 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px]">Reset</button>
                     </div>
                 </form>
             </div>
+
+            <ErrorBox
+                    isOpen={isErrorBoxOpen}
+                    onClose={() => setIsErrorBoxOpen(false)}
+                >
+                    <p>{errMessage}</p>
+            </ErrorBox>
+
 
             <div class="h-[422px] w-full relative bottom-0 left-0">
                 <svg class="h-[100%] w-[100%]" viewBox="0 0 1436 422" fill="none" xmlns="http://www.w3.org/2000/svg">

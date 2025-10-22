@@ -4,8 +4,10 @@ const path = require("node:path");
 const fs = require("node:fs");
 const crypto = require("crypto");
 const app = express();
-const cors = require("cors")
-
+const cors = require("cors");
+const dotenv = require("dotenv").config();
+const {RestrictToLoggedInUsersOnly} = require("./Middlewares/Authentication")
+const cookieParser = require("cookie-parser")
 
 // DB Schemas
 const mongoose = require("mongoose");
@@ -21,7 +23,7 @@ const publicDir = path.join(__dirname, "Frontend/dist");
 
 // Routes
 const userRoute = require("./Routers/UsersRouter")
-
+const vaultRoute = require("./Routers/VaultRouter")
 
 // Connecting to VaultDB
 async function connectDB(){
@@ -35,14 +37,15 @@ async function connectDB(){
 connectDB();
 
 
+// Applying middlewares, routes and dotenv config
 app.use(express.static("public")) // Accesing Public folder
 app.use(express.json());
 app.use(cors({origin: "http://localhost:5173"}))
 app.use("/user", userRoute)
+app.use("/vault", vaultRoute)
 app.set("views", "./Views")
 app.set("view engine", "ejs")
-
-
+app.use(cookieParser())
 
 app.get("/", (req, res)=>{
     res.sendFile("index.html", {root: publicDir})

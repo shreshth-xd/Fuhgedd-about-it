@@ -2,7 +2,7 @@ const path = require("node:path")
 const {User} = require("../Models/User.mjs")
 const publicDir = path.join("../", "Frontend/dist");
 const {setUser, getUser} = require("../Services/JWTAuth")
-const {bcrypt} = require("bcrypt")
+const bcrypt = require("bcrypt")
 
 async function signUp(req, res){
     try{
@@ -13,26 +13,29 @@ async function signUp(req, res){
         return res.json({"Status": "User created successfully"})
     }catch(error){
         console.log(error)
+        return res.json({"Status":error})
     }
 }
 
 async function signIn(req, res){
     try{
         const {username, password} = req.body;
-        let user = await User.findOne({username, password})
+        let user = await User.findOne({username})
         if(!user || !(await bcrypt.compare(password, user.password))){
-            res.status(404).json({"Status":"User not found"})
+            res.status(404).json({"Status":"Invalid username or password"})
         }else{
             const token = setUser({id: user._id, username: user.username})
             res.cookie("JWT_token", token, {
                 maxAge: 15 * 24 * 60 * 60 * 1000,
                 httpOnly: false,
-                sameSite: lax
+                sameSite: "lax",
+                path: "/"
             })
             res.status(200).json({"Status":"Signed in successfully"})
         }
     }catch(error){
         console.log(error)
+        return res.json({"Error: ":error})
     }
 }
 

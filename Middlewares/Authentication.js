@@ -1,16 +1,17 @@
+const {jwt} = require("jsonwebtoken")
 const {setUser, getUser} = require("../Services/JWTAuth")
 
 async function RestrictToLoggedInUsersOnly(req, res, next){
     const token = req.cookies?.JWT_token;
     if(!token) res.redirect("http://localhost:5173/sign-in")
     
-    // const user = getUser(userSessionId);
-    // if(!user){
-    //     return res.redirect("http://localhost:5173/sign-in")
-    // }
-
-    req.user = user;
-    next();    
+    try{
+        let decodedPayload = jwt.verify(token, process.env.JWT_secret)
+        req.user = decodedPayload;
+        next()
+    }catch(error){
+        return res.status(403).json({"Status":"Invalid or expired token"})
+    }
 }
 
 module.exports = {RestrictToLoggedInUsersOnly}
