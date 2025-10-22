@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import ErrorBox from "../Components/PopUp";
 
 const SignIn = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [isErrorBoxOpen, setIsErrorBoxOpen] = useState(false);
+    const [errMessage, setErrMessage] = useState();
 
     const handleSignIn = async (e) => {
         e.preventDefault();
@@ -20,7 +23,9 @@ const SignIn = () => {
             if (res.ok) {
                 window.location.href = "/app";
             } else {
-                alert("Invalid username or password");
+                const errorData = await res.json(); // wait for JSON
+                setErrMessage(errorData.Status || "Sign-in failed");
+                setIsErrorBoxOpen(true);
             }
         } catch (error) {
             console.error(error);
@@ -57,31 +62,39 @@ const SignIn = () => {
                 </div>
 
                 <div className="buttons flex justify-between items-center w-2/4 mx-auto mb-6 gap-x-2">
-                    <button type="submit" className="p-2 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px]">Submit</button>
-                    <button type="reset" className="p-2 form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px]">Reset</button>
+                    <button type="submit" className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px]">Submit</button>
+                    <button type="reset" className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] bg-[#f5f5f5] border-2 border-black rounded-[8px]">Reset</button>
                 </div>
             </form>
         </div>
 
-        <div class="h-[422px] w-full relative bottom-0 left-0 hidden sm:block">
-            <svg class="h-[100%] w-[100%]" viewBox="0 0 1436 422" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g filter="url(#filter0_d_10_3)">
-                <path d="M1396 492C857.529 304.395 21.662 442.309 -36.762 44.0178C-37.7225 229.075 -39.9442 492 -39.9442 492H1396Z" fill="#FCFF31"/>
-                </g>
-                <defs>
-                <filter id="filter0_d_10_3" x="-79.9442" y="0.0177612" width="1515.94" height="527.982" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                <feOffset dy="-4"/>
-                <feGaussianBlur stdDeviation="20"/>
-                <feComposite in2="hardAlpha" operator="out"/>
-                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_10_3"/>
-                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_10_3" result="shape"/>
-                </filter>
-                </defs>
-            </svg>
-        </div>
+
+            <ErrorBox
+                    isOpen={isErrorBoxOpen}
+                    onClose={() => setIsErrorBoxOpen(false)}
+                >
+                    <p>{errMessage}</p>
+            </ErrorBox>
+
+            <div class="h-[422px] w-full relative bottom-0 left-0 hidden sm:block">
+                <svg class="h-[100%] w-[100%]" viewBox="0 0 1436 422" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g filter="url(#filter0_d_10_3)">
+                    <path d="M1396 492C857.529 304.395 21.662 442.309 -36.762 44.0178C-37.7225 229.075 -39.9442 492 -39.9442 492H1396Z" fill="#FCFF31"/>
+                    </g>
+                    <defs>
+                    <filter id="filter0_d_10_3" x="-79.9442" y="0.0177612" width="1515.94" height="527.982" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                    <feOffset dy="-4"/>
+                    <feGaussianBlur stdDeviation="20"/>
+                    <feComposite in2="hardAlpha" operator="out"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_10_3"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_10_3" result="shape"/>
+                    </filter>
+                    </defs>
+                </svg>
+            </div>
     </>
     );
 };

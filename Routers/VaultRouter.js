@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
+const router = express.Router();
+const {GetVaults} = require("../Controllers/VaultController")
 
-const Router = express.Router();
+router.get("/getVaults", GetVaults);
 
-Router.get("/profile")
+module.exports = router;
