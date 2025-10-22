@@ -27,8 +27,9 @@ async function signIn(req, res){
             const token = setUser({id: user._id, username: user.username})
             res.cookie("JWT_token", token, {
                 maxAge: 15 * 24 * 60 * 60 * 1000,
-                httpOnly: false,
+                httpOnly: true,
                 sameSite: "lax",
+                secure: false,
                 path: "/"
             })
             res.status(200).json({"Status":"Signed in successfully"})
