@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const signature = "universalSignature123$#"
+const signature = process.env.JWT_SIG;
 
 function setUser(payload){
     return jwt.sign({
