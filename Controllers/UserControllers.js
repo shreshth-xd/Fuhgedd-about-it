@@ -1,6 +1,5 @@
 const path = require("node:path")
 const {User} = require("../Models/User.mjs")
-const publicDir = path.join("../", "Frontend/dist");
 const {setUser, getUser} = require("../Services/JWTAuth")
 const bcrypt = require("bcrypt")
 
