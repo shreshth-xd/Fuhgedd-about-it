@@ -1,11 +1,12 @@
 // Libraries and middlewares
+const dotenv = require("dotenv").config();
+console.log("The environment variable parsed by so far is: ", dotenv.parsed)
 const express = require("express");
 const path = require("node:path");
 const fs = require("node:fs");
 const crypto = require("crypto");
 const app = express();
 const cors = require("cors");
-const dotenv = require("dotenv").config();
 const {RestrictToLoggedInUsersOnly} = require("./Middlewares/Authentication")
 const cookieParser = require("cookie-parser")
 
