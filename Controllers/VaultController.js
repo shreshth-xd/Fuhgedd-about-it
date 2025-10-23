@@ -13,7 +13,13 @@ async function GetVaults(req, res){
 
 
     try{
+<<<<<<< HEAD
         const decoded = jwt.verify(token, process.env.JWT_SIG)
+=======
+        const decoded = jwt.decode(token, {complete: true})
+        console.log(decoded)
+        console.log(token==req.cookies?.JWT_token)
+>>>>>>> 12bbf43dc3710aa61466cdc7be06f5fdaff7a8f3
         
         let vaults = await Vault.find({user: decoded.username})
         if(vaults.length==0){
