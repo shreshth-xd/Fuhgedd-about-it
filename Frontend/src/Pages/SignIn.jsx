@@ -52,7 +52,7 @@ const SignIn = () => {
 
                 <div className="fields flex flex-col gap-y-2.5 relative mt-10 mb-4 px-10">
                     <label className="text-xl">Username</label>
-                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5" required />
+                    <input type="text" autoComplete="username" value={username} onChange={(e) => setUsername(e.target.value)} className="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5" required />
 
                     <label className="text-xl">Password</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="bg-[#d9d9d9] border border-black rounded-[8px] h-[40px] px-1.5" required />
