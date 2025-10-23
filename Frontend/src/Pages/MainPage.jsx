@@ -9,23 +9,22 @@ const MainPage = () => {
 
     useEffect(() => {
         const fetchVaults = async () => {
-            try {
+            // try {
                 const res = await fetch("/vault/getVaults", { credentials: "include" });
                 const data = await res.json();
 
                 if (res.ok && data.vaults && data.vaults.length > 0) {
                     setVaultBoxes(data.vaults); // Update vaults if they exist
                     setStatus("success");
-                } else if (res.ok && data.vaults && data.vaults.length === 0) {
+                } else if (res.ok && (!data.vaults || data.vaults.length === 0)) {
                     setStatus("empty"); // No vaults found
                 } else {
-                    console.log(data)
                     setStatus("error"); // Error fetching vaults
                 }
-            } catch (error) {
-                console.error("Error fetching vaults:", error);
-                setStatus("error");
-            }
+            // } catch (error) {
+            //     console.log("Error fetching vaults:", error);
+            //     setStatus("error");
+            // }
         };
 
         fetchVaults();
@@ -50,9 +49,9 @@ const MainPage = () => {
                 )}
 
                 {status === "empty" && (
-                    <div className="NoVaultParent w-full mx-auto h-72">
-                        <div className="NoVaultBox h-full w-96">
-                            <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end">
+                    <div className="NoVaultParent w-full h-auto mt-34">
+                        <div className="NoVaultBox h-72 w-96 mx-auto">
+                            <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end border-2 border-black bg-linear-90 from-[#FFF8AA_24.52%] to-[#FF8400]">
                                 <svg
                                     width="35"
                                     height="43"
@@ -71,7 +70,7 @@ const MainPage = () => {
                                     />
                                 </svg>
                             </div>
-                            <div className="dialog h-52 w-full text-center">
+                            <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 bg-linear-90 from-[#F4FFAA_37.44%] to-[#FF8400_97.12%]">
                                 <h2 className="jersey-25">No vaults to be found here</h2>
                                 <p>Click to get started</p>
                             </div>
@@ -80,9 +79,9 @@ const MainPage = () => {
                 )}
 
                 {status === "error" && (
-                                <div className="NoVaultParent w-full h-auto mt-6">
+                                <div className="NoVaultParent w-full h-auto mt-34">
                                     <div className="NoVaultBox h-72 w-96 mx-auto">
-                                        <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end border-2 border-black">
+                                        <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end border-2 border-black bg-linear-90 from-[#FFF8AA_24.52%] to-[#FF8400]">
                                             <svg
                                                 width="35"
                                                 height="43"
@@ -101,7 +100,7 @@ const MainPage = () => {
                                                 />
                                             </svg>
                                         </div>
-                                        <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8">
+                                        <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 bg-linear-90 from-[#F4FFAA_37.44%] to-[#FF8400_97.12%]">
                                             <h2 className="jersey-25">There was an error in retrieving the vaults</h2>
                                             <p>Please try again later</p>
                                         </div>
