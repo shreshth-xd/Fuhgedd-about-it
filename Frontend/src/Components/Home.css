@@ -9,7 +9,9 @@
 
 /* border-radius: 16px; */
 
-
+.dialog{
+    background: linear-gradient(90deg, #F4FFAA 37.44%, #FF8400 97.12%);
+}
 
 .jersey-25{
     font-family: "Jersey 25", sans-serif;
