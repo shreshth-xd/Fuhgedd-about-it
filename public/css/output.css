@@ -22,7 +22,6 @@
     --radius-2xl: 1rem;
     --radius-3xl: 1.5rem;
     --blur-sm: 8px;
-    --blur-2xl: 40px;
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -230,9 +229,6 @@
   .mt-\[50px\] {
     margin-top: 50px;
   }
-  .mb-1\.5 {
-    margin-bottom: calc(var(--spacing) * 1.5);
-  }
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
   }
@@ -385,10 +381,6 @@
     border-style: var(--tw-border-style);
     border-width: 2px;
   }
-  .border-4 {
-    border-style: var(--tw-border-style);
-    border-width: 4px;
-  }
   .border-\[3px\] {
     border-style: var(--tw-border-style);
     border-width: 3px;
@@ -437,19 +429,8 @@
     }
     background-image: linear-gradient(var(--tw-gradient-stops));
   }
-  .bg-linear-270 {
-    --tw-gradient-position: 270deg;
-    @supports (background-image: linear-gradient(in lab, red, red)) {
-      --tw-gradient-position: 270deg in oklab;
-    }
-    background-image: linear-gradient(var(--tw-gradient-stops));
-  }
   .from-\[\#FF8400\] {
     --tw-gradient-from: #FF8400;
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
-  .from-\[\#FFF8AA_28\.85\%\] {
-    --tw-gradient-from: #FFF8AA 28.85%;
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .from-\[\#FFF8AA_30\%\] {
@@ -458,10 +439,6 @@
   }
   .to-\[\#FF8400\] {
     --tw-gradient-to: #FF8400;
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
-  .to-\[\#FF8400_100\%\] {
-    --tw-gradient-to: #FF8400 100%;
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .to-\[\#FFF8AA\] {
