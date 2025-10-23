@@ -1,6 +1,6 @@
 const path = require("node:path")
 const {User} = require("../Models/User.mjs")
-const {setUser, getUser} = require("../Services/JWTAuth")
+const {setUser} = require("../Services/JWTAuth")
 const bcrypt = require("bcrypt")
 
 async function signUp(req, res){
@@ -21,7 +21,7 @@ async function signIn(req, res){
         const {username, password} = req.body;
         let user = await User.findOne({username})
         if(!user || !(await bcrypt.compare(password, user.password))){
-            res.status(404).json({"Status":"Invalid username or password"})
+            return res.status(404).json({"Status":"Invalid username or password"})
         }else{
             const token = setUser({_id: user._id, username: user.username})
             res.cookie("JWT_token", token, {
@@ -31,7 +31,7 @@ async function signIn(req, res){
                 secure: false,
                 path: "/"
             })
-            res.status(200).json({"Status":"Signed in successfully"})
+            return res.status(200).json({"Status":"Signed in successfully"})
         }
     }catch(error){
         console.log(error)
