@@ -11,7 +11,6 @@ async function GetVaults(req, res){
         return res.status(404).json({Status: "JWT token not found"})
     }
 
-
     try{
         const decoded = jwt.verify(token, process.env.JWT_SIG)
         let vaults = await Vault.find({user: decoded.username})
