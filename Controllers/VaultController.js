@@ -31,4 +31,4 @@ async function CreateVault(req, res){
 }
 
 
-module.exports = {GetVaults}
+module.exports = {GetVaults, CreateVault}
