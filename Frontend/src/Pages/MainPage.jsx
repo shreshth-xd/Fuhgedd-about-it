@@ -8,7 +8,12 @@ const MainPage = () => {
     const [vaultBoxes, setVaultBoxes] = useState([]);
     const [status, setStatus] = useState(""); // To track the status of the fetch
     const [isVaultBoxOpen, setIsVaultBoxOpen] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
     
+    const createVault = () =>{
+
+    }
 
     useEffect(() => {
         const fetchVaults = async () => {
@@ -31,7 +36,7 @@ const MainPage = () => {
         };
 
         fetchVaults();
-    }, []); // Empty dependency array to run only once on mount
+    }, [vaultBoxes]); // Empty dependency array to run only once on mount
 
     return (
         <>
@@ -56,8 +61,8 @@ const MainPage = () => {
                         <div className="NoVaultBox h-72 w-96 mx-auto">
                             <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end border-2 border-black bg-linear-90 from-[#fffbaa_24.52%] to-[#ffea00]">
                                 <svg width="35" height="43" viewBox="0 0 35 43" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M17.5 0.5C26.8757 0.5 34.5 8.32165 34.5 18C34.5 27.6784 26.8757 35.5 17.5 35.5C8.12434 35.5 0.5 27.6784 0.5 18C0.5 8.32165 8.12434 0.5 17.5 0.5Z" fill="#F4FFAA" stroke="#F4FFAA"/>
-<path d="M15.4229 27V18.1577L14.6029 17.652V16.1897L17.5413 15.3833H19.8236V27H15.4229ZM17.4046 14.126L15.1633 11.871V11.3927L17.4046 9.15133H17.9239L20.2609 11.3927V11.871L17.9239 14.126H17.4046Z" fill="#0B0C00"/>
+                                    <path d="M17.5 0.5C26.8757 0.5 34.5 8.32165 34.5 18C34.5 27.6784 26.8757 35.5 17.5 35.5C8.12434 35.5 0.5 27.6784 0.5 18C0.5 8.32165 8.12434 0.5 17.5 0.5Z" fill="#F4FFAA" stroke="#F4FFAA"/>
+                                    <path d="M15.4229 27V18.1577L14.6029 17.652V16.1897L17.5413 15.3833H19.8236V27H15.4229ZM17.4046 14.126L15.1633 11.871V11.3927L17.4046 9.15133H17.9239L20.2609 11.3927V11.871L17.9239 14.126H17.4046Z" fill="#0B0C00"/>
                                 </svg>
                             </div>
                             <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 bg-linear-90 from-[#fcffaa_37.44%] to-[#f6ff00_97.12%]">
@@ -73,8 +78,8 @@ const MainPage = () => {
                                     <div className="NoVaultBox h-72 w-96 mx-auto">
                                         <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end border-2 border-black bg-linear-90 from-[#fffbaa_24.52%] to-[#ffea00]">
                                             <svg width="35" height="43" viewBox="0 0 35 43" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M17.5 0.5C26.8757 0.5 34.5 8.32165 34.5 18C34.5 27.6784 26.8757 35.5 17.5 35.5C8.12434 35.5 0.5 27.6784 0.5 18C0.5 8.32165 8.12434 0.5 17.5 0.5Z" fill="#F4FFAA" stroke="#F4FFAA"/>
-<path d="M15.4229 27V18.1577L14.6029 17.652V16.1897L17.5413 15.3833H19.8236V27H15.4229ZM17.4046 14.126L15.1633 11.871V11.3927L17.4046 9.15133H17.9239L20.2609 11.3927V11.871L17.9239 14.126H17.4046Z" fill="#0B0C00"/>
+                                                <path d="M17.5 0.5C26.8757 0.5 34.5 8.32165 34.5 18C34.5 27.6784 26.8757 35.5 17.5 35.5C8.12434 35.5 0.5 27.6784 0.5 18C0.5 8.32165 8.12434 0.5 17.5 0.5Z" fill="#F4FFAA" stroke="#F4FFAA"/>
+                                                <path d="M15.4229 27V18.1577L14.6029 17.652V16.1897L17.5413 15.3833H19.8236V27H15.4229ZM17.4046 14.126L15.1633 11.871V11.3927L17.4046 9.15133H17.9239L20.2609 11.3927V11.871L17.9239 14.126H17.4046Z" fill="#0B0C00"/>
                                             </svg>
                                         </div>
                                         <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 bg-linear-90 from-[#fcffaa_37.44%] to-[#f6ff00_97.12%]">
@@ -92,6 +97,21 @@ const MainPage = () => {
                     setIsVaultBoxOpen(false)
                 }}
             >
+                <form onSubmit={createVault()} className="w-full flex flex-col gap-y-3">
+                    <label htmlFor="purpose">Purpose:</label>
+                    <input type="text" id="purpose" className="border-b-[1px] border-white selection:border-0 bg-[#151515] px-0.5 py-1"/>
+                
+                    <label htmlFor="credential">Credential:</label>
+                    <input type={showPassword ? "text" : "password"} id="credential" className="border-b-[1px] border-white selection:border-0 bg-[#151515] px-0.5 py-1"/>
+                    <span className="text-blue-500 text-sm" onClick={()=>{
+                        return setShowPassword(showPassword => !showPassword)
+                    }}>
+                        {showPassword ? "Hide password" : "Show password"}
+                    </span>
+                    
+                    <label htmlFor="algoName"></label>
+                    <input type="" />
+                </form>
             </DialogBox>
         
         </div>
