@@ -1,6 +1,5 @@
 // Libraries and middlewares
 const dotenv = require("dotenv").config();
-console.log("The environment variable parsed by so far is: ", dotenv.parsed)
 const express = require("express");
 const path = require("node:path");
 const fs = require("node:fs");
