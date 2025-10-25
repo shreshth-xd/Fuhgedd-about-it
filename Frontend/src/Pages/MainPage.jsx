@@ -2,14 +2,17 @@ import { useState, useEffect } from "react";
 import "../../../public/css/output.css";
 import "../Components/Home.css";
 import AppNavBar from "../Components/AppNavbar";
+import DialogBox from "../Components/DialogBox";
 
 const MainPage = () => {
     const [vaultBoxes, setVaultBoxes] = useState([]);
     const [status, setStatus] = useState(""); // To track the status of the fetch
+    const [isVaultBoxOpen, setIsVaultBoxOpen] = useState(false);
+    
 
     useEffect(() => {
         const fetchVaults = async () => {
-            // try {
+            try {
                 const res = await fetch("/vault/getVaults", { credentials: "include" });
                 const data = await res.json();
 
@@ -21,10 +24,10 @@ const MainPage = () => {
                 } else {
                     setStatus("error"); // Error fetching vaults
                 }
-            // } catch (error) {
-            //     console.log("Error fetching vaults:", error);
-            //     setStatus("error");
-            // }
+            } catch (error) {
+                console.log("Error fetching vaults:", error);
+                setStatus("error");
+            }
         };
 
         fetchVaults();
@@ -32,10 +35,10 @@ const MainPage = () => {
 
     return (
         <>
-        <div className="ParentFlexBox bg-linear-258 from-[#FF8400] to-[#FFF8AA] w-full h-screen flex flex-col">
+        <div className="ParentFlexBox bg-linear-258 from-[#e1ff00] to-[#f8ffaa] w-full h-screen flex flex-col">
             <AppNavBar/>
 
-            <div className="main-page">
+            <div className="main-page w-full h-full">
                 {status === "success" && (
                     <div className="vaults">
                         <h1>Vaults will display here</h1>
@@ -51,7 +54,7 @@ const MainPage = () => {
                 {status === "empty" && (
                     <div className="NoVaultParent w-full h-auto mt-34">
                         <div className="NoVaultBox h-72 w-96 mx-auto">
-                            <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end border-2 border-black bg-linear-90 from-[#FFF8AA_24.52%] to-[#FF8400]">
+                            <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end border-2 border-black bg-linear-90 from-[#fffbaa_24.52%] to-[#ffea00]">
                                 <svg
                                     width="35"
                                     height="43"
@@ -70,9 +73,9 @@ const MainPage = () => {
                                     />
                                 </svg>
                             </div>
-                            <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 bg-linear-90 from-[#F4FFAA_37.44%] to-[#FF8400_97.12%]">
+                            <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 bg-linear-90 from-[#fcffaa_37.44%] to-[#f6ff00_97.12%]">
                                 <h2 className="jersey-25">No vaults to be found here</h2>
-                                <p>Click to get started</p>
+                                <p className="hover:text-blue-600 hover:font-medium inline" onClick={()=>{return setIsVaultBoxOpen(true)}}>Click to get started</p>
                             </div>
                         </div>
                     </div>
@@ -81,7 +84,7 @@ const MainPage = () => {
                 {status === "error" && (
                                 <div className="NoVaultParent w-full h-auto mt-34">
                                     <div className="NoVaultBox h-72 w-96 mx-auto">
-                                        <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end border-2 border-black bg-linear-90 from-[#FFF8AA_24.52%] to-[#FF8400]">
+                                        <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end border-2 border-black bg-linear-90 from-[#fffbaa_24.52%] to-[#ffea00]">
                                             <svg
                                                 width="35"
                                                 height="43"
@@ -100,7 +103,7 @@ const MainPage = () => {
                                                 />
                                             </svg>
                                         </div>
-                                        <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 bg-linear-90 from-[#F4FFAA_37.44%] to-[#FF8400_97.12%]">
+                                        <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 bg-linear-90 from-[#fcffaa_37.44%] to-[#f6ff00_97.12%]">
                                             <h2 className="jersey-25">There was an error in retrieving the vaults</h2>
                                             <p>Please try again later</p>
                                         </div>
@@ -108,6 +111,15 @@ const MainPage = () => {
                                 </div>
                 )}
             </div>
+        
+            <DialogBox
+                isOpen={isVaultBoxOpen}
+                onClose={() => {
+                    setIsVaultBoxOpen(false)
+                }}
+            >
+            </DialogBox>
+        
         </div>
 
         
