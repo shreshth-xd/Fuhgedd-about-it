@@ -4,6 +4,7 @@ import Home from "./Components/Home";
 import MainPage from "./Pages/MainPage";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
+import Vault from "./Pages/VaultUI";
 
 const router  = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ const router  = createBrowserRouter([
     {
         path: "/sign-up",
         element: <SignUp/>
+    },
+    {
+        path: "/vault",
+        element: <Vault/>
     }
 ]);
 
