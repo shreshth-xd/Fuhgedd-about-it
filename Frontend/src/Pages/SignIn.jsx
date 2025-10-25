@@ -71,12 +71,12 @@ const SignIn = () => {
 
 
             <ErrorBox
-                    isOpen={isErrorBoxOpen}
-                    onClose={() => {
-                        setIsErrorBoxOpen(false)
-                        }}
-                >
-                    <p>{errMessage}</p>
+                isOpen={isErrorBoxOpen}
+                onClose={() => {
+                    setIsErrorBoxOpen(false)
+                }}
+            >
+                <p>{errMessage}</p>
                     
             </ErrorBox>
 
