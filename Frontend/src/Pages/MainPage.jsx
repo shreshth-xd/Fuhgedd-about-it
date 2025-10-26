@@ -3,13 +3,25 @@ import "../../../public/css/output.css";
 import "../Components/Home.css";
 import AppNavBar from "../Components/AppNavbar";
 import DialogBox from "../Components/DialogBox";
+import { v4 as uuidv4 } from "uuid";
 
 const MainPage = () => {
     const [vaultBoxes, setVaultBoxes] = useState([]);
     const [status, setStatus] = useState(""); // To track the status of the fetch
     const [isVaultBoxOpen, setIsVaultBoxOpen] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    
+    // For generating keys for each credential input field:
+    const [credId, setCredId] = useState(uuidv4());
+    const [credFields, setCredFields] = useState([
+        {id: credId}
+    ]);
+    const isLimitExceed = credFields.length>=5;
 
+    const addCred = () => {
+        setCredId(credId+1);
+        setCredFields([...credFields, { id: credId}]);
+    };
     
     const createVault = () =>{
 
@@ -36,7 +48,7 @@ const MainPage = () => {
         };
 
         fetchVaults();
-    }, [vaultBoxes]); // Empty dependency array to run only once on mount
+    }, []); // Empty dependency array to run only once on mount
 
     return (
         <>
@@ -97,20 +109,51 @@ const MainPage = () => {
                     setIsVaultBoxOpen(false)
                 }}
             >
-                <form onSubmit={createVault()} className="w-full flex flex-col gap-y-3">
-                    <label htmlFor="purpose">Purpose:</label>
-                    <input type="text" id="purpose" className="border-b-[1px] border-white selection:border-0 bg-[#151515] px-0.5 py-1"/>
-                
-                    <label htmlFor="credential">Credential:</label>
-                    <input type={showPassword ? "text" : "password"} id="credential" className="border-b-[1px] border-white selection:border-0 bg-[#151515] px-0.5 py-1"/>
-                    <span className="text-blue-500 text-sm" onClick={()=>{
-                        return setShowPassword(showPassword => !showPassword)
-                    }}>
-                        {showPassword ? "Hide password" : "Show password"}
-                    </span>
+                <form onSubmit={createVault} className="w-full flex flex-col gap-y-8">
+                    <div className="name flex flex-col gap-y-1.5">
+                        <label htmlFor="name">Name:</label>
+                        <input type="text" id="purpose" className="border-b-[1px] border-white focus:outline-[0.2px] bg-[#151515] px-0.5 py-1"/>
+                    </div>
+
+                    <div className="Credentials flex flex-col gap-y-1.5">
+                        <label htmlFor="credential">Credentials:</label>
+                        <div>
+                            
+                            {credFields.map((cred)=>{
+                                if(isLimitExceed){
+                                    return null
+                                }
+                                return (
+                                    <input key={cred.id} type={showPassword ? "text" : "password"} id="credential" className=" focus:outline-0 fo bg-[#1a1919] px-0.5 py-1 w-full mb-1"/>
+                                )
+                            })}
+                            <button type="button" className={`border-b-[1px] border-white bg-[#151515] hover:bg-[#1a1919] px-0.5 py-1 w-full  ${isLimitExceed ? "invisible" : "block"}`} onClick={addCred}>+</button>
+                        </div>
+                        <span className="text-blue-500 text-[12px]" onClick={()=>{
+                            return setShowPassword(showPassword => !showPassword)
+                        }}>
+                            {showPassword ? "Hide values" : "Show values"}
+                        </span>
+
+                    </div>
                     
-                    <label htmlFor="algoName"></label>
-                    <input type="" />
+                    <div className="algoName flex flex-col gap-y-1.5">
+                        <label htmlFor="algoName">Encryption algorithm:</label>
+                        <select name="algoName" id="algoName" className="border-b-[0.02px] border-white focus:outline-0 bg-[#151515] px-0.5 py-1">
+                            <option className="flex items-center justify-between px-1 py-1.5">
+                                SHA256
+                            </option>
+                            <option className="flex items-center justify-between px-1 py-1.5">
+                                BCrypt
+                            </option>
+                        </select>
+                    </div>
+
+                    <div className="buttons flex items-center gap-x-2 flex-wrap">
+                        <button type="submit" className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Submit</button>
+                        <button type="reset" className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Reset</button>
+                    </div>
+                    
                 </form>
             </DialogBox>
         
