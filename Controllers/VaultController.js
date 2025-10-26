@@ -4,6 +4,7 @@ const {User} = require("../Models/User.mjs")
 const jwt = require("jsonwebtoken")
 const {getUser} = require("../Services/JWTAuth")
 
+
 // Write a controller to see if user has even created any vault by so far or not
 async function GetVaults(req, res){
     const token = req.cookies?.JWT_token;
@@ -24,6 +25,7 @@ async function GetVaults(req, res){
         return res.status(500).json({ Status: error.message || error.toString() });
     }
 }
+
 
 // Devise a way to write a controller to create a vault in such a way that it returns all the vaults created by that specified user only:
 async function CreateVault(req, res){
