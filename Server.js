@@ -15,16 +15,6 @@ const {User} = require("./Models/User.mjs");
 const vault = require("./Models/Vault.mjs");
 const cred = require("./Models/Cred.mjs");
 
-
-// Constants
-const port = 3000;
-const publicDir = path.join(__dirname, "Frontend/dist");
-
-
-// Routes
-const userRoute = require("./Routers/UsersRouter")
-const vaultRoute = require("./Routers/VaultRouter")
-
 // Connecting to VaultDB
 async function connectDB(){
     try{
@@ -35,6 +25,16 @@ async function connectDB(){
     }
 }
 connectDB();
+
+// Constants
+const port = 3000;
+const publicDir = path.join(__dirname, "Frontend/dist");
+
+
+// Routes
+const userRoute = require("./Routers/UsersRouter")
+const vaultRoute = require("./Routers/VaultRouter")
+
 
 
 // Applying middlewares, routes and dotenv config
