@@ -10,7 +10,9 @@
 /* border-radius: 16px; */
 
 .dialog{
-    background: linear-gradient(90deg, #F4FFAA 37.44%, #f6ff00 97.12%);
+    /* background: linear-gradient(90deg, #F4FFAA 37.44%, #f6ff00 97.12%); */
+    /* bg-linear-90 from-[#1a4bbf] to-[#020887] */
+    background: linear-gradient(90deg, #1a4bbf, #020887);
 }
 
 
