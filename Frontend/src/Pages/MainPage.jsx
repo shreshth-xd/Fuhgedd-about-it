@@ -4,27 +4,54 @@ import "../Components/Home.css";
 import AppNavBar from "../Components/AppNavbar";
 import DialogBox from "../Components/DialogBox";
 import { v4 as uuidv4 } from "uuid";
+// import {Key} from "lucide-react"
 
 const MainPage = () => {
     const [vaultBoxes, setVaultBoxes] = useState([]);
     const [status, setStatus] = useState(""); // To track the status of the fetch
     const [isVaultBoxOpen, setIsVaultBoxOpen] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    
+
     // For generating keys for each credential input field:
-    const [credId, setCredId] = useState(uuidv4());
+    // const [algo, setAlgo] = useState("SHA256");
+    const [credId, setCredId] = useState(1);
     const [credFields, setCredFields] = useState([
-        {id: credId}
+        {id: credId, Value: "", Algorithm: ""}
     ]);
     const isLimitExceed = credFields.length>=5;
 
     const addCred = () => {
-        setCredId(credId+1);
-        setCredFields([...credFields, { id: credId}]);
-    };
-    
-    const createVault = () =>{
+        setCredId(previousId =>{
+                const newId = previousId+1;
+                setCredFields(currFields =>{
+                    if(isLimitExceed===true) return currFields;
+                    return [...currFields, {id: newId, Value: "", Algorithm: ""}]
+                });
 
+                return newId;
+            }
+        )
+    };
+
+    const handleInput = (id, value) =>{
+        setCredFields(prev=> 
+            prev.map(field =>
+                field.id === id ? {...field, Value: value} : field
+            )
+        )
+    }
+
+    const handleAlgoChange = (id, value) =>{
+        setCredFields(currs =>
+            currs.map(field=>
+                field.id === id ? {...field, Algorithm: value} : field
+            )
+        )
+    }
+    
+    const createVault = (e) =>{
+        e.preventDefault();
+        console.log("Sending vault creation request and credential data to server...")
     }
 
     useEffect(() => {
@@ -71,7 +98,7 @@ const MainPage = () => {
                 {status === "empty" && (
                     <div className="NoVaultParent w-full h-auto mt-34">
                         <div className="NoVaultBox h-72 w-96 mx-auto">
-                            <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end border-2 border-black bg-linear-90 from-[#d8dbe2_24.52%] to-[#ffea00]">
+                            <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end border-2 border-black bg-linear-90 from-[#1a4bbf] to-[#020887]">
                                 <svg width="35" height="43" viewBox="0 0 35 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M17.5 0.5C26.8757 0.5 34.5 8.32165 34.5 18C34.5 27.6784 26.8757 35.5 17.5 35.5C8.12434 35.5 0.5 27.6784 0.5 18C0.5 8.32165 8.12434 0.5 17.5 0.5Z" fill="#F4FFAA" stroke="#F4FFAA"/>
                                     <path d="M15.4229 27V18.1577L14.6029 17.652V16.1897L17.5413 15.3833H19.8236V27H15.4229ZM17.4046 14.126L15.1633 11.871V11.3927L17.4046 9.15133H17.9239L20.2609 11.3927V11.871L17.9239 14.126H17.4046Z" fill="#0B0C00"/>
@@ -79,7 +106,7 @@ const MainPage = () => {
                             </div>
                             <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 bg-linear-90 from-[#1a4bbf] to-[#020887_97.12%]">
                                 <h2 className="jersey-25">No vaults to be found here</h2>
-                                <p className="hover:text-blue-600 hover:font-medium inline" onClick={()=>{return setIsVaultBoxOpen(true)}}>Click to get started</p>
+                                <p className="hover:text-white hover:font-medium inline" onClick={()=>{return setIsVaultBoxOpen(true)}}>Click to get started</p>
                             </div>
                         </div>
                     </div>
@@ -120,11 +147,18 @@ const MainPage = () => {
                         <div>
                             
                             {credFields.map((cred)=>{
-                                if(isLimitExceed){
-                                    return null
-                                }
                                 return (
-                                    <input key={cred.id} type={showPassword ? "text" : "password"} id="credential" className=" focus:outline-0 fo bg-[#1a1919] px-0.5 py-1 w-full mb-1"/>
+                                    <div key={cred.id} className="flex items-center">
+                                        <input type={showPassword ? "text" : "password"} value={cred.Value} onChange={(e) => handleInput(cred.id, e.target.value)} name="credential" className="credential focus:outline-0 fo bg-[#1a1919] px-0.5 py-1 w-full mb-1"/>
+                                        <select name="algoName" value={cred.Algorithm} onChange={(e) => handleAlgoChange(cred.id, e.target.value)} id="algoName" className="focus:outline-0 bg-[#151515] px-0.5 py-1">
+                                            <option className="flex items-center justify-between px-1 py-1.5">
+                                                SHA256
+                                            </option>
+                                            <option className="flex items-center justify-between px-1 py-1.5">
+                                                BCrypt
+                                            </option>
+                                        </select>
+                                    </div>
                                 )
                             })}
                             <button type="button" className={`border-b-[1px] border-white bg-[#151515] hover:bg-[#1a1919] px-0.5 py-1 w-full  ${isLimitExceed ? "invisible" : "block"}`} onClick={addCred}>+</button>
@@ -137,7 +171,7 @@ const MainPage = () => {
 
                     </div>
                     
-                    <div className="algoName flex flex-col gap-y-1.5">
+                    {/* <div className="algoName flex flex-col gap-y-1.5">
                         <label htmlFor="algoName">Encryption algorithm:</label>
                         <select name="algoName" id="algoName" className="border-b-[0.02px] border-white focus:outline-0 bg-[#151515] px-0.5 py-1">
                             <option className="flex items-center justify-between px-1 py-1.5">
@@ -147,10 +181,10 @@ const MainPage = () => {
                                 BCrypt
                             </option>
                         </select>
-                    </div>
+                    </div> */}
 
                     <div className="buttons flex items-center gap-x-2 flex-wrap">
-                        <button type="submit" className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Submit</button>
+                        <button type="submit" onClick={createVault} className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Submit</button>
                         <button type="reset" className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Reset</button>
                     </div>
                     
