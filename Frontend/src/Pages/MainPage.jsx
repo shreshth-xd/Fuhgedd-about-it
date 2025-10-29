@@ -11,13 +11,14 @@ const MainPage = () => {
     const [status, setStatus] = useState(""); // To track the status of the fetch
     const [isVaultBoxOpen, setIsVaultBoxOpen] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-
+    const [vaultName, setVaultName] = useState("")
     // For generating keys for each credential input field:
-    // const [algo, setAlgo] = useState("SHA256");
+    
     const [credId, setCredId] = useState(1);
     const [credFields, setCredFields] = useState([
-        {id: credId, Value: "", Algorithm: ""}
+        {id: credId, Value: "", Algorithm: "SHA256"}
     ]);
+
     const isLimitExceed = credFields.length>=5;
 
     const addCred = () => {
@@ -25,7 +26,7 @@ const MainPage = () => {
                 const newId = previousId+1;
                 setCredFields(currFields =>{
                     if(isLimitExceed===true) return currFields;
-                    return [...currFields, {id: newId, Value: "", Algorithm: ""}]
+                    return [...currFields, {id: newId, Value: "", Algorithm: "SHA256"}]
                 });
 
                 return newId;
@@ -51,6 +52,7 @@ const MainPage = () => {
     
     const createVault = (e) =>{
         e.preventDefault();
+        console.log(credFields)
         console.log("Sending vault creation request and credential data to server...")
     }
 
@@ -139,7 +141,7 @@ const MainPage = () => {
                 <form onSubmit={createVault} className="w-full flex flex-col gap-y-8">
                     <div className="name flex flex-col gap-y-1.5">
                         <label htmlFor="name">Name:</label>
-                        <input type="text" id="purpose" className="border-b-[1px] border-white focus:outline-[0.2px] bg-[#151515] px-0.5 py-1"/>
+                        <input type="text" id="purpose" value={vaultName} onChange={(e)=>setVaultName(e.target.value)} className="border-b-[1px] border-white focus:outline-[0.2px] bg-[#151515] px-0.5 py-1"/>
                     </div>
 
                     <div className="Credentials flex flex-col gap-y-1.5">
