@@ -50,10 +50,18 @@ const MainPage = () => {
         )
     }
     
-    const createVault = (e) =>{
+    const createVault = async (e) =>{
         e.preventDefault();
         console.log(credFields)
         console.log("Sending vault creation request and credential data to server...")
+        
+        const dataPayload = {vaultName, credFields}
+        const res = await fetch("/vault/createVault", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dataPayload),
+            credentials: "include"
+        });
     }
 
     useEffect(() => {
