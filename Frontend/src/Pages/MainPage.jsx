@@ -19,7 +19,7 @@ const MainPage = () => {
     
     // The array of objects to hold the actual credential data:
     const [credFields, setCredFields] = useState([
-        {id: credId, Value: "", Algorithm: "SHA256"}
+        {id: credId, Name: "", Value: "", Algorithm: "SHA256"}
     ]);
 
     const [isVaultCreationErrorBoxOpen, setIsVaultCreationErrorBoxOpen] = useState(false);
@@ -32,13 +32,21 @@ const MainPage = () => {
                 const newId = previousId+1;
                 setCredFields(currFields =>{
                     if(isLimitExceed===true) return currFields;
-                    return [...currFields, {id: newId, Value: "", Algorithm: "SHA256"}]
+                    return [...currFields, {id: newId, Name:"", Value: "", Algorithm: "SHA256"}]
                 });
 
                 return newId;
             }
         )
     };
+
+    const handleCredName = (id, value) =>{
+        setCredFields(prev=> 
+            prev.map(field =>
+                field.id === id ? {...field, Name: value} : field
+            )
+        )
+    }
 
     const handleInput = (id, value) =>{
         setCredFields(prev=> 
@@ -197,6 +205,7 @@ const MainPage = () => {
                             {credFields.map((cred)=>{
                                 return (
                                     <div key={cred.id} className="flex items-center">
+                                        <input type="text" value={cred.Name} onChange={(e) => handleCredName(cred.id, e.target.value)} className="credential focus:outline-0 fo bg-[#1a1919] px-0.5 py-1 w-full mb-1"/>
                                         <input type={showPassword ? "text" : "password"} value={cred.Value} onChange={(e) => handleInput(cred.id, e.target.value)} name="credential" className="credential focus:outline-0 fo bg-[#1a1919] px-0.5 py-1 w-full mb-1"/>
                                         <select name="algoName" value={cred.Algorithm} onChange={(e) => handleAlgoChange(cred.id, e.target.value)} id="algoName" className="focus:outline-0 bg-[#151515] px-0.5 py-1">
                                             <option className="flex items-center justify-between px-1 py-1.5">
