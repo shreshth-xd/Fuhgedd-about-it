@@ -2,6 +2,8 @@ import React from "react";
 import "../../../public/css/output.css";
 import "../index.css";
 
+
+
 const Navbar = () => {
     return (
         <div className="sm:flex justify-center p-0 m-0 w-[100%] max-w-[100%]">
@@ -50,6 +52,7 @@ const Navbar = () => {
                     <a href="/sign-up"
                         className="text-black decoration-[none]">
                         <button className="navigation-button px-[36px] py-[13px] border-[#000000] rounded-[36px] text-[20px]">
+
                             Sign Up
                         </button>
                     </a>
