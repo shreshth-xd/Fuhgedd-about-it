@@ -5,19 +5,25 @@ import AppNavBar from "../Components/AppNavbar";
 import DialogBox from "../Components/DialogBox";
 import { v4 as uuidv4 } from "uuid";
 // import {Key} from "lucide-react"
+import ErrorBox from "../Components/PopUp";
 
 const MainPage = () => {
     const [vaultBoxes, setVaultBoxes] = useState([]);
     const [status, setStatus] = useState(""); // To track the status of the fetch
     const [isVaultBoxOpen, setIsVaultBoxOpen] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    
     const [vaultName, setVaultName] = useState("")
     // For generating keys for each credential input field:
-    
     const [credId, setCredId] = useState(1);
+    
+    // The array of objects to hold the actual credential data:
     const [credFields, setCredFields] = useState([
         {id: credId, Value: "", Algorithm: "SHA256"}
     ]);
+
+    const [isVaultCreationErrorBoxOpen, setIsVaultCreationErrorBoxOpen] = useState(false);
+    const [vaultCreationStatus, setVaultCreationStatus] = useState();
 
     const isLimitExceed = credFields.length>=5;
 
@@ -49,19 +55,40 @@ const MainPage = () => {
             )
         )
     }
-    
+
+    const addVault = async () =>{
+        //Just to make sure that I remove the already present dialog box from the page and replace it with actual vaults 
+    }
+
+    // To create a vault and register it to the DB
     const createVault = async (e) =>{
         e.preventDefault();
         console.log(credFields)
         console.log("Sending vault creation request and credential data to server...")
         
         const dataPayload = {vaultName, credFields}
-        const res = await fetch("/vault/createVault", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dataPayload),
-            credentials: "include"
-        });
+        
+        try {
+            const res = await fetch("/vault/createVault", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dataPayload),
+                credentials: "include"
+            });
+
+            if(res.ok){
+                setStatus("")
+                addVault();
+                setIsVaultBoxOpen(false)
+            }else{
+                const creationStatus = await res.json();
+                setVaultCreationStatus(creationStatus.msg);
+                setIsVaultCreationErrorBoxOpen(true);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 
     useEffect(() => {
@@ -138,6 +165,10 @@ const MainPage = () => {
                                     </div>
                                 </div>
                 )}
+
+                {status === "" && (
+                    <div className="hidden"></div>
+                )}
             </div>
         
             <DialogBox
@@ -198,6 +229,15 @@ const MainPage = () => {
                         <button type="reset" className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Reset</button>
                     </div>
                     
+                    <ErrorBox
+                        isOpen={isVaultCreationErrorBoxOpen}
+                        onClose={()=> 
+                            setIsVaultCreationErrorBoxOpen(false)
+                        }>
+                            
+                        <p>{vaultCreationStatus}</p>
+
+                    </ErrorBox>
                 </form>
             </DialogBox>
         
