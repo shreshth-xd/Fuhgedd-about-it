@@ -56,9 +56,9 @@ const MainPage = () => {
         )
     }
 
-    const addVault = async () =>{
-        //Just to make sure that I remove the already present dialog box from the page and replace it with actual vaults 
-    }
+    // const addVault = async () =>{
+    //     //Just to make sure that I remove the already present dialog box from the page and replace it with actual vaults 
+    // }
 
     // To create a vault and register it to the DB
     const createVault = async (e) =>{
@@ -75,14 +75,24 @@ const MainPage = () => {
                 body: JSON.stringify(dataPayload),
                 credentials: "include"
             });
+            const data = await res.json();
 
             if(res.ok){
-                setStatus("")
-                addVault();
+                // Gonna update the vaultBoxes state as soon as we receive the vaults on the assurance of our request:
+
+                setVaultBoxes(currVaultsOnPage => {
+                
+                    // The data has to be in such a way that I can use it to make the vault component
+                    // Since the Express API is just about to be made to send the vault data, we are just assuming 
+                    // that data.vaults just safely returns us with all the necessary requirements we need to make that component
+                    return [...currVaultsOnPage, [data.vaults]]
+                })
+            
+                setStatus("success");
                 setIsVaultBoxOpen(false)
             }else{
-                const creationStatus = await res.json();
-                setVaultCreationStatus(creationStatus.msg);
+                const creationStatus = data.msg;
+                setVaultCreationStatus(creationStatus);
                 setIsVaultCreationErrorBoxOpen(true);
             }
         } catch (error) {
@@ -116,7 +126,7 @@ const MainPage = () => {
 
     return (
         <>
-        <div className="ParentFlexBox bg-[#232323] w-full h-screen flex flex-col">
+        <div className="ParentFlexBox bg-[#232323] w-full h-screen flex flex-col gap-y-5">
             <AppNavBar/>
 
             <div className="main-page w-full h-full">
@@ -166,9 +176,6 @@ const MainPage = () => {
                                 </div>
                 )}
 
-                {status === "" && (
-                    <div className="hidden"></div>
-                )}
             </div>
         
             <DialogBox
