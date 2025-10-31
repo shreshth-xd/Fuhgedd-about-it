@@ -443,10 +443,6 @@
     border-style: var(--tw-border-style);
     border-width: 2px;
   }
-  .border-\[1px\] {
-    border-style: var(--tw-border-style);
-    border-width: 1px;
-  }
   .border-b-\[0\.02px\] {
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 0.02px;
