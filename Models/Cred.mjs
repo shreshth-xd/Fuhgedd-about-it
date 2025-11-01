@@ -4,8 +4,8 @@ const credSchema = new Schema({
     _id:{
         type: Schema.Types.ObjectId,
         default: () => new mongoose.Types.ObjectId
-    }
-    ,user:{
+    },
+    user:{
         type: Schema.Types.ObjectId,
         ref: "user"
     },
