@@ -18,7 +18,8 @@ const credSchema = new Schema({
         required: true
     },
     algo:{
-        type: String
+        type: String,
+        required: true
     },
     vault:{
         type: Schema.Types.ObjectId,
