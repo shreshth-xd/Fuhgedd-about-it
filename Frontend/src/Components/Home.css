@@ -19,7 +19,11 @@
     display: none;
 }
 
+
 @media only screen and (max-width:430px){
+    .AppNavBar{
+        padding: 6px 24px;
+    }
     .icon{
         display: inline-block;
     }

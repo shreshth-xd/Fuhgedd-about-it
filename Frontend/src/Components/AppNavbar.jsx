@@ -10,7 +10,7 @@ const AppNavBar = () =>{
     const currLocation = window.location.href;
 
     return(
-        <div className="navBar jersey-25 bg-[#161614] mt-2 mx-auto w-11/12 px-12 py-3 flex items-center justify-between rounded-3xl text-white">
+        <div className="AppNavBar jersey-25 bg-[#161614] mt-2 mx-auto w-11/12 px-12 py-3 flex items-center justify-between rounded-3xl text-white">
             <div className="VaultsAndSettings h-full flex items-center gap-x-2">
                 <button className={`lg:px-7 lg:py-3.5 px-4 py-2  rounded-2xl navbar-vault-btn border-2 hover:border-white
                 
