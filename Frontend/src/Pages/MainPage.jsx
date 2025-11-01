@@ -162,7 +162,7 @@ const MainPage = () => {
                                 </svg>
                             </div>
                             <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 bg-linear-90 from-[#1a4bbf] to-[#020887_97.12%]">
-                                <h2 className="jersey-25">No vaults to be found here</h2>
+                                <h2 className="jersey-25 text-gray-950">No vaults to be found here</h2>
                                 <p className="hover:text-white text-white md:text-black hover:font-medium inline" onClick={()=>{return setIsVaultBoxOpen(true)}}>Click to get started</p>
                             </div>
                         </div>
