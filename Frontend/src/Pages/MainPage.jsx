@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from "uuid";
 // import {Key} from "lucide-react"
 import ErrorBox from "../Components/PopUp";
 
+// Delete icon
+import { MdDelete } from "react-icons/md";
 
 
 const MainPage = () => {
@@ -42,6 +44,12 @@ const MainPage = () => {
         )
     };
 
+    const removeCred = (id) =>{
+        setCredFields(curr=>
+            curr.filter(field => field.id!==id)
+        )
+    }
+
     const handleCredName = (id, value) =>{
         setCredFields(prev=> 
             prev.map(field =>
@@ -76,7 +84,7 @@ const MainPage = () => {
         console.log(credFields)
         console.log("Sending vault creation request and credential data to server...")
         
-        const dataPayload = {vaultName, credFields}
+        const dataPayload = {"vault":vaultName, "creds":credFields}
         
         try {
             const res = await fetch("/vault/createVault", {
@@ -136,7 +144,7 @@ const MainPage = () => {
 
     return (
         <>
-        <div className="ParentFlexBox bg-[#232323] w-full h-screen flex flex-col gap-y-5">
+        <div className="ParentFlexBox bg-[#232323] w-full h-screen flex flex-col gap-y-5 relative">
             <AppNavBar/>
 
             <div className="main-page max-w-full h-full ">
@@ -197,7 +205,7 @@ const MainPage = () => {
                 <form onSubmit={createVault} className="w-full flex flex-col gap-y-8">
                     <div className="name flex flex-col gap-y-1.5">
                         <label htmlFor="name">Name:</label>
-                        <input type="text" id="purpose" value={vaultName} onChange={(e)=>setVaultName(e.target.value)} className="border-b-[1px] border-white focus:outline-[0.2px] bg-[#151515] px-0.5 py-1"/>
+                        <input type="text" id="purpose" placeholder="ex.- Passwords, Seed phrases, Private keys, etc." value={vaultName} onChange={(e)=>setVaultName(e.target.value)} className="border-b-[1px] border-white focus:outline-[0.2px] bg-[#151515] px-0.5 py-1"/>
                     </div>
 
                     <div className="Credentials flex flex-col gap-y-1">
@@ -206,21 +214,30 @@ const MainPage = () => {
                             
                             {credFields.map((cred)=>{
                                 return (
-                                    <div key={cred.id} className="flex items-center mb-1.5 gap-x-1">
-                                        <input type="text" placeholder="Name" value={cred.Name} onChange={(e) => handleCredName(cred.id, e.target.value)} className="credential focus:outline-0 fo bg-[#1a1919] px-0.5 py-1 w-full mb-1 text-gray-200 flex-1/3"/>
-                                        <input type={showPassword ? "text" : "password"} placeholder="Credential's value" value={cred.Value} onChange={(e) => handleInput(cred.id, e.target.value)} name="credential" className="credential focus:outline-0 fo bg-[#1a1919] px-0.5 py-1 w-full mb-1 grow text-gray-500"/>
-                                        <select name="algoName" value={cred.Algorithm} onChange={(e) => handleAlgoChange(cred.id, e.target.value)} id="algoName" className="focus:outline-0 bg-[#151515] px-0.5 py-1 flex-1/6 text-gray-400 mb-1">
-                                            <option className="flex items-center justify-between px-1 py-1.5">
-                                                SHA256
-                                            </option>
-                                            <option className="flex items-center justify-between px-1 py-1.5">
-                                                BCrypt
-                                            </option>
-                                        </select>
+                                    <div key={cred.id} className="flex-col items-center mb-2.5 gap-y-0.5">
+                                        
+                                        <div className="CredNameAndDeleteBtn flex items-center gap-x-1">
+                                            <input type="text" placeholder="Name" value={cred.Name} onChange={(e) => handleCredName(cred.id, e.target.value)} className="credential focus:outline-0 fo bg-[#1a1919] px-0.5 py-1 w-full mb-1 text-gray-200 grow"/>
+                                            <button onClick={()=>removeCred(cred.id)} className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] flex-1/6 mb-1"><MdDelete/></button>
+                                        </div>
+
+                                        <div className="DataFields flex items-center gap-x-1">
+                                            <input type={showPassword ? "text" : "password"} placeholder="Credential's value" value={cred.Value} onChange={(e) => handleInput(cred.id, e.target.value)} name="credential" className="credential focus:outline-0 fo bg-[#1a1919] px-0.5 py-1 w-full mb-1 grow text-gray-500"/>
+                                            <select name="algoName" value={cred.Algorithm} onChange={(e) => handleAlgoChange(cred.id, e.target.value)} id="algoName" className="focus:outline-0 bg-[#151515] px-0.5 py-1 flex-1/6 text-gray-400 mb-1">
+                                                <option className="flex items-center justify-between px-1 py-1.5">
+                                                    SHA256
+                                                </option>
+                                                <option className="flex items-center justify-between px-1 py-1.5">
+                                                    BCrypt
+                                                </option>
+                                            </select>
+                                        </div>
+
                                     </div>
                                 )
                             })}
                             <button type="button" className={`border-b-[1px] border-white bg-[#151515] hover:bg-[#1a1919] px-0.5 py-1 w-full  ${isLimitExceed ? "invisible" : "block"}`} onClick={addCred}>+</button>
+
                         </div>
                         <span className="text-blue-500 text-[15px]" onClick={()=>{
                             return setShowPassword(showPassword => !showPassword)
@@ -236,17 +253,17 @@ const MainPage = () => {
                         <button type="reset" className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Reset</button>
                     </div>
                     
-                    <ErrorBox
-                        isOpen={isVaultCreationErrorBoxOpen}
-                        onClose={()=> 
-                            setIsVaultCreationErrorBoxOpen(false)
-                        }>
-                            
-                        <p>{vaultCreationStatus}</p>
-
-                    </ErrorBox>
                 </form>
+
             </DialogBox>
+
+                <ErrorBox
+                    isOpen={isVaultCreationErrorBoxOpen}
+                    onClose={()=> 
+                        setIsVaultCreationErrorBoxOpen(false)
+                }>               
+                    <p>{vaultCreationStatus}</p>
+                </ErrorBox>
         
         </div>
 
