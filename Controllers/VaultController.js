@@ -31,6 +31,10 @@ async function GetVaults(req, res){
 // Devise a way to write a controller to create a vault in such a way that it returns all the vaults created by that specified user only:
 async function CreateVault(req, res){
     const token = req.cookies?.JWT_token;
+    const {vault, creds} = req.body;
+    console.log(vault)
+    console.log(creds)
+    
     res.status(401).json({msg: "Couldn't process your request at this moment"})
 }
 
