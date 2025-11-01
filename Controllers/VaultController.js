@@ -3,6 +3,7 @@ const {Vault} = require("../Models/Vault.mjs")
 const {User} = require("../Models/User.mjs")
 const jwt = require("jsonwebtoken")
 const {getUser} = require("../Services/JWTAuth")
+const crypto = require("crypto");
 
 
 // Write a controller to see if user has even created any vault by so far or not
