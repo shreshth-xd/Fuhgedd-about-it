@@ -23,7 +23,8 @@ const credSchema = new Schema({
     },
     vault:{
         type: Schema.Types.ObjectId,
-        ref: "vault"
+        ref: "vault",
+        required: true
     }
 })
 

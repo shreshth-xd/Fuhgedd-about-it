@@ -5,6 +5,10 @@ const vaultSchema = new Schema({
         type: Schema.Types.ObjectId,
         default: () => new mongoose.Types.ObjectId
     },
+    name:{
+        type: String,
+        required: true
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: "user"

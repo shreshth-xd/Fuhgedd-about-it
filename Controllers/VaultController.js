@@ -1,6 +1,7 @@
 const path = require("node:path");
 const {Vault} = require("../Models/Vault.mjs")
 const {User} = require("../Models/User.mjs")
+const {cred} = require("../Models/Cred.mjs")
 const jwt = require("jsonwebtoken")
 const {getUser} = require("../Services/JWTAuth")
 const crypto = require("crypto");
@@ -32,10 +33,33 @@ async function GetVaults(req, res){
 async function CreateVault(req, res){
     const token = req.cookies?.JWT_token;
     const {vault, creds} = req.body;
-    console.log(vault)
-    console.log(creds)
+    const decoded = getUser(token)
     
-    res.status(401).json({msg: "Couldn't process your request at this moment"})
+    try{
+        const NewVault = new Vault({name: vault, user: decoded.id})
+        await NewVault.save()        
+        
+        const NewCreds = await Promise.all(
+            creds.map(async (credential)=>{
+                return await cred.create({
+                    purpose: credential.Name,
+                    cred: credential.Value,
+                    algo: credential.Algorithm,
+                    vault: NewVault._id
+                })
+            })
+        )
+
+        NewVault.creds = NewCreds.map((credential) => credential._id);
+        await NewVault.save()
+        
+        await User.findByIdAndUpdate(decoded.id, {
+            $push: {vaults: NewVault._id}
+        })
+
+    }catch(error){
+        res.status(401).json({msg: error})
+    }
 }
 
 
