@@ -12,24 +12,33 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdDeleteSweep } from "react-icons/md";
 
 const MainPage = () => {
-    const [vaultBoxes, setVaultBoxes] = useState([]);
-    const [status, setStatus] = useState(""); // To track the status of the fetch
-    const [isVaultBoxOpen, setIsVaultBoxOpen] = useState(false);
+    
+    const [vaultBoxes, setVaultBoxes] = useState([]); //Array of vault objects
+    const [status, setStatus] = useState(""); // To track the status of fetching of the vaults
+    const [isVaultBoxOpen, setIsVaultBoxOpen] = useState(false); //To toggle the vault creation window
     const [showPassword, setShowPassword] = useState(false);
     
     const [vaultName, setVaultName] = useState("")
+    
+    
     // For generating keys for each credential input field:
     const [credId, setCredId] = useState(1);
+
     
     // The array of objects to hold the actual credential data:
     const [credFields, setCredFields] = useState([
         {id: credId, Name: "", Value: "", Algorithm: "SHA256"}
     ]);
 
+    // To display the error received by the vault creation Fetch API
     const [isVaultCreationErrorBoxOpen, setIsVaultCreationErrorBoxOpen] = useState(false);
     const [vaultCreationStatus, setVaultCreationStatus] = useState();
 
+
+    // Constants to check if the user has only the permitted number of creds or vaults
     const isLimitExceed = credFields.length>=5;
+    const isVaultLimitExceed = vaultBoxes.length>=6;
+
 
     const addCred = () => {
         setCredId(previousId =>{
@@ -50,6 +59,21 @@ const MainPage = () => {
         )
     }
 
+    const deleteVault = async () =>{
+        const req = await fetch("/vault/DeleteVault", {
+            method: "DELETE"
+        })
+        const res = await req.json();
+    }
+
+    const removeVault = (vaultId) =>{
+        setVaultBoxes(currVaults => 
+            currVaults.filter(vault => vault._id!==vaultId)
+        )
+    }
+
+
+    // To handle the value change in cred name and algo dropdown input fields:
     const handleCredName = (id, value) =>{
         setCredFields(prev=> 
             prev.map(field =>
@@ -74,9 +98,7 @@ const MainPage = () => {
         )
     }
 
-    // const addVault = async () =>{
-    //     //Just to make sure that I remove the already present dialog box from the page and replace it with actual vaults 
-    // }
+
 
     // To create a vault and register it to the DB
     const createVault = async (e) =>{
@@ -119,6 +141,8 @@ const MainPage = () => {
         
     }
 
+    
+
 
 
     useEffect(() => {
@@ -150,23 +174,23 @@ const MainPage = () => {
             <AppNavBar/>
 
             <div className="main-page w-full h-full">
-                <div className="vaults border-2 border-white lg:w-6xl xl:w-7xl mx-auto p-6 h-full overflow-hidden rounded-4xl bg-linear-180 from-[#161616] to-[#313131]">
+                <div className="vaults border-2 border-white max-w-6xl mx-auto p-6 h-full overflow-hidden rounded-4xl bg-linear-180 from-[#161616] to-[#313131]">
                     {status === "success" && (
                         <div className="flex flex-col gap-y-2.5">
                             {vaultBoxes.map((vault) => (    
                                     <div key={vault._id} className="vault-box h-auto w-full bg-[#2c2c2c] px-3 py-2 rounded-[6px]">
                                         <div className="dialog w-full flex justify-between items-center text-gray-200">
-                                            <h2 className="" onClick={()=>{window.location.href = "/Vault"}}>{vault.name}</h2>
+                                            <h2 onClick={()=>{window.location.href = "/Vault"}}>{vault.name}</h2>
                                             <div className="flex gap-x-1.5">
-                                                <button onClick={()=>removeCred(cred.id)} className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] mb-1"><MdDelete/></button>
+                                                <button onClick={()=>removeVault(vault._id)} className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] mb-1"><MdDelete/></button>
                                                 <button className="CredSettingsBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-black bg-white text-black hover:font-semibold rounded-[4px] mb-1"><IoSettingsOutline/></button>
                                             </div>
                                         </div>
                                     </div>
                             ))}
                             <div className="AddIcon h-auto p-2 flex w-full justify-center items-center gap-x-1.5 text-white">
-                                <button className="text-center rounded-[4px] bg-[#282828] grow shrink h-[35px]" onClick={()=>setIsVaultBoxOpen(true)}>Add vault</button>
-                                <button onClick={()=>setVaultBoxes((currVaults)=> [])} className="DeleteAllBtn p-2 flex items-center justify-center grow shrink form-btn xl:h-[35px] bg-red-500 hover:font-semibold rounded-[4px]"><MdDeleteSweep/></button>
+                                <button className={`text-center rounded-[4px] px-1 py-3 ${isVaultLimitExceed ? "invisible" : "block"} bg-[#282828] grow shrink h-[35px] flex items-center justify-center`} onClick={()=>setIsVaultBoxOpen(true)}>Add vault</button>
+                                <button onClick={()=>setVaultBoxes((currVaults)=> [])} className="DeleteAllBtn px-1 py-3 flex items-center justify-center grow shrink form-btn xl:h-[35px] bg-red-500 hover:font-semibold rounded-[4px]"><MdDeleteSweep/></button>
                             </div>
                         </div>
                     )}
