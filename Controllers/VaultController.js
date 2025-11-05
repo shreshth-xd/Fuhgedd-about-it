@@ -57,6 +57,8 @@ async function CreateVault(req, res){
             $push: {vaults: NewVault._id}
         })
 
+        res.status(200).json({"Status":"The vault was created successfully", vault: NewVault})
+
     }catch(error){
         res.status(401).json({msg: error})
     }
