@@ -9,15 +9,22 @@
 
 /* border-radius: 16px; */
 
-.dialog{
-    /* background: linear-gradient(90deg, #F4FFAA 37.44%, #f6ff00 97.12%); */
-    /* bg-linear-90 from-[#1a4bbf] to-[#020887] */
+/* .dialog{
+    background: linear-gradient(90deg, #F4FFAA 37.44%, #f6ff00 97.12%);
+    bg-linear-90 from-[#1a4bbf] to-[#020887]
     background: linear-gradient(90deg, #1a4bbf, #020887);
-}
+} */
 
 .icon{
     display: none;
 }
+
+/* Rectangle 87 */
+
+
+/* background: linear-gradient(180deg, #2F2F2F 0%, #959595 100%); */
+/* border: 2px solid #FFFFFF; */
+/* border-radius: 34px; */
 
 
 @media only screen and (max-width:430px){
