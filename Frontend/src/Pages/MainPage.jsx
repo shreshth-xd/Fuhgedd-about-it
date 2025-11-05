@@ -156,7 +156,7 @@ const MainPage = () => {
                             {vaultBoxes.map((vault) => (    
                                     <div key={vault._id} className="vault-box h-auto w-full bg-[#2c2c2c] px-3 py-2 rounded-[6px]">
                                         <div className="dialog w-full flex justify-between items-center text-gray-200">
-                                            <h2 className="" onClick={()=>{window.location.href = "/vault"}}>{vault.name}</h2>
+                                            <h2 className="" onClick={()=>{window.location.href = "/Vault"}}>{vault.name}</h2>
                                             <div className="flex gap-x-1.5">
                                                 <button onClick={()=>removeCred(cred.id)} className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] mb-1"><MdDelete/></button>
                                                 <button className="CredSettingsBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-black bg-white text-black hover:font-semibold rounded-[4px] mb-1"><IoSettingsOutline/></button>
