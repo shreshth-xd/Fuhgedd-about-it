@@ -66,6 +66,7 @@ async function CreateVault(req, res){
 
 // To encrypt the retrieved credentials through the algorithm chosen by user:
 async function EncryptCreds(req, res){
+    let creds = req.body;
     res.status(501).json({"Status":"Encryption API yet to be developed"})
 }
 
@@ -77,4 +78,4 @@ async function DeleteVault(req, res){
 
 
 
-module.exports = {GetVaults, CreateVault}
+module.exports = {GetVaults, CreateVault, EncryptCreds, DeleteVault}
