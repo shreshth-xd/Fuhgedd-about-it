@@ -6,7 +6,7 @@ const {GetVaults, CreateVault, EncryptCreds, DeleteVault} = require("../Controll
 router.get("/getVaults", GetVaults);
 router.post("/createVault", CreateVault);
 router.post("/encryptCreds", EncryptCreds);
-router.delete("/deleteVault", DeleteVault);
+router.delete("/deleteVault/:id", DeleteVault);
 
 
 module.exports = router;
