@@ -32,7 +32,7 @@ async function GetVaults(req, res){
 // Devise a way to write a controller to create a vault in such a way that it returns all the vaults created by that specified user only:
 async function CreateVault(req, res){
     const token = req.cookies?.JWT_token;
-    const {VaultId,vault, creds} = req.body;
+    const {VaultId, vault, creds} = req.body;
     const decoded = getUser(token)
     
     try{
@@ -73,8 +73,16 @@ async function EncryptCreds(req, res){
 
 // To delete the specified vaults from the database:
 async function DeleteVault(req, res){
-    
-    res.status(501).json({"Status":"API to delete the specified vaults from database are yet to come"})
+    try{
+        const VaultId = req.params.id;
+        await cred.deleteMany({ vaultId: VaultId });
+        await Vault.findByIdAndDelete(VaultId);
+        
+        res.status(200).json({"Status":"Vault deleted successfully"})
+    }catch(error){
+        res.status(401).json({"Status":"Something went wrong"})
+    }
+
 }
 
 
