@@ -5,7 +5,7 @@ const {GetVaults, CreateVault, EncryptCreds, DeleteVault} = require("../Controll
 
 router.get("/getVaults", GetVaults);
 router.post("/createVault", CreateVault);
-router.get("/encryptCreds", EncryptCreds);
+router.post("/encryptCreds", EncryptCreds);
 router.delete("/deleteVault", DeleteVault);
 
 
