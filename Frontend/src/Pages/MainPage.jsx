@@ -30,6 +30,7 @@ const MainPage = () => {
         {id: credId, Name: "", Value: "", Algorithm: "SHA256"}
     ]);
 
+
     // To display the error received by the vault creation Fetch API
     const [isVaultCreationErrorBoxOpen, setIsVaultCreationErrorBoxOpen] = useState(false);
     const [vaultCreationStatus, setVaultCreationStatus] = useState();
@@ -60,7 +61,7 @@ const MainPage = () => {
     }
 
     const deleteVault = async () =>{
-        const req = await fetch("/vault/DeleteVault", {
+        const req = await fetch("/vault/deleteVault", {
             method: "DELETE"
         })
         const res = await req.json();
@@ -106,7 +107,21 @@ const MainPage = () => {
         console.log(credFields)
         console.log("Sending vault creation request and credential data to server...")
         
-        const dataPayload = {"vault":vaultName, "creds":credFields}
+
+        // Making a request to encrypt the credential's values before inserting them into a newly created vault
+        try{
+            const encryptionRequest = await fetch("/vault/encryptCreds", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                credentials: "include"
+            });
+            const data = await encryptionRequest.json();
+        }catch(error){
+            console.log(error)
+        }
+
+        const VaultId = uuidv4();
+        const dataPayload = {"VaultId":VaultId,"vault":vaultName, "creds":credFields}
         
         try {
             const res = await fetch("/vault/createVault", {
@@ -121,10 +136,7 @@ const MainPage = () => {
                 // Gonna update the vaultBoxes state as soon as we receive the vaults on the assurance of our request:
                 setStatus("")
                 setVaultBoxes(currVaultsOnPage => {
-                
-                    // The data has to be in such a way that I can use it to make the vault component
-                    // Since the Express API is just about to be made to send the vault data, we are just assuming 
-                    // that data.vaults just safely returns us with all the necessary requirements we need to make that component
+                    
                     return [...currVaultsOnPage, {vault: data.vault}]
                 })
             
@@ -306,6 +318,8 @@ const MainPage = () => {
         
         </>
     );
+    console.log(credFields)
 };
+
 
 export default MainPage;
