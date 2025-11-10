@@ -8,7 +8,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/user": "http://localhost:3000",
-      "/vault": "http://localhost:3000"
+      "/vault": "http://localhost:3000",
+      "/cred": "http://localhost:3000"
     },
   },
 })
