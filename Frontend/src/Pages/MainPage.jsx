@@ -10,7 +10,6 @@ import ErrorBox from "../Components/PopUp";
 import { MdDelete } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdDeleteSweep } from "react-icons/md";
-import { DeleteVault } from "../../../Controllers/VaultController";
 
 const MainPage = () => {
     
@@ -55,6 +54,8 @@ const MainPage = () => {
         )
     };
 
+    // Keeping only the remvove cred function over here, because user doesn't gets to actually "delete" a cred
+    // until he actuall opens that respective vault
     const removeCred = (id) =>{
         setCredFields(curr=>
             curr.filter(field => field.id!==id)
@@ -68,7 +69,7 @@ const MainPage = () => {
                 credentials: "include"
             })
             const res = await req.json();
-            if(res.ok){
+            if(req.ok){
                 setVaultBoxes(currVaults => 
                     currVaults.filter(vault => vault._id!==vault_id)
                 )
@@ -119,9 +120,10 @@ const MainPage = () => {
 
         // Making a request to encrypt the credential's values before inserting them into a newly created vault
         try{
-            const encryptionRequest = await fetch("/vault/encryptCreds", {
+            const encryptionRequest = await fetch("/cred/encryptCreds", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(credFields),
                 credentials: "include"
             });
             const data = await encryptionRequest.json();
@@ -203,7 +205,7 @@ const MainPage = () => {
                                         <div className="dialog w-full flex justify-between items-center text-gray-200">
                                             <h2 onClick={()=>{window.location.href = "/Vault"}}>{vault.name}</h2>
                                             <div className="flex gap-x-1.5">
-                                                <button onClick={()=>DeleteVault(vault._id)} className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] mb-1"><MdDelete/></button>
+                                                <button onClick={()=>deleteVault(vault._id)} className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] mb-1"><MdDelete/></button>
                                                 <button className="CredSettingsBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-black bg-white text-black hover:font-semibold rounded-[4px] mb-1"><IoSettingsOutline/></button>
                                             </div>
                                         </div>
