@@ -14,6 +14,7 @@ const {User} = require("./Models/User.mjs");
 const vault = require("./Models/Vault.mjs");
 const cred = require("./Models/Cred.mjs");
 
+
 // Connecting to VaultDB
 async function connectDB(){
     try{
@@ -33,18 +34,18 @@ const publicDir = path.join(__dirname, "Frontend/dist");
 // Routes
 const userRoute = require("./Routers/UsersRouter")
 const vaultRoute = require("./Routers/VaultRouter")
-
+const credRoute = require("./Routers/CredRouter")
 
 
 // Applying middlewares, routes and dotenv config
 app.use(cookieParser())
 app.use(express.static("public")) // Accesing Public folder
 app.use(express.json());
-app.use(cors({origin: "http://localhost:5173", credentials: true}))
-app.use("/user", userRoute)
-app.use("/vault", vaultRoute)
-app.set("views", "./Views")
-app.set("view engine", "ejs")
+app.use(cors({origin: "http://localhost:5173", credentials: true}));
+app.use("/user", userRoute);
+app.use("/vault", vaultRoute);
+app.use("/cred", credRoute);
+
 
 app.get("/", (req, res)=>{
     res.sendFile("index.html", {root: publicDir})
