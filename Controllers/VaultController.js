@@ -64,27 +64,29 @@ async function CreateVault(req, res){
     }
 }
 
-// To encrypt the retrieved credentials through the algorithm chosen by user:
-async function EncryptCreds(req, res){
-    let creds = req.body;
-    res.status(501).json({"Status":"Encryption API yet to be developed"})
-}
 
 
 // To delete the specified vaults from the database:
 async function DeleteVault(req, res){
     try{
         const VaultId = req.params.id;
-        await cred.deleteMany({ vaultId: VaultId });
+        await cred.deleteMany({ vault: VaultId });
         await Vault.findByIdAndDelete(VaultId);
         
         res.status(200).json({"Status":"Vault deleted successfully"})
     }catch(error){
         res.status(401).json({"Status":"Something went wrong"})
     }
+}
 
+async function DeleteAllVaults(req, res){
+    try{
+        const Vaults = req.vaults;
+        res.status(501).json({"Status":"API is not developed yet"})
+    }catch(error){
+        res.status(401).json({"Status": "Something went wrong"})
+    }
 }
 
 
-
-module.exports = {GetVaults, CreateVault, EncryptCreds, DeleteVault}
+module.exports = {GetVaults, CreateVault, DeleteVault}
