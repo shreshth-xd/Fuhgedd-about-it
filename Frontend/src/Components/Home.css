@@ -11,6 +11,18 @@
 
 /* Rectangle 69 */
 
+@media only screen and (min-width: 359px){
+    .home-page-bottom-mobile-svg{
+        display: none;
+    }
+
+}
+@media only screen and (max-width: 358px){
+    .home-page-bottom-mobile-svg{
+        display: flex;
+        
+    }
+}
 
 .SideBar{
     box-shadow: -7px 14px 7px #FBFF00;
