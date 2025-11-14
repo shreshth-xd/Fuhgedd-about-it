@@ -119,6 +119,8 @@ const MainPage = () => {
         
 
         // Making a request to encrypt the credential's values before inserting them into a newly created vault
+        
+        let data;
         try{
             const encryptionRequest = await fetch("/cred/encryptCreds", {
                 method: "POST",
@@ -126,14 +128,15 @@ const MainPage = () => {
                 body: JSON.stringify(credFields),
                 credentials: "include"
             });
-            const data = await encryptionRequest.json();
+            data = await encryptionRequest.json();
+            console.log(data)
         }catch(error){
             console.log(error)
         }
 
         const VaultId = uuidv4();
-        const dataPayload = {"VaultId":VaultId,"vault":vaultName, "creds":credFields}
-        
+        const dataPayload = {"VaultId":VaultId,"vault":vaultName, "creds":data}
+        // console.log(dataPayload)
         try {
             const res = await fetch("/vault/createVault", {
                 method: "POST",
@@ -154,7 +157,7 @@ const MainPage = () => {
                 setStatus("success");
                 setIsVaultBoxOpen(false)
             }else{
-                const creationStatus = data.msg;
+                const creationStatus = data.Status;
                 setVaultCreationStatus(creationStatus);
                 setIsVaultCreationErrorBoxOpen(true);
             }
