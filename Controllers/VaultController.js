@@ -60,7 +60,7 @@ async function CreateVault(req, res){
         res.status(200).json({"Status":"The vault was created successfully", vault: NewVault})
 
     }catch(error){
-        res.status(401).json({msg: error})
+        res.status(401).json({"Status":"Something went wrong"})
     }
 }
 
@@ -82,7 +82,12 @@ async function DeleteVault(req, res){
 async function DeleteAllVaults(req, res){
     try{
         const Vaults = req.vaults;
-        res.status(501).json({"Status":"API is not developed yet"})
+        Vaults.foreach(async (node)=>{
+            await cred.deleteMany({vault: node.VaultId});
+            await Vault.findByIdAndDelete(node.VaultId);
+
+            res.status(200).json({"Status":"Deleted all the vaults successfully"})
+        })
     }catch(error){
         res.status(401).json({"Status": "Something went wrong"})
     }
