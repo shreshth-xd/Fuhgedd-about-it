@@ -38,8 +38,6 @@ async function CreateVault(req, res){
     try{
         const NewVault = new Vault({name: vault, user: decoded.id})
         await NewVault.save()        
-        console.log("Encrypted creds:")
-        console.log(creds)
 
         const NewCreds = await Promise.all(
             creds.map(async (credential)=>{
