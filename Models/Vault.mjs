@@ -13,10 +13,10 @@ const vaultSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "user"
     },
-    creds:{
+    creds:[{
         type: Schema.Types.ObjectId,
         ref: "cred"
-    }
+    }]
 }, {timestamps: true})
 
 export const Vault = mongoose.model("vault", vaultSchema);
