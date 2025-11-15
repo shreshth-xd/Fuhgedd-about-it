@@ -139,9 +139,7 @@ const MainPage = () => {
         let EncryptedCreds = await encryptCreds(credFields);
         console.log(EncryptedCreds)
         
-
-        const VaultId = uuidv4();
-        const dataPayload = {"vault":vaultName, "creds":EncryptedCreds}
+        const dataPayload = {"vault":vaultName, "creds":EncryptedCreds.Creds}
         // console.log(dataPayload)
         try {
             const res = await fetch("/vault/createVault", {
@@ -222,7 +220,7 @@ const MainPage = () => {
                             ))}
                             <div className="AddIcon h-auto p-2 flex w-full justify-center items-center gap-x-1.5 text-white">
                                 <button className={`text-center rounded-[4px] px-1 py-3 ${isVaultLimitExceed ? "invisible" : "block"} bg-[#282828] grow shrink h-[35px] flex items-center justify-center`} onClick={()=>setIsVaultBoxOpen(true)}>Add vault</button>
-                                <button onClick={()=>setVaultBoxes((currVaults)=> [])} className="DeleteAllBtn px-1 py-3 flex items-center justify-center grow shrink form-btn xl:h-[35px] bg-red-500 hover:font-semibold rounded-[4px]"><MdDeleteSweep/></button>
+                                <button onClick={()=>setVaultBoxes((currVaults)=> [])} className="DeleteAllBtn px-1 py-3 flex items-center justify-center grow form-btn xl:h-[35px] bg-red-500 hover:font-semibold rounded-[4px]"><MdDeleteSweep/></button>
                             </div>
                         </div>
                     )}
