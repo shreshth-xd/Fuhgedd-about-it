@@ -8,6 +8,7 @@ const {cred} = require("../Models/Cred.mjs")
 // To encrypt the retrieved credentials through the algorithm chosen by user:
 async function EncryptCreds(req, res){
     let credArray = req.body;
+
     EncryptedCredentials = credArray.map(cred => {
         // Here I just have to encrypt the incoming credential with the provided algorithm:
         if(cred.Algorithm.toLowerCase()==="sha256"){
@@ -15,7 +16,7 @@ async function EncryptCreds(req, res){
         }
     })
 
-    res.status(200).json({"Creds": EncryptedCredentials})
+    return res.status(200).json({"Creds": EncryptedCredentials})
 
     // res.status(501).json({"Status":"Encryption API is yet to be developed"})
 }
