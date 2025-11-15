@@ -101,6 +101,9 @@ const MainPage = () => {
         )
     }
 
+
+
+
     const handleAlgoChange = (id, value) =>{
         setCredFields(currs =>
             currs.map(field=>
@@ -110,32 +113,35 @@ const MainPage = () => {
     }
 
 
-
-    // To create a vault and register it to the DB
-    const createVault = async (e) =>{
-        e.preventDefault();
-        console.log(credFields)
-        console.log("Sending vault creation request and credential data to server...")
-        
-
-        // Making a request to encrypt the credential's values before inserting them into a newly created vault
-        
-        let data;
+    const encryptCreds = async (creds) =>{
         try{
             const encryptionRequest = await fetch("/cred/encryptCreds", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(credFields),
+                body: JSON.stringify(creds),
                 credentials: "include"
             });
-            data = await encryptionRequest.json();
-            console.log(data)
+            return await encryptionRequest.json();
         }catch(error){
-            console.log(error)
+            return error;
         }
+    }
+
+
+
+    // To create a vault and register it to the DB
+    const createVault = async (e) =>{
+        e.preventDefault();
+        // console.log(credFields)
+        
+
+        // Making a request to encrypt the credential's values before inserting them into a newly created vault
+        let EncryptedCreds = await encryptCreds(credFields);
+        console.log(EncryptedCreds)
+        
 
         const VaultId = uuidv4();
-        const dataPayload = {"VaultId":VaultId,"vault":vaultName, "creds":data}
+        const dataPayload = {"vault":vaultName, "creds":EncryptedCreds}
         // console.log(dataPayload)
         try {
             const res = await fetch("/vault/createVault", {
@@ -230,7 +236,7 @@ const MainPage = () => {
                                             <path d="M15.4229 27V18.1577L14.6029 17.652V16.1897L17.5413 15.3833H19.8236V27H15.4229ZM17.4046 14.126L15.1633 11.871V11.3927L17.4046 9.15133H17.9239L20.2609 11.3927V11.871L17.9239 14.126H17.4046Z" fill="#0B0C00"/>
                                         </svg>
                                     </div>
-                                    <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 bg-linear-90 from-[#1a4bbf] to-[#020887_97.12%]">
+                                    <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 bg-linear-90 from-[#1a4bbf] to-[#020887]">
                                         <h2 className="jersey-25 text-gray-950">No vaults to be found here</h2>
                                         <p className="hover:text-white text-white md:text-black hover:font-medium inline" onClick={()=>{return setIsVaultBoxOpen(true)}}>Click to get started</p>
                                     </div>
