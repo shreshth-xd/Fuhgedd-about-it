@@ -34,9 +34,12 @@ async function CreateVault(req, res){
     const token = req.cookies?.JWT_token;
     const {VaultId, vault, creds} = req.body;
     const decoded = getUser(token)
-    
+
+    console.log(token)
+    console.log(decoded)
+
     try{
-        const NewVault = new Vault({_id: VaultId ,name: vault, user: decoded.id})
+        const NewVault = new Vault({name: vault, user: decoded.id})
         await NewVault.save()        
         
         const NewCreds = await Promise.all(
@@ -60,6 +63,7 @@ async function CreateVault(req, res){
         res.status(200).json({"Status":"The vault was created successfully", vault: NewVault})
 
     }catch(error){
+        console.log(error)
         res.status(401).json({"Status":"Something went wrong"})
     }
 }
@@ -81,13 +85,13 @@ async function DeleteVault(req, res){
 
 async function DeleteAllVaults(req, res){
     try{
-        const Vaults = req.vaults;
-        Vaults.foreach(async (node)=>{
-            await cred.deleteMany({vault: node.VaultId});
-            await Vault.findByIdAndDelete(node.VaultId);
+        const Vaults = req.vaults;        
+        for (const node of Vaults) {
+            await cred.deleteMany({ vault: node._id });
+            await Vault.findByIdAndDelete(node._id);
+        }
 
-            res.status(200).json({"Status":"Deleted all the vaults successfully"})
-        })
+        res.status(200).json({"Status":"Deleted all the vaults successfully"})
     }catch(error){
         res.status(401).json({"Status": "Something went wrong"})
     }
