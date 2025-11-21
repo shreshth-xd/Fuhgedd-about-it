@@ -4,12 +4,13 @@ import { AiOutlineHome } from "react-icons/ai";
 import {useParams} from "react-router-dom"
 
 const Vault = () =>{
+    const {id} = useParams();
     const [Sidebar, setSidebar] = useState("hidden");
 
     return(
         <>
             <div className="ParentContainer flex h-[100vh] w-[100vw] m-0 relative">
-                <div className={`SideBar w-[322px] h-full bg-[#000] ${Sidebar} self-start px-4 py-7 relative z-10 left-0`}>
+                <div className={`SideBar w-[322px] h-full bg-gray-300 ${Sidebar} self-start px-4 py-7 relative z-10 left-0`}>
                     <div className="SideBarHeader w-full h-32 bg-[#FCFF31] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
                     </div>
                 </div>
