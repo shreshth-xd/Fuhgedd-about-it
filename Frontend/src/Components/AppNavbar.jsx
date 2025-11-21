@@ -36,10 +36,12 @@ const AppNavBar = () =>{
                 </button>
             </div>
             <div className="Logout-btn h-full">
-                <button className={`lg:px-7 lg:py-3.5 px-4 py-2 rounded-2xl border-2 hover:border-white
-
-                ${currLocation==='http://localhost:5173/logout' ? 'bg-[#d9d9d3] text-[#161614]' : 'bg-[#161614]' }
-                `}>
+                <button className={`lg:px-7 lg:py-3.5 px-4 py-2 rounded-2xl border-2 hover:border-white`} onClick={async ()=>{
+                    const LogOutReq = await fetch("/user/logout", {credentials: "include"})
+                    if(LogOutReq.ok){
+                        window.location.href = "/"
+                    }
+                }}>
 
                     <IoLogOut className="icon"/>
                     <label htmlFor="logout" className="AppNavBarBtnText">
