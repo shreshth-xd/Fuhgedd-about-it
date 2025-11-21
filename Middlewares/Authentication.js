@@ -7,10 +7,12 @@ async function RestrictToLoggedInUsersOnly(req, res, next){
     
     try{
         let decodedPayload = jwt.verify(token, process.env.JWT_SIG)
+        console.log("User found and verified")
         req.user = decodedPayload;
         next()
     }catch(error){
         console.log(error)
+        console.log("Couldn't verify the user")
         return res.status(403).json({"Status":"Invalid or expired token"})
     }
 }
