@@ -44,10 +44,12 @@ const Navbar = () => {
 
                     <a
                         className="text-black decoration-[none]" onClick={async ()=>{
-                            const req = await fetch("/user/verify", {credentials: include});
+                            const req = await fetch("/user/verify", {credentials: "include"});
                             const res = await req.json();
                             if(req.ok){
                                 window.location.href="/app"
+                            }else{
+                                window.location.href="/sign-in"
                             }        
                         }}>
                         <button  className="navigation-button rounded-[36px] px-[36px] py-[13px] border-2 border-transparent transition-all duration-300 hover:shadow-[0_4px_12px_rgba(0,0,0,0.4)] text-[20px]">
