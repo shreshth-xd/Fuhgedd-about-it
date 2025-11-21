@@ -43,8 +43,22 @@ async function signIn(req, res){
     }
 }
 
+async function logout(req,res){
+    try{
+        res.clearCookie("JWT_token", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            path: "/",
+        })
+        return res.status(200).json({"Status":"Logged out the user successfully"})
+    }catch(error){
+        return res.status(401).json({"Status":"Something went wrong"})
+    }
+}
+
 
 
 module.exports = {
-    signUp, signIn
+    signUp, signIn, logout
 }
