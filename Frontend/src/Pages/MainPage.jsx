@@ -84,6 +84,23 @@ const MainPage = () => {
         }
     }
 
+
+    const DeleteAllVaults = async () =>{
+        const DeleteReq = fetch("/vault/deleteAllVaults", {
+            method: "DELETE",
+            credentials: "include"
+        })
+        const Res = await DeleteReq.json();
+
+        if(DeleteReq.ok){
+            setVaultBoxes(currVaults => []);
+        }else{
+            setVaultCreationStatus(DeleteReq.Status);
+            setIsVaultCreationErrorBoxOpen(true);
+        }
+    }
+
+
     // To handle the value change in cred name and algo dropdown input fields:
     const handleCredName = (id, value) =>{
         setCredFields(prev=> 
@@ -220,7 +237,7 @@ const MainPage = () => {
                             ))}
                             <div className="AddIcon h-auto p-2 flex w-full justify-center items-center gap-x-1.5 text-white">
                                 <button className={`text-center rounded-[4px] px-1 py-3 ${isVaultLimitExceed ? "invisible" : "block"} bg-[#282828] grow shrink h-[35px] flex items-center justify-center`} onClick={()=>setIsVaultBoxOpen(true)}>Add vault</button>
-                                <button onClick={()=>setVaultBoxes((currVaults)=> [])} className="DeleteAllBtn px-1 py-3 flex items-center justify-center grow form-btn xl:h-[35px] bg-red-500 hover:font-semibold rounded-[4px]"><MdDeleteSweep/></button>
+                                <button onClick={()=>DeleteAllVaults()} className="DeleteAllBtn px-1 py-3 flex items-center justify-center grow form-btn xl:h-[35px] bg-red-500 hover:font-semibold rounded-[4px]"><MdDeleteSweep/></button>
                             </div>
                         </div>
                     )}
@@ -251,7 +268,7 @@ const MainPage = () => {
                                                     <path d="M15.4229 27V18.1577L14.6029 17.652V16.1897L17.5413 15.3833H19.8236V27H15.4229ZM17.4046 14.126L15.1633 11.871V11.3927L17.4046 9.15133H17.9239L20.2609 11.3927V11.871L17.9239 14.126H17.4046Z" fill="#0B0C00"/>
                                                 </svg>
                                             </div>
-                                            <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8">
+                                            <div className="dialog h-32 w-full text-center border-2 border-black rounded-b-lg pt-8 from-[#1a4bbf] to-[#020887]">
                                                 <h2 className="jersey-25">There was an error in retrieving the vaults</h2>
                                                 <p>Please try again later</p>
                                             </div>
