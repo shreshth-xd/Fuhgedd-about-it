@@ -218,23 +218,28 @@ const MainPage = () => {
     return (
         <>
         <div className="ParentFlexBox bg-[linear-gradient(135deg,#1f1f1f,#2c2c2c)] w-full h-screen flex flex-col gap-y-5 relative">
-            <AppNavBar/>
 
             <div className="main-page w-full h-full">
-                <div className="vaults border-2 border-white max-w-6xl mx-auto p-6 h-full overflow-hidden rounded-4xl bg-linear-180 from-[#161616] to-[#313131]">
+                <div className="vaults border-[1px] border-white max-w-6xl mx-auto h-full overflow-hidden rounded-4xl bg-linear-180 from-[#161616] to-[#313131]">
                     {status === "success" && (
-                        <div className="flex flex-col gap-y-2.5">
-                            {vaultBoxes.map((vault) => (    
-                                    <div key={vault._id} className="vault-box h-auto w-full bg-[#2c2c2c] px-3 py-2 rounded-[6px]">
-                                        <div className="dialog w-full flex justify-between items-center text-gray-200">
-                                            <h2 onClick={()=>{window.location.href = "/Vault"}}>{vault.name}</h2>
-                                            <div className="flex gap-x-1.5">
-                                                <button onClick={()=>deleteVault(vault._id)} className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] mb-1"><MdDelete/></button>
-                                                <button className="CredSettingsBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-black bg-white text-black hover:font-semibold rounded-[4px] mb-1"><IoSettingsOutline/></button>
+                        <div className="flex flex-col">
+                            <div className="NavigationButtons mb-2">
+                                <AppNavBar/>
+                                <hr className="text-white"/>
+                            </div>
+                            <div className="vaults flex flex-col gap-y-2">
+                                {vaultBoxes.map((vault) => (    
+                                        <div key={vault._id} className="vault-box h-auto w-full bg-[#2c2c2c] px-3 py-2">
+                                            <div className="dialog w-full flex justify-between items-center text-gray-200">
+                                                <h2 onClick={()=>{window.location.href = `/Vault/${vault._id}`}}>{vault.name}</h2>
+                                                <div className="flex gap-x-1.5">
+                                                    <button onClick={()=>deleteVault(vault._id)} className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] mb-1"><MdDelete/></button>
+                                                    <button className="CredSettingsBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-black bg-white text-black hover:font-semibold rounded-[4px] mb-1"><IoSettingsOutline/></button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                            ))}
+                                ))}
+                            </div>
                             <div className="AddIcon h-auto p-2 flex w-full justify-center items-center gap-x-1.5 text-white">
                                 <button className={`text-center rounded-[4px] px-1 py-3 ${isVaultLimitExceed ? "invisible" : "block"} bg-[#282828] grow shrink h-[35px] flex items-center justify-center`} onClick={()=>setIsVaultBoxOpen(true)}>Add vault</button>
                                 <button onClick={()=>DeleteAllVaults()} className="DeleteAllBtn px-1 py-3 flex items-center justify-center grow form-btn xl:h-[35px] bg-red-500 hover:font-semibold rounded-[4px]"><MdDeleteSweep/></button>
