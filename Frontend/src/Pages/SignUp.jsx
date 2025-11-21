@@ -39,8 +39,8 @@ const SignUp = () => {
 
     return (
         <>
-            <div class="h-40 w-full relative top-0 right-0 m-0 z-[1]">
-                <svg class="h-[100%] w-[100%]" viewBox="0 0 1440 163" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="h-40 w-full relative top-0 right-0 m-0 z-[1]">
+                <svg className="h-[100%] w-[100%]" viewBox="0 0 1440 163" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M-12 -24C551.527 30.6734 888.5 -43.5 1431 116C1973.5 275.5 1431 -24 1431 -24H-12Z" fill="#FCFF31"/>
                 </svg>
             </div>
