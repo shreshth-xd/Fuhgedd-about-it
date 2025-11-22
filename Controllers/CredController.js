@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const {cred} = require("../Models/Cred.mjs")
-
+const {getUser} = require("../Services/JWTAuth")
 
 
 // To encrypt the retrieved credentials through the algorithm chosen by user:
@@ -24,7 +24,21 @@ async function EncryptCreds(req, res){
     console.log(EncryptedCredentials)
     return res.status(200).json({"Creds": EncryptedCredentials})
 
-    // res.status(501).json({"Status":"Encryption API is yet to be developed"})
 }
 
-module.exports = {EncryptCreds}
+async function GetCreds(req,res){
+    const token = req.cookies?.JWT_token;
+    
+    const user_id = getUser(token).id;
+    const vault_id = req.body;
+
+    const creds = await cred.find({user: user_id, vault: vault_id})
+    if(creds.length===0){
+        return res.status(404).json({creds: [], "Status":"No creds found here"})
+    }else{
+        return res.status(200).json({creds, "Status":"Successfully found all the creds"})
+    }
+        
+}
+
+module.exports = {EncryptCreds, GetCreds};
