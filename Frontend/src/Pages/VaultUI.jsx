@@ -1,11 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BsLayoutTextSidebar } from "react-icons/bs";
 import { AiOutlineHome } from "react-icons/ai";
 import {useParams} from "react-router-dom"
 
+
 const Vault = () =>{
     const {id} = useParams();
     const [Sidebar, setSidebar] = useState("hidden");
+    const [vault, setVault] = useState();
+    const [creds, setCreds] = useState([]);
+    const [retrievalStatus, setRetrievalStatus] = useState("");
+    const [VaultBgColor, setVaultBgColor] = useState();
+
+    useEffect(()=>{
+        const fetchCreds = async () =>{
+            try{
+                const request = await fetch("/cred/GetCreds", {
+                    method: "POST",
+                    credentials: "include",
+                    body: JSON.stringify(id)
+                });
+                const data = await request.json();
+                if(request.ok && data.creds.length>0){
+                    setCreds(data.creds)
+                    setRetrievalStatus("Creds fetched successfully")
+                }else{
+                    console.log(data.status);
+                }
+            }catch(error){
+                console.log(error)
+            }
+        }
+
+        fetchCreds();
+    }, [])
 
     return(
         <>
@@ -27,15 +55,18 @@ const Vault = () =>{
                     </div>
 
 
-                    <div className="vaults h-3/4 bg-[#e6fafc]">
-                        {/* To render the actual vaults themselves */}
-                        {/* Gonna use the useeffect() hook to load and show up the requested vault, with the dependency array of
-                        hook being the vault id itself, so if user tries to open a new vault, it actually does change the opened vault */}
-                        
+                    <div className="creds h-3/4 bg-[#e6fafc]">
+                        {
+                            creds.map((cred)=>(
+                                <div key={cred._id} className="cred">
+                                    Cred {cred._id}
+                                </div>
+                            ))
+                        }
                     </div>
                     
                     
-                    <div className="buttons h-1/6 bg-gray-300">
+                    <div className="buttons h-1/6 bg-gray-400">
                         <div className="DeleteAllBtn"></div>
                         <div className="FeedbackBtn"></div>
                         <div className="AddCredBtn"></div>
