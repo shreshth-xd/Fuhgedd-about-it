@@ -217,19 +217,19 @@ const MainPage = () => {
 
     return (
         <>
-        <div className="ParentFlexBox bg-[linear-gradient(135deg,#1f1f1f,#2c2c2c)] w-full h-screen flex flex-col gap-y-5 relative">
+        <div className="ParentFlexBox bg-[linear-gradient(135deg,#1f1f1f,#2c2c2c)] w-full h-screen flex flex-col gap-y-5 relative justify-center">
 
-            <div className="main-page w-full h-full">
+            <div className="main-page w-full h-11/12">
                 <div className="vaults border-[1px] border-white max-w-6xl mx-auto h-full overflow-hidden rounded-4xl bg-linear-180 from-[#161616] to-[#313131]">
                     {status === "success" && (
                         <div className="flex flex-col">
-                            <div className="NavigationButtons mb-2">
+                            <div className="NavigationButtons">
                                 <AppNavBar/>
                                 <hr className="text-white"/>
                             </div>
                             <div className="vaults flex flex-col gap-y-2">
                                 {vaultBoxes.map((vault) => (    
-                                        <div key={vault._id} className="vault-box h-auto w-full bg-[#2c2c2c] px-3 py-2">
+                                        <div key={vault._id} className="vault-box h-auto w-full bg-[#737070] px-3 py-2">
                                             <div className="dialog w-full flex justify-between items-center text-gray-200">
                                                 <h2 onClick={()=>{window.location.href = `/Vault/${vault._id}`}}>{vault.name}</h2>
                                                 <div className="flex gap-x-1.5">
