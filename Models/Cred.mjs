@@ -7,7 +7,8 @@ const credSchema = new Schema({
     },
     user:{
         type: Schema.Types.ObjectId,
-        ref: "user"
+        ref: "user",
+        required: true
     },
     purpose:{
         type: String,
@@ -25,7 +26,24 @@ const credSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "vault",
         required: true
+    },
+    iv: {
+        type: String,
+        required: true
+    },
+    salt: {
+        type: String,
+        required: false
+    },
+    authTag: {
+        type: String,
+        required: false // required if algo is AES-GCM
+    },
+    encoding: {
+        type: String,
+        default: "base64"
     }
+    
 })
 
 export const cred = mongoose.model("cred", credSchema);
