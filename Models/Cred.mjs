@@ -42,8 +42,10 @@ const credSchema = new Schema({
     encoding: {
         type: String,
         default: "base64"
-    }
-    
+    },
+    CredStrength:{
+        type: String
+    },
 })
 
 export const cred = mongoose.model("cred", credSchema);
