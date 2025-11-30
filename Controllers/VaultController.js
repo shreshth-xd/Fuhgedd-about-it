@@ -44,6 +44,7 @@ async function CreateVault(req, res){
                 return await cred.create({
                     purpose: credential.Name,
                     cred: credential.Value,
+                    user: decoded.id,
                     algo: credential.Algorithm,
                     vault: NewVault._id
                 })
