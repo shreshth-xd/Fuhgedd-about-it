@@ -27,7 +27,7 @@ const MainPage = () => {
     
     // The array of objects to hold the actual credential data:
     const [credFields, setCredFields] = useState([
-        {id: credId, Name: "", Value: "", Algorithm: "SHA256"}
+        {id: credId, Name: "", Value: "", Algorithm: "AES-256"}
     ]);
 
 
@@ -149,15 +149,12 @@ const MainPage = () => {
     // To create a vault and register it to the DB
     const createVault = async (e) =>{
         e.preventDefault();
-        // console.log(credFields)
         
-
         // Making a request to encrypt the credential's values before inserting them into a newly created vault
         let EncryptedCreds = await encryptCreds(credFields);
-        console.log(EncryptedCreds)
         
         const dataPayload = {"vault":vaultName, "creds":EncryptedCreds.Creds}
-        // console.log(dataPayload)
+        
         try {
             const res = await fetch("/vault/createVault", {
                 method: "POST",
@@ -313,10 +310,10 @@ const MainPage = () => {
                                             <input type={showPassword ? "text" : "password"} placeholder="Credential's value" value={cred.Value} onChange={(e) => handleInput(cred.id, e.target.value)} name="credential" className="credential focus:outline-0 fo bg-[#1a1919] px-0.5 py-1 w-full mb-1 grow text-gray-500"/>
                                             <select name="algoName" value={cred.Algorithm} onChange={(e) => handleAlgoChange(cred.id, e.target.value)} id="algoName" className="focus:outline-0 bg-[#151515] px-0.5 py-1 flex-1/6 text-gray-400 mb-1">
                                                 <option className="flex items-center justify-between px-1 py-1.5">
-                                                    SHA256
+                                                    AES-256
                                                 </option>
                                                 <option className="flex items-center justify-between px-1 py-1.5">
-                                                    BCrypt
+                                                    RSA
                                                 </option>
                                             </select>
                                         </div>
