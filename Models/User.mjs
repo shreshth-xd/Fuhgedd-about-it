@@ -20,10 +20,15 @@ const userSchema = new mongoose.Schema({
         required: true,
         minLength:8
     },
-    vaults:{
+    // For key derivation:
+    salt:{
+        type: String,
+        required: true        
+    },
+    vaults:[{
         type: Schema.Types.ObjectId,
         ref: "vault"
-    }
+    }]
 }, {timestamps: true})
 
 export const User = mongoose.model("user", userSchema);

@@ -39,14 +39,17 @@ async function CreateVault(req, res){
         const NewVault = new Vault({name: vault, user: decoded.id})
         await NewVault.save()        
 
+        // creds are already encrypted and have the structure: { purpose, cred, iv, authTag, algo, vault }
         const NewCreds = await Promise.all(
             creds.map(async (credential)=>{
                 return await cred.create({
-                    purpose: credential.Name,
-                    cred: credential.Value,
-                    user: decoded.id,
-                    algo: credential.Algorithm,
-                    vault: NewVault._id
+                    purpose: credential.purpose,
+                    cred: credential.cred,
+                    user: credential.user || decoded.id,
+                    algo: credential.algo,
+                    iv: credential.iv,
+                    authTag: credential.authTag,
+                    vault: NewVault._id // Use the new vault ID
                 })
             })
         )
