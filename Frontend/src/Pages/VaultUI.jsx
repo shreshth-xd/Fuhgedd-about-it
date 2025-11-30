@@ -1,31 +1,43 @@
 import { useState, useEffect } from "react";
-import { BsLayoutTextSidebar } from "react-icons/bs";
-import { AiOutlineHome } from "react-icons/ai";
 import {useParams} from "react-router-dom"
 
 
+import { MdOutlineDeleteSweep } from "react-icons/md";
+import { BsLayoutTextSidebar } from "react-icons/bs";
+import { AiOutlineHome } from "react-icons/ai";
+import { VscFeedback } from "react-icons/vsc";
+import { PiDownloadBold } from "react-icons/pi";
+import { IoSettingsOutline } from "react-icons/io5";
+import { GrAddCircle } from "react-icons/gr";
+
 const Vault = () =>{
     const {id} = useParams();
-    const [Sidebar, setSidebar] = useState("hidden");
+    console.log(id)
+    const [Sidebar, setSidebar] = useState("block");
     const [vault, setVault] = useState();
     const [creds, setCreds] = useState([]);
     const [retrievalStatus, setRetrievalStatus] = useState("");
     const [VaultBgColor, setVaultBgColor] = useState();
 
     useEffect(()=>{
+        if(!id) return
+
         const fetchCreds = async () =>{
             try{
                 const request = await fetch("/cred/GetCreds", {
                     method: "POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
                     credentials: "include",
-                    body: JSON.stringify(id)
+                    body: JSON.stringify({"id":id})
                 });
                 const data = await request.json();
                 if(request.ok && data.creds.length>0){
                     setCreds(data.creds)
                     setRetrievalStatus("Creds fetched successfully")
                 }else{
-                    console.log(data.status);
+                    console.log(data.Status);
                 }
             }catch(error){
                 console.log(error)
@@ -33,16 +45,16 @@ const Vault = () =>{
         }
 
         fetchCreds();
-    }, [])
+    }, [id])
 
     return(
         <>
-            <div className="ParentContainer flex h-[100vh] w-[100vw] m-0 relative">
+            <div className="ParentContainer flex h-[100vh] w-[100vw] m-0 relative bg-[#e6fafc]">
                 <div className={`SideBar w-[322px] h-full bg-gray-300 ${Sidebar} self-start px-4 py-7 relative z-10 left-0`}>
                     <div className="SideBarHeader w-full h-32 bg-[#FCFF31] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
                     </div>
                 </div>
-                <div className="FrontElements flex grow flex-col">
+                <div className="FrontElements flex grow flex-col w-full">
                     <div className="NavBar gap-x-4 jersey-25 w-full h-[75px] bg-gray-400 px-4.5 py-1 flex items-center">
                         <button onClick={()=>{
                             if(Sidebar==="hidden"){
@@ -50,16 +62,19 @@ const Vault = () =>{
                             }else{
                                 return setSidebar("hidden")
                             }
-                        }} className="NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/><p className="hidden lg:block">Sidebar</p></button>
+                        }} className="NavButton rounded-[26px] px-[28px] py-[12px] flex xl:hidden items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/><p className="hidden lg:block">Sidebar</p></button>
                         <button onClick={()=>window.location.href="/app"} className="NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><AiOutlineHome/><p className="hidden lg:block">Home</p></button>
                     </div>
 
 
-                    <div className="creds h-3/4 bg-[#e6fafc]">
+                    <div className="creds h-3/4 flex grow w-full p-3">
                         {
                             creds.map((cred)=>(
-                                <div key={cred._id} className="cred">
-                                    Cred {cred._id}
+                                <div key={cred._id} className="cred h-24 max-h-28 mx-auto grow w-4xl bg-white rounded-2xl flex justify-between items-center px-5 shadow-[4px_4px_7px_2px_rgba(0,0,0,0.25))]">
+                                    <span className="title jersey-25 text-2xl">{cred.purpose}</span>
+                                    <div className="credBtns flex items-center gap-x-1">
+                                        <button className="CopyBtn px-3 py-1.5 bg-[#1c1c1c] text-white rounded-[8px]">Copy</button>
+                                    </div>
                                 </div>
                             ))
                         }
