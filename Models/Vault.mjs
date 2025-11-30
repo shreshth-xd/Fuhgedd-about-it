@@ -15,7 +15,8 @@ const vaultSchema = new Schema({
     },
     creds:[{
         type: Schema.Types.ObjectId,
-        ref: "cred"
+        ref: "cred",
+        required: "true"
     }]
 }, {timestamps: true})
 
