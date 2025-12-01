@@ -5,23 +5,7 @@ const {cred} = require("../Models/Cred.mjs")
 const {getUser} = require("../Services/JWTAuth")
 
 
-// Migrated middleware:
-// async function verifyPasswordMiddleware(req, res, next) {
-//     const { password } = req.body;
-//     const user = await User.findById(req.user._id);
 
-//     const passwordCorrect = await bcrypt.compare(password, user.password);
-//     if (!passwordCorrect) {
-//         return res.status(401).json({ error: "Invalid master password" });
-//     }
-
-//     req.encryptionKey = crypto.pbkdf2Sync(password, user.salt, 100000, 32, "sha256");
-
-//     next();
-
-//     // must be cleaned up after request
-//     req.encryptionKey = undefined;
-// }
 
 
 
@@ -69,18 +53,18 @@ async function EncryptCreds(req, res){
             const salt = crypto.randomBytes(16);
     
             const { encrypted, iv, authTag } = encryptAES(item.Value, key);
+            
+            return {
+                user: req.user._id,
+                purpose: item.Purpose,
+                algo: "aes-256-gcm",
+                cred: encrypted,
+                iv,
+                authTag,
+                salt: salt.toString("hex"),
+                vault: item.VaultId
+            };
         }
-    
-        return {
-            user: req.user._id,
-            purpose: item.Purpose,
-            algo: "aes-256-gcm",
-            cred: encrypted,
-            iv,
-            authTag,
-            salt: salt.toString("hex"),
-            vault: item.VaultId
-        };
     });
 
     return res.status(201).json({ message: "Encrypted and stored!" });
