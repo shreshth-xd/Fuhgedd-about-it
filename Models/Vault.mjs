@@ -17,7 +17,10 @@ const vaultSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "cred",
         required: "true"
-    }]
+    }],
+    VaultStrength:{
+        type: String,        
+    },
 }, {timestamps: true})
 
 vaultSchema.index({ name: 1, user: 1 }, { unique: true });

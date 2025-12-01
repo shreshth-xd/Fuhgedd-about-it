@@ -6,23 +6,7 @@ const {getUser} = require("../Services/JWTAuth")
 const {User} = require("../Models/User.mjs")
 const bcrypt = require("bcrypt")
 
-// Migrated middleware:
-// async function verifyPasswordMiddleware(req, res, next) {
-//     const { password } = req.body;
-//     const user = await User.findById(req.user._id);
 
-//     const passwordCorrect = await bcrypt.compare(password, user.password);
-//     if (!passwordCorrect) {
-//         return res.status(401).json({ error: "Invalid master password" });
-//     }
-
-//     req.session.encryptionKey = crypto.pbkdf2Sync(password, user.salt, 100000, 32, "sha256");
-
-//     next();
-
-//     // must be cleaned up after request
-//     req.session.encryptionKey = undefined;
-// }
 
 
 
@@ -55,7 +39,41 @@ function encryptAES(value, key) {
 }
 
 
-async function decryptAES(cred){
+
+// To encrypt the retrieved credentials through the algorithm chosen by user:
+async function EncryptCreds(req, res){
+
+    const creds = req.body; 
+    const array = Array.isArray(creds) ? creds : [creds];
+
+    // Here the vault password doesnt means, the password for a vault but rather a key to let the decryption of all creds happen
+    
+    const encryptedCreds = array.map(item => {
+        if(item.Algorithm==="AES-256"){
+            const key = req.encryptionKey;
+            const salt = crypto.randomBytes(16);
+    
+            const { encrypted, iv, authTag } = encryptAES(item.Value, key);
+            
+            return {
+                user: req.user._id,
+                purpose: item.Purpose,
+                algo: "aes-256-gcm",
+                cred: encrypted,
+                iv,
+                authTag,
+                salt: salt.toString("hex"),
+                vault: item.VaultId
+            };
+        }
+    });
+
+    return res.status(201).json({ message: "Encrypted and stored!" });
+}
+
+
+
+async function decryptCred(req, res) {
     try {
         const key = req.encryptionKey;
 
