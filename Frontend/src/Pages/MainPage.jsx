@@ -356,10 +356,19 @@ const MainPage = () => {
                                             <input type={showPassword ? "text" : "password"} placeholder="Credential's value" value={cred.Value} onChange={(e) => handleInput(cred.id, e.target.value)} name="credential" className="credential focus:outline-0 fo bg-[#1a1919] px-0.5 py-1 w-full mb-1 grow text-gray-500"/>
                                             <select name="algoName" value={cred.Algorithm} onChange={(e) => handleAlgoChange(cred.id, e.target.value)} id="algoName" className="focus:outline-0 bg-[#151515] px-0.5 py-1 flex-1/6 text-gray-400 mb-1">
                                                 <option className="flex items-center justify-between px-1 py-1.5">
-                                                    AES-256
+                                                    AES-256-GCM
                                                 </option>
                                                 <option className="flex items-center justify-between px-1 py-1.5">
-                                                    RSA
+                                                    Twofish
+                                                </option>
+                                                <option className="flex items-center justify-between px-1 py-1.5">
+                                                    Camellia
+                                                </option>
+                                                <option className="flex items-center justify-between px-1 py-1.5">
+                                                    AES-256-CBC
+                                                </option>
+                                                <option className="flex items-center justify-between px-1 py-1.5">
+                                                    ChaCha20-Poly1305
                                                 </option>
                                             </select>
                                         </div>
@@ -380,7 +389,7 @@ const MainPage = () => {
                     
 
                     <div className="buttons flex items-center gap-x-2 flex-wrap">
-                        <button type="submit" onClick={createVault} className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Submit</button>
+                        <button type="submit" onClick={()=>setIsPasswordModalOpen(true)} className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Submit</button>
                         <button type="reset" className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Reset</button>
                     </div>
                     

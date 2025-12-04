@@ -10,6 +10,7 @@ import { PiDownloadBold } from "react-icons/pi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { GrAddCircle } from "react-icons/gr";
 import PasswordModal from "../Components/PasswordModal";
+import { MdDelete } from "react-icons/md";
 
 const Vault = () =>{
     const {id} = useParams();
@@ -161,6 +162,7 @@ const Vault = () =>{
                                         >
                                             Copy
                                         </button>
+                                        <button onClick={()=>removeCred(cred.id)} className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] flex-1/6 mb-1"><MdDelete/></button>
                                     </div>
                                 </div>
                             ))
