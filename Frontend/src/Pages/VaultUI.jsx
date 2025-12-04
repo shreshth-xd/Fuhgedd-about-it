@@ -10,6 +10,7 @@ import { PiDownloadBold } from "react-icons/pi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { GrAddCircle } from "react-icons/gr";
 import PasswordModal from "../Components/PasswordModal";
+import DialogBox from "../Components/DialogBox";
 import { MdDelete } from "react-icons/md";
 
 const Vault = () =>{
@@ -25,6 +26,14 @@ const Vault = () =>{
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
     const [passwordError, setPasswordError] = useState("");
     const [selectedCredId, setSelectedCredId] = useState(null);
+    const [isCreatingCred, setIsCreatingCred] = useState(false); // Track if creating cred
+    
+    // Create cred modal state
+    const [isCreateCredModalOpen, setIsCreateCredModalOpen] = useState(false);
+    const [newCredPurpose, setNewCredPurpose] = useState("");
+    const [newCredValue, setNewCredValue] = useState("");
+    const [newCredAlgorithm, setNewCredAlgorithm] = useState("AES-256-GCM");
+    const [createCredError, setCreateCredError] = useState("");
 
 
     useEffect(()=>{
@@ -82,7 +91,7 @@ const Vault = () =>{
         }
     }
 
-    // Handle copy button click - opens password modal
+
     const handleCopyClick = (credId) => {
         setSelectedCredId(credId);
         setIsPasswordModalOpen(true);
@@ -121,17 +130,105 @@ const Vault = () =>{
         }
     }
 
+    // Create credential function
+    const createCred = async (password) => {
+        try {
+            const request = await fetch("/cred/createCred", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    password,
+                    purpose: newCredPurpose,
+                    value: newCredValue,
+                    algorithm: newCredAlgorithm,
+                    vaultId: id
+                })
+            });
+            const data = await request.json();
+            return data;
+        } catch (error) {
+            return { error: error.message || "Failed to create credential" };
+        }
+    }
+
+    // Handle create cred form submission
+    const handleCreateCredSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!newCredPurpose.trim() || !newCredValue.trim()) {
+            setCreateCredError("Purpose and value are required");
+            return;
+        }
+        
+        // Open password modal to get encryption password
+        setIsCreateCredModalOpen(false);
+        setIsCreatingCred(true);
+        setIsPasswordModalOpen(true);
+        setPasswordError("");
+    }
+
+    // Handle password submission for creating credential
+    const handleCreateCredPasswordSubmit = async (password) => {
+        setIsPasswordModalOpen(false);
+        setPasswordError("");
+        
+        try {
+            const result = await createCred(password);
+            
+            if (result.error) {
+                setPasswordError(result.error);
+                setIsPasswordModalOpen(true);
+                return;
+            }
+            
+            if (result.cred) {
+                // Refresh the creds list
+                const request = await fetch("/cred/GetCreds", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({ id: id })
+                });
+                const data = await request.json();
+                if (request.ok && data.creds) {
+                    setCreds(data.creds);
+                }
+                
+                // Reset form
+                setNewCredPurpose("");
+                setNewCredValue("");
+                setNewCredAlgorithm("AES-256-GCM");
+                setCreateCredError("");
+                setIsCreatingCred(false);
+                alert("Credential created successfully!");
+            } else {
+                setPasswordError("Failed to create credential");
+                setIsPasswordModalOpen(true);
+            }
+        } catch (error) {
+            console.error("Create credential error:", error);
+            setPasswordError("An error occurred while creating credential");
+            setIsPasswordModalOpen(true);
+        }
+    }
+
     return(
         <>
             <div className="ParentContainer flex h-[100vh] w-[100vw] m-0 relative bg-[#e6fafc]">
                 <div className={`SideBar w-[322px] h-full gap-y-3 overflow-y-auto bg-[#1d3660] ${Sidebar} self-start px-4 py-7 relative z-10 left-0 flex flex-col items-center`}>
-                    <div className="SideBarHeader flex items-center justify-center w-full h-32 bg-[#FCFF31] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
-                        <h1 className="text-2xl jersey-25">Vaults</h1>
+                    <div className="SideBarHeader p-4 flex flex-col w-full h-32 bg-[#FCFF31] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+                        <div className="profile-pic h-8 w-8 rounded-3xl p-3 bg-white shadow-[1px_1px_16px_0.2px_#000]"></div>
+                        
                     </div>
 
                     {vaults.map((vault)=>(
                         <div className="vaultNode px-4 py-4 h-44 w-full bg-white rounded-3xl shadow-[4px_8px_4px_4px_rgba(0, 0, 0, 0.25)]" key={vault._id}>
-                            <h1 className="text-2xl jersey-25">{vault.name}</h1>
+                            <h1 className="text-2xl jersey-25 hover:text-blue-500 hover:underline inline">{vault.name}</h1>
                             <h2>Cred count: {vault.creds.length}</h2>
                         </div>
                     ))}
@@ -145,28 +242,34 @@ const Vault = () =>{
                             }else{
                                 return setSidebar("hidden")
                             }
-                        }} className="NavButton rounded-[26px] px-[28px] py-[12px] flex xl:hidden items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/><p className="hidden lg:block">Sidebar</p></button>
+                        }} className="NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/><p className="hidden lg:block">Sidebar</p></button>
                         <button onClick={()=>window.location.href="/app"} className="NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><AiOutlineHome/><p className="hidden lg:block">Home</p></button>
                     </div>
 
 
-                    <div className="creds h-3/4 flex grow w-full p-3">
+                    <div className="creds h-3/4 flex flex-col grow w-full p-3 gap-y-2">
                         {
                             creds.map((cred)=>(
-                                <div key={cred._id} className="cred h-24 max-h-28 mx-auto grow w-4xl bg-white rounded-2xl flex justify-between items-center px-5 shadow-[4px_4px_7px_2px_rgba(0,0,0,0.25))]">
+                                <div key={cred._id} className="cred h-24 max-h-28 grow bg-white rounded-2xl flex justify-between items-center px-5 shadow-[4px_4px_7px_2px_rgba(0,0,0,0.25))]">
                                     <span className="title jersey-25 text-2xl">{cred.purpose}</span>
                                     <div className="credBtns flex items-center gap-x-1">
                                         <button 
                                             onClick={() => handleCopyClick(cred._id)}
-                                            className="CopyBtn px-3 py-1.5 bg-[#1c1c1c] text-white rounded-[8px] hover:bg-[#2c2c2c]"
+                                            className="CopyBtn px-3 py-1.5 bg-[#1c1c1c] text-white rounded-[4px] hover:bg-[#2c2c2c]"
                                         >
                                             Copy
                                         </button>
-                                        <button onClick={()=>removeCred(cred.id)} className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] flex-1/6 mb-1"><MdDelete/></button>
+                                        <button className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] flex-1/6"><MdDelete/></button>
                                     </div>
                                 </div>
                             ))
                         }
+                        <button 
+                            onClick={() => setIsCreateCredModalOpen(true)}
+                            className="cred h-24 max-h-28 grow bg-white rounded-2xl flex items-center justify-center shadow-[4px_4px_7px_2px_rgba(0,0,0,0.25))] hover:bg-gray-100"
+                        >
+                            <span className="text-black text-4xl font-bold">+</span>
+                        </button>
                     </div>
                     
                     
@@ -185,12 +288,97 @@ const Vault = () =>{
                 onClose={() => {
                     setIsPasswordModalOpen(false);
                     setPasswordError("");
-                    setSelectedCredId(null);
+                    if (isCreatingCred) {
+                        setIsCreatingCred(false);
+                    } else {
+                        setSelectedCredId(null);
+                    }
                 }}
-                onSubmit={handlePasswordSubmit}
-                title="Enter Master Password to Decrypt Credential"
+                onSubmit={isCreatingCred ? handleCreateCredPasswordSubmit : handlePasswordSubmit}
+                title={isCreatingCred ? "Enter Master Password to Encrypt Credential" : "Enter Master Password to Decrypt Credential"}
                 error={passwordError}
             />
+
+            <DialogBox
+                isOpen={isCreateCredModalOpen}
+                onClose={() => {
+                    setIsCreateCredModalOpen(false);
+                    setCreateCredError("");
+                    setNewCredPurpose("");
+                    setNewCredValue("");
+                    setNewCredAlgorithm("AES-256-GCM");
+                }}
+            >
+                <form onSubmit={handleCreateCredSubmit} className="w-full flex flex-col gap-y-6">
+                    <div className="flex flex-col gap-y-2">
+                        <label htmlFor="purpose" className="text-sm">Purpose/Name:</label>
+                        <input
+                            type="text"
+                            id="purpose"
+                            value={newCredPurpose}
+                            onChange={(e) => setNewCredPurpose(e.target.value)}
+                            className="bg-[#1a1919] px-3 py-2 rounded border border-gray-600 focus:outline-none focus:border-blue-500 text-white"
+                            placeholder="e.g., Email Password, Bank PIN"
+                            required
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-y-2">
+                        <label htmlFor="value" className="text-sm">Value:</label>
+                        <input
+                            type="password"
+                            id="value"
+                            value={newCredValue}
+                            onChange={(e) => setNewCredValue(e.target.value)}
+                            className="bg-[#1a1919] px-3 py-2 rounded border border-gray-600 focus:outline-none focus:border-blue-500 text-white"
+                            placeholder="Enter credential value"
+                            required
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-y-2">
+                        <label htmlFor="algorithm" className="text-sm">Algorithm:</label>
+                        <select
+                            id="algorithm"
+                            value={newCredAlgorithm}
+                            onChange={(e) => setNewCredAlgorithm(e.target.value)}
+                            className="bg-[#1a1919] px-3 py-2 rounded border border-gray-600 focus:outline-none focus:border-blue-500 text-white"
+                        >
+                            <option value="AES-256-GCM">AES-256-GCM</option>
+                            <option value="Twofish">Twofish</option>
+                            <option value="Camellia">Camellia</option>
+                            <option value="AES-256-CBC">AES-256-CBC</option>
+                            <option value="ChaCha20-Poly1305">ChaCha20-Poly1305</option>
+                        </select>
+                    </div>
+
+                    {createCredError && (
+                        <p className="text-red-500 text-sm">{createCredError}</p>
+                    )}
+
+                    <div className="flex gap-x-2 justify-end">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setIsCreateCredModalOpen(false);
+                                setCreateCredError("");
+                                setNewCredPurpose("");
+                                setNewCredValue("");
+                                setNewCredAlgorithm("AES-256-GCM");
+                            }}
+                            className="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded text-white"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white"
+                        >
+                            Create
+                        </button>
+                    </div>
+                </form>
+            </DialogBox>
         </>
     )
 }
