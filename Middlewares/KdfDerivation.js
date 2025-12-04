@@ -1,10 +1,11 @@
 const {User} = require("../Models/User.mjs")
 const bcrypt = require("bcrypt")
+const crypto = require("crypto")
 
 async function verifyPasswordMiddleware(req, res, next) {
     try{
         const { password } = req.body;
-        const user = await User.findById(req.user._id);
+        const user = await User.findById(req.user.id);
     
         const passwordCorrect = await bcrypt.compare(password, user.password);
         if (!passwordCorrect) {
