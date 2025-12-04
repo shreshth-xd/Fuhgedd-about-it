@@ -5,6 +5,7 @@ import AppNavBar from "../Components/AppNavbar";
 import DialogBox from "../Components/DialogBox";
 import { v4 as uuidv4 } from "uuid";
 import ErrorBox from "../Components/PopUp";
+import PasswordModal from "../Components/PasswordModal";
 
 // React icons
 import { MdDelete } from "react-icons/md";
@@ -34,6 +35,11 @@ const MainPage = () => {
     // To display the error received by the vault creation Fetch API
     const [isVaultCreationErrorBoxOpen, setIsVaultCreationErrorBoxOpen] = useState(false);
     const [vaultCreationStatus, setVaultCreationStatus] = useState();
+
+    // Password modal state
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+    const [passwordError, setPasswordError] = useState("");
+    const [pendingVaultCreation, setPendingVaultCreation] = useState(false);
 
 
     // Constants to check if the user has only the permitted number of creds or vaults
@@ -130,17 +136,17 @@ const MainPage = () => {
     }
 
 
-    const encryptCreds = async (creds) =>{
+    const encryptCreds = async (creds, password) =>{
         try{
             const encryptionRequest = await fetch("/cred/encryptCreds", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(creds),
+                body: JSON.stringify({ creds, password }),
                 credentials: "include"
             });
             return await encryptionRequest.json();
         }catch(error){
-            return error;
+            return { error: error.message || "Encryption failed" };
         }
     }
 
@@ -150,12 +156,47 @@ const MainPage = () => {
     const createVault = async (e) =>{
         e.preventDefault();
         
-        // Making a request to encrypt the credential's values before inserting them into a newly created vault
-        let EncryptedCreds = await encryptCreds(credFields);
+        // Validate vault name and creds
+        if (!vaultName.trim()) {
+            setVaultCreationStatus("Vault name is required");
+            setIsVaultCreationErrorBoxOpen(true);
+            return;
+        }
         
-        const dataPayload = {"vault":vaultName, "creds":EncryptedCreds.Creds}
+        if (credFields.length === 0 || credFields.every(cred => !cred.Name.trim() || !cred.Value.trim())) {
+            setVaultCreationStatus("Please add at least one credential with name and value");
+            setIsVaultCreationErrorBoxOpen(true);
+            return;
+        }
+        
+        // Open password modal first
+        setPendingVaultCreation(true);
+        setIsPasswordModalOpen(true);
+    }
+
+    // Handle password submission for vault creation
+    const handlePasswordSubmit = async (password) => {
+        setPasswordError("");
+        setIsPasswordModalOpen(false);
         
         try {
+            // Making a request to encrypt the credential's values before inserting them into a newly created vault
+            let EncryptedCreds = await encryptCreds(credFields, password);
+            
+            if (EncryptedCreds.error) {
+                setPasswordError(EncryptedCreds.error);
+                setIsPasswordModalOpen(true);
+                return;
+            }
+            
+            if (!EncryptedCreds.Creds) {
+                setVaultCreationStatus("Encryption failed. Please try again.");
+                setIsVaultCreationErrorBoxOpen(true);
+                return;
+            }
+            
+            const dataPayload = {"vault":vaultName, "creds":EncryptedCreds.Creds}
+            
             const res = await fetch("/vault/createVault", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -168,21 +209,26 @@ const MainPage = () => {
                 // Gonna update the vaultBoxes state as soon as we receive the vaults on the assurance of our request:
                 setStatus("")
                 setVaultBoxes(currVaultsOnPage => {
-                    
-                    return [...currVaultsOnPage, {vault: data.vault}]
+                    return [...currVaultsOnPage, data.vault]
                 })
             
                 setStatus("success");
-                setIsVaultBoxOpen(false)
+                setIsVaultBoxOpen(false);
+                setVaultName("");
+                setCredFields([{id: 1, Name: "", Value: "", Algorithm: "AES-256"}]);
+                setCredId(1);
             }else{
-                const creationStatus = data.Status;
+                const creationStatus = data.Status || data.error || "Failed to create vault";
                 setVaultCreationStatus(creationStatus);
                 setIsVaultCreationErrorBoxOpen(true);
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            setVaultCreationStatus("An error occurred. Please try again.");
+            setIsVaultCreationErrorBoxOpen(true);
+        } finally {
+            setPendingVaultCreation(false);
         }
-        
     }
 
     
@@ -310,10 +356,19 @@ const MainPage = () => {
                                             <input type={showPassword ? "text" : "password"} placeholder="Credential's value" value={cred.Value} onChange={(e) => handleInput(cred.id, e.target.value)} name="credential" className="credential focus:outline-0 fo bg-[#1a1919] px-0.5 py-1 w-full mb-1 grow text-gray-500"/>
                                             <select name="algoName" value={cred.Algorithm} onChange={(e) => handleAlgoChange(cred.id, e.target.value)} id="algoName" className="focus:outline-0 bg-[#151515] px-0.5 py-1 flex-1/6 text-gray-400 mb-1">
                                                 <option className="flex items-center justify-between px-1 py-1.5">
-                                                    AES-256
+                                                    AES-256-GCM
                                                 </option>
                                                 <option className="flex items-center justify-between px-1 py-1.5">
-                                                    RSA
+                                                    Twofish
+                                                </option>
+                                                <option className="flex items-center justify-between px-1 py-1.5">
+                                                    Camellia
+                                                </option>
+                                                <option className="flex items-center justify-between px-1 py-1.5">
+                                                    AES-256-CBC
+                                                </option>
+                                                <option className="flex items-center justify-between px-1 py-1.5">
+                                                    ChaCha20-Poly1305
                                                 </option>
                                             </select>
                                         </div>
@@ -334,7 +389,7 @@ const MainPage = () => {
                     
 
                     <div className="buttons flex items-center gap-x-2 flex-wrap">
-                        <button type="submit" onClick={createVault} className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Submit</button>
+                        <button type="submit" onClick={()=>setIsPasswordModalOpen(true)} className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Submit</button>
                         <button type="reset" className="p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:bg-[#151515] md:text-white bg-white text-[#151515] hover:bg-white hover:text-[#151515] hover:font-semibold rounded-[4px]">Reset</button>
                     </div>
                     
@@ -349,13 +404,24 @@ const MainPage = () => {
                 }>               
                     <p>{vaultCreationStatus}</p>
                 </ErrorBox>
+
+                <PasswordModal
+                    isOpen={isPasswordModalOpen}
+                    onClose={() => {
+                        setIsPasswordModalOpen(false);
+                        setPasswordError("");
+                        setPendingVaultCreation(false);
+                    }}
+                    onSubmit={handlePasswordSubmit}
+                    title="Enter Master Password to Encrypt Credentials"
+                    error={passwordError}
+                />
         
         </div>
 
         
         </>
     );
-    console.log(credFields)
 };
 
 

@@ -2,16 +2,18 @@ const path = require("node:path")
 const {User} = require("../Models/User.mjs")
 const {setUser} = require("../Services/JWTAuth")
 const bcrypt = require("bcrypt")
+const crypto = require("crypto")
 
 async function signUp(req, res){
     const {username, email, password} = req.body;
+    const KdfSalt = crypto.randomBytes(32);
     let user = User.findOne({username, email, password: hashedPassword})
     if(user){
         return res.status(409).json({"Status":"User already exists"})
     }
     try{
         const hashedPassword = await bcrypt.hash(password, 10)
-        let newUser = new User({username, email, password: hashedPassword})
+        let newUser = new User({username, salt:KdfSalt, email, password: hashedPassword})
         await newUser.save()
         return res.status(200).json({"Status": "User created successfully"})
     }catch(error){
