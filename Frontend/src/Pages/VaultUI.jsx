@@ -80,6 +80,7 @@ const Vault = () =>{
         }
 
         fetchCreds();
+        FetchUser();
         FetchVaults();
     }, [id])
 
@@ -234,7 +235,7 @@ const Vault = () =>{
                     <div className="SideBarHeader p-4 flex flex-col w-full h-32 bg-[#FCFF31] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
                         {/* <div className="profile-pic h-8 w-8 rounded-3xl p-3 bg-white shadow-[1px_1px_16px_0.2px_#000]"></div> */}
                         <CgProfile className="profile-pic h-8 w-8"/>
-
+                        <h2>{username}</h2>
                     </div>
 
                     {vaults.map((vault)=>(
