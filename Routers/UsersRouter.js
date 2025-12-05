@@ -1,9 +1,10 @@
 const express = require("express");
-const {signUp, signIn, logout} = require("../Controllers/UserControllers");
+const {signUp, signIn, getUser, logout} = require("../Controllers/UserControllers");
 const app = express();
 const router = express.Router();
-const {RestrictToLoggedInUsersOnly} = require("../Middlewares/Authentication")
+const {RestrictToLoggedInUsersOnly} = require("../Middlewares/Authentication");
 
+router.get("/getUser", getUser);
 router.post("/sign-up", signUp);
 router.post("/sign-in", signIn);
 router.get("/verify", RestrictToLoggedInUsersOnly, (req, res)=>{
