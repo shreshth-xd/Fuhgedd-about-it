@@ -12,6 +12,7 @@ import { GrAddCircle } from "react-icons/gr";
 import PasswordModal from "../Components/PasswordModal";
 import DialogBox from "../Components/DialogBox";
 import { MdDelete } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
 
 const Vault = () =>{
     const {id} = useParams();
@@ -308,6 +309,7 @@ const Vault = () =>{
                     setNewCredValue("");
                     setNewCredAlgorithm("AES-256-GCM");
                 }}
+                title="Create New Credential"
             >
                 <form onSubmit={handleCreateCredSubmit} className="w-full flex flex-col gap-y-6">
                     <div className="flex flex-col gap-y-2">
