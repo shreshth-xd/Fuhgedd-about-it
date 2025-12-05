@@ -1,8 +1,18 @@
 const path = require("node:path")
 const {User} = require("../Models/User.mjs")
-const {setUser} = require("../Services/JWTAuth")
+const {setUser, getUser} = require("../Services/JWTAuth")
 const bcrypt = require("bcrypt")
 const crypto = require("crypto")
+
+async function getUser(req, res){
+    const token = req.cookies?.JWT_token;
+    try{
+        const user = getUser(token);
+        return res.status(200).json({"username":user.username,"Status":"User fetched successfully"})
+    }catch(error){
+        return res.status(500).json({"Status":"Something went wrong"})
+    }
+}
 
 async function signUp(req, res){
     const {username, email, password} = req.body;
@@ -62,5 +72,5 @@ async function logout(req,res){
 
 
 module.exports = {
-    signUp, signIn, logout
+    signUp, signIn, getUser, logout
 }
