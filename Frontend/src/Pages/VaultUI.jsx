@@ -36,6 +36,7 @@ const Vault = () =>{
     const [newCredAlgorithm, setNewCredAlgorithm] = useState("AES-256-GCM");
     const [createCredError, setCreateCredError] = useState("");
 
+    const [username, setUsername] = useState("");
 
     useEffect(()=>{
         if(!id) return
@@ -68,6 +69,14 @@ const Vault = () =>{
                 if(request.ok){
                     setVaults(data.vaults || [])
                 }
+        }
+
+        const FetchUser = async () =>{
+            const request = await fetch("/user/getUser");
+            const data = await request.json();
+            if(request.ok){
+                setUsername(()=>data.username);
+            }
         }
 
         fetchCreds();
@@ -223,8 +232,9 @@ const Vault = () =>{
             <div className="ParentContainer flex h-[100vh] w-[100vw] m-0 relative bg-[#e6fafc]">
                 <div className={`SideBar w-[322px] h-full gap-y-3 overflow-y-auto bg-[#1d3660] ${Sidebar} self-start px-4 py-7 relative z-10 left-0 flex flex-col items-center`}>
                     <div className="SideBarHeader p-4 flex flex-col w-full h-32 bg-[#FCFF31] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
-                        <div className="profile-pic h-8 w-8 rounded-3xl p-3 bg-white shadow-[1px_1px_16px_0.2px_#000]"></div>
-                        
+                        {/* <div className="profile-pic h-8 w-8 rounded-3xl p-3 bg-white shadow-[1px_1px_16px_0.2px_#000]"></div> */}
+                        <CgProfile className="profile-pic h-8 w-8"/>
+
                     </div>
 
                     {vaults.map((vault)=>(
