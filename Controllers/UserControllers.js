@@ -4,7 +4,7 @@ const {setUser, getUser} = require("../Services/JWTAuth")
 const bcrypt = require("bcrypt")
 const crypto = require("crypto")
 
-async function getUser(req, res){
+async function GetUser(req, res){
     const token = req.cookies?.JWT_token;
     try{
         const user = getUser(token);
@@ -72,5 +72,5 @@ async function logout(req,res){
 
 
 module.exports = {
-    signUp, signIn, getUser, logout
+    signUp, signIn, GetUser, logout
 }
