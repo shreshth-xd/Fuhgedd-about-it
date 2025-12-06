@@ -272,7 +272,7 @@ const MainPage = () => {
                             </div>
                             <div className="vaults flex flex-col gap-y-2">
                                 {vaultBoxes.map((vault) => (    
-                                        <div key={vault._id} className="vault-box h-auto w-full bg-[#737070] px-3 py-2">
+                                        <div key={vault._id} className="vault-box h-auto w-full bg-[#2c2c2c] px-3 py-2">
                                             <div className="dialog w-full flex justify-between items-center text-gray-200">
                                                 <h2 onClick={()=>{window.location.href = `/Vault/${vault._id}`}}>{vault.name}</h2>
                                                 <div className="flex gap-x-1.5">
