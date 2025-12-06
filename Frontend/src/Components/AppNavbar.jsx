@@ -11,31 +11,16 @@ const AppNavBar = () =>{
 
     return(
         <div className="AppNavBar jersey-25 bg-[#292928] w-full px-8 py-3 flex items-center justify-between text-white">
-            <div className="VaultsAndSettings h-full flex items-center gap-x-2">
                 <button className={`lg:px-7 lg:py-3.5 px-4 py-2  rounded-2xl navbar-vault-btn border-2 hover:border-white
-                
                 ${currLocation==='http://localhost:5173/app' ? 'bg-[#d9d9d3] text-[#161614]' : 'bg-[#161614]' }
                 `}>
-                    
                     <FaVault className="icon"/>
                     <label htmlFor="vaults" className="AppNavBarBtnText">
                         Vaults
-                    </label>
-                    
+                    </label>                    
                 </button>
-                <button className={`lg:px-7 lg:py-3.5 px-4 py-2 rounded-2xl navbar-settings-btn border-2 hover:border-white 
-                
-                ${currLocation==='http://localhost:5173/settings' ? 'bg-[#d9d9d3] text-[#161614]' : 'bg-[#161614]' }
-                `}>
 
-                <MdOutlineSettingsApplications className="icon"/>
-                <label htmlFor="settings" className="AppNavBarBtnText">
-                    Settings    
-                </label>    
-                    
-                </button>
-            </div>
-            <div className="Logout-btn h-full">
+                
                 <button className={`lg:px-7 lg:py-3.5 px-4 py-2 rounded-2xl border-2 hover:border-white`} onClick={async ()=>{
                     const LogOutReq = await fetch("/user/logout", {credentials: "include"})
                     if(LogOutReq.ok){
@@ -49,7 +34,6 @@ const AppNavBar = () =>{
                     </label>    
                     
                 </button>
-            </div>
         </div>
     )
 }
