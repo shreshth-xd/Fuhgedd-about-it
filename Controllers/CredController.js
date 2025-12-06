@@ -445,18 +445,13 @@ async function GetCreds(req,res){
     const user_id = req.user.id;
     const vault_id = req.body.id;
 
-    // console.log("user_id:", user_id, typeof user_id);
-    // console.log("vault_id:", vault_id, typeof vault_id);
 
     try{
-        const allCreds = await cred.find({});
-    
         const creds = await cred.find({
             user: mongoose.Types.ObjectId.createFromHexString(user_id), 
             vault: mongoose.Types.ObjectId.createFromHexString(vault_id)
         })
-        // console.log("All creds: ",allCreds);
-        // console.log("Creds: ",creds);
+        
         if(creds.length===0){
             return res.status(404).json({creds: [], "Status":"No creds found here"})
         }else{
