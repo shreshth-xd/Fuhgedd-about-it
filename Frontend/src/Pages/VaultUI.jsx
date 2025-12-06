@@ -17,7 +17,7 @@ import { CgProfile } from "react-icons/cg";
 const Vault = () =>{
     const {id} = useParams();
     console.log(id)
-    const [Sidebar, setSidebar] = useState("block");
+    const [Sidebar, setSidebar] = useState("hidden");
     const [vaults, setVaults] = useState([]);
     const [creds, setCreds] = useState([]);
     const [retrievalStatus, setRetrievalStatus] = useState("");
@@ -253,7 +253,7 @@ const Vault = () =>{
                             }else{
                                 return setSidebar("hidden")
                             }
-                        }} className="NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/><p className="hidden lg:block">Sidebar</p></button>
+                        }} className="NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/><p className="hidden lg:block">Vaults</p></button>
                         <button onClick={()=>window.location.href="/app"} className="NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><AiOutlineHome/><p className="hidden lg:block">Home</p></button>
                     </div>
 
