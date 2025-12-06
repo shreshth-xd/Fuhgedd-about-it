@@ -36,11 +36,7 @@ const Navbar = () => {
                 </div>
 
                 <div className="sign-in-sign-up hidden sm:flex gap-x-[20px]">
-                    <a href="/learn" className="text-black decoration-[none]">
-                        <button className="navigation-button text-[20px] rounded-[36px] px-[36px] py-[13px] border-2 border-transparent transition-all duration-300 hover:shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
-                            Learn
-                        </button>
-                    </a>
+                    
 
                     <a
                         className="text-black decoration-[none]" onClick={async ()=>{
