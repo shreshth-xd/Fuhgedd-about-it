@@ -54,7 +54,7 @@ const Navbar = () => {
                     </a>
 
                     <a
-                        className="text-black decoration-[none]">
+                        className="text-black decoration-[none]" onClick={async () => window.location.href="/sign-up"}>
                         <button className="navigation-button px-[36px] py-[13px] border-[#000000] rounded-[36px] text-[20px]">
                             Sign Up
                         </button>
