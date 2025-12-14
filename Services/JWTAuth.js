@@ -4,6 +4,7 @@ const signature = process.env.JWT_SIG;
 function setUser(payload){
     return jwt.sign({
         id: payload._id,
+        role: payload.role,
         username: payload.username
     }, signature, {
         expiresIn: "15d"
