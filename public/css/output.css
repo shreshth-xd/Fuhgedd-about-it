@@ -585,9 +585,6 @@
   .bg-\[\#292928\] {
     background-color: #292928;
   }
-  .bg-\[\#737070\] {
-    background-color: #737070;
-  }
   .bg-\[\#FCFF31\] {
     background-color: #FCFF31;
   }
@@ -836,10 +833,6 @@
   }
   .shadow-\[0_4px_12px_rgba\(0\,0\,0\,0\.4\)\] {
     --tw-shadow: 0 4px 12px var(--tw-shadow-color, rgba(0,0,0,0.4));
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
-  .shadow-\[1px_1px_16px_0\.2px_\#000\] {
-    --tw-shadow: 1px 1px 16px 0.2px var(--tw-shadow-color, #000);
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-\[4px_4px_7px_2px_rgba\(0\,0\,0\,0\.25\)\)\] {
