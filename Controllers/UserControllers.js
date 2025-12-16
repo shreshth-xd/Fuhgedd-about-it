@@ -23,7 +23,7 @@ async function signUp(req, res){
     }
     try{
         const hashedPassword = await bcrypt.hash(password, 10)
-        let newUser = new User({username, salt:KdfSalt, role: "User",email, password: hashedPassword})
+        let newUser = new User({username, salt:KdfSalt, email, password: hashedPassword})
         await newUser.save()
         return res.status(200).json({"Status": "User created successfully"})
     }catch(error){
@@ -39,7 +39,7 @@ async function signIn(req, res){
         if(!user || !(await bcrypt.compare(password, user.password))){
             return res.status(404).json({"Status":"Invalid username or password"})
         }else{
-            const token = setUser({_id: user._id, role: user.role, username: user.username})
+            const token = setUser({_id: user._id, username: user.username})
             res.cookie("JWT_token", token, {
                 maxAge: 15 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
