@@ -7,7 +7,8 @@ const {getUser} = require("../Services/JWTAuth")
 const crypto = require("crypto");
 
 
-// Write a controller to see if user has even created any vault by so far or not
+// Devise a way to write a controller to create a vault in such a way that it 
+// returns all the vaults created by that specified user only:
 async function GetVaults(req, res){
     const token = req.cookies?.JWT_token;
     if(!token){
@@ -29,7 +30,7 @@ async function GetVaults(req, res){
 }
 
 
-// Devise a way to write a controller to create a vault in such a way that it returns all the vaults created by that specified user only:
+
 async function CreateVault(req, res){
     const token = req.cookies?.JWT_token;
     const {vault, creds} = req.body;
@@ -78,12 +79,15 @@ async function DeleteVault(req, res){
         await cred.deleteMany({ vault: VaultId });
         await Vault.findByIdAndDelete(VaultId);
         
+        
         res.status(200).json({"Status":"Vault deleted successfully"})
     }catch(error){
         res.status(401).json({"Status":"Something went wrong"})
     }
 }
 
+
+// To delete all the present vaults with a single click
 async function DeleteAllVaults(req, res){
     try{
         const Vaults = req.vaults;        
