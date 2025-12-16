@@ -15,9 +15,5 @@ async function RestrictToLoggedInUsersOnly(req, res, next){
     }
 }
 
-// Making a new middleware to restrict access to a route to only to a selected array of roles
-async function RestrictToRole(req, res){
-    return res.status(501).json({"Status":"The middleware is yet to be developed."})
-}
 
 module.exports = {RestrictToLoggedInUsersOnly}
