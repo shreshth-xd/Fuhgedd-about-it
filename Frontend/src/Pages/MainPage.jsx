@@ -28,7 +28,7 @@ const MainPage = () => {
     
     // The array of objects to hold the actual credential data:
     const [credFields, setCredFields] = useState([
-        {id: credId, Name: "", Value: "", Algorithm: "AES-256"}
+        {id: credId, Name: "", Value: "", Algorithm: "AES-256-GCM"}
     ]);
 
 
@@ -52,7 +52,7 @@ const MainPage = () => {
                 const newId = previousId+1;
                 setCredFields(currFields =>{
                     if(isLimitExceed===true) return currFields;
-                    return [...currFields, {id: newId, Name:"", Value: "", Algorithm: "SHA256"}]
+                    return [...currFields, {id: newId, Name:"", Value: "", Algorithm: "AES-256-GCM"}]
                 });
 
                 return newId;
@@ -215,7 +215,7 @@ const MainPage = () => {
                 setStatus("success");
                 setIsVaultBoxOpen(false);
                 setVaultName("");
-                setCredFields([{id: 1, Name: "", Value: "", Algorithm: "AES-256"}]);
+                setCredFields([{id: 1, Name: "", Value: "", Algorithm: "AES-256-GCM"}]);
                 setCredId(1);
             }else{
                 const creationStatus = data.Status || data.error || "Failed to create vault";
