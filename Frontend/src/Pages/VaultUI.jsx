@@ -230,7 +230,7 @@ const Vault = () =>{
 
     return(
         <>
-            <div className="ParentContainer flex h-[100vh] w-[100vw] m-0 relative bg-[#e6fafc]">
+            <div className="ParentContainer flex h-[100vh] w-[100vw] m-0 relative bg-white">
                 <div className={`SideBar w-[322px] h-full gap-y-3 overflow-y-auto bg-[#1d3660] ${Sidebar} self-start px-4 py-7 relative z-10 left-0 flex flex-col items-center`}>
                     <div className="SideBarHeader p-4 flex items-center w-full h-16 gap-x-1.5 bg-[#FCFF31] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
                         <CgProfile className="profile-pic h-8 w-8"/>
@@ -261,7 +261,7 @@ const Vault = () =>{
                     <div className="creds h-3/4 flex flex-col grow w-full p-3 gap-y-2">
                         {
                             creds.map((cred)=>(
-                                <div key={cred._id} className="cred h-24 max-h-28 grow bg-white rounded-2xl flex justify-between items-center px-5 shadow-[4px_4px_7px_2px_rgba(0,0,0,0.25))]">
+                                <div key={cred._id} className="cred h-24 max-h-28 grow bg-[#f2f2f2] border-[1px] border-black rounded-2xl flex justify-between items-center px-5 shadow-[4px_4px_7px_2px_rgba(0,0,0,0.25))]">
                                     <span className="title jersey-25 text-2xl">{cred.purpose}</span>
                                     <div className="credBtns flex items-center gap-x-1">
                                         <button 
@@ -277,15 +277,15 @@ const Vault = () =>{
                         }
                         <button 
                             onClick={() => setIsCreateCredModalOpen(true)}
-                            className="cred h-24 max-h-28 grow bg-white rounded-2xl flex items-center justify-center shadow-[4px_4px_7px_2px_rgba(0,0,0,0.25))] hover:bg-gray-100"
+                            className="cred h-24 max-h-28 grow bg-[#f2f2f2] border-[1px] border-black rounded-2xl flex items-center justify-center shadow-[4px_4px_7px_2px_rgba(0,0,0,0.25))] hover:bg-gray-100"
                         >
                             <span className="text-black text-4xl font-bold">+</span>
                         </button>
                     </div>
                     
                     
-                    <div className="buttons h-1/6 bg-gray-400">
-                        <div className="DeleteAllBtn"></div>
+                    <div className="buttons h-1/6 bg-[rgb(242,242,242)] border-2 p-5 flex justify-between items-center border-black rounded-[39px] mx-[40px] mb-[14px]">
+                        <div className="DeleteAllBtn VaultUI-Footer-Utility-Button"><MdOutlineDeleteSweep className="VaultUI-Footer-Svg-Icon"/><p className="hidden lg:block">Delete all</p></div>
                         <div className="FeedbackBtn"></div>
                         <div className="AddCredBtn"></div>
                         <div className="DownloadAllBtn"></div>
