@@ -11,6 +11,34 @@
 
 /* Rectangle 69 */
 
+/* Buttons parent element style: */
+/*
+padding: 10px;
+display: flex;
+justify-content: space-between;
+align-items: center; */
+
+
+.VaultUI-Footer-Utility-Button{
+    padding: 6px 10px;
+    border: 1px solid black;
+    background-color: #e0e0e0;
+    border-radius: 32px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+    box-shadow: 0px 1px 13px 2px #858585;
+}
+
+
+.VaultUI-Footer-Svg-Icon{
+    height: 38px;
+    width: auto;
+}
+
+
+
 @media only screen and (min-width: 359px){
     .home-page-bottom-mobile-svg{
         display: none;
