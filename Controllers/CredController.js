@@ -279,7 +279,7 @@ async function DecryptCred(req, res){
                 
             case "twofish":
                 try {
-                    // Note: This requires the 'twofish' npm package
+                    // Note: This always requires the 'twofish' npm package
                     const twofish = require('twofish');
                     const twofishKey = decryptionKey.slice(0, 32);
                     const decipherTwofish = twofish.createDecipheriv(
