@@ -284,7 +284,7 @@ const Vault = () =>{
                     </div>
                     
                     
-                    <div className="buttons h-1/6 bg-[rgb(242,242,242)] border-2 p-5 flex justify-between items-center border-black rounded-[39px] mx-[40px] mb-[14px]">
+                    <div className="buttons h-1/6 bg-[rgb(242,242,242)] border-2 p-5 flex gap-x-5 justify-between items-center border-black rounded-[39px] mx-[40px] mb-[14px]">
                         <div className="DeleteAllBtn VaultUI-Footer-Utility-Button">
                             <MdOutlineDeleteSweep className="VaultUI-Footer-Svg-Icon"/>
                             <p className="hidden lg:block">Delete all</p>
@@ -295,18 +295,20 @@ const Vault = () =>{
                             <p className="hidden lg:block">Feedback</p>    
                         </div>
                         
-                        <div className="AddCredBtn VaultUI-Footer-Utility-Button">
+                        {/* <div className="AddCredBtn VaultUI-Footer-Utility-Button">
                             <GrAddCircle className="VaultUI-Footer-Svg-Icon"/>
                             <p className="hidden lg:block">Add a cred</p>
                         </div>
                         
                         <div className="DownloadAllBtn VaultUI-Footer-Utility-Button">
+                            <PiDownloadBold className="VaultUI-Footer-Svg-Icon"/>
                             <p className="hidden lg:block">Download all creds</p>
                         </div>
                         
                         <div className="Settings VaultUI-Footer-Utility-Button">
+                            <IoSettingsOutline className="VaultUI-Footer-Svg-Icon"/>
                             <p className="hidden lg:block">Settings</p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
