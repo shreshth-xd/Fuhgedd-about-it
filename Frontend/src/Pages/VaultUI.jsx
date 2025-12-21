@@ -285,11 +285,28 @@ const Vault = () =>{
                     
                     
                     <div className="buttons h-1/6 bg-[rgb(242,242,242)] border-2 p-5 flex justify-between items-center border-black rounded-[39px] mx-[40px] mb-[14px]">
-                        <div className="DeleteAllBtn VaultUI-Footer-Utility-Button"><MdOutlineDeleteSweep className="VaultUI-Footer-Svg-Icon"/><p className="hidden lg:block">Delete all</p></div>
-                        <div className="FeedbackBtn"></div>
-                        <div className="AddCredBtn"></div>
-                        <div className="DownloadAllBtn"></div>
-                        <div className="Settings"></div>
+                        <div className="DeleteAllBtn VaultUI-Footer-Utility-Button">
+                            <MdOutlineDeleteSweep className="VaultUI-Footer-Svg-Icon"/>
+                            <p className="hidden lg:block">Delete all</p>
+                        </div>
+
+                        <div className="FeedbackBtn VaultUI-Footer-Utility-Button">
+                            <VscFeedback className="VaultUI-Footer-Svg-Icon"/>
+                            <p className="hidden lg:block">Feedback</p>    
+                        </div>
+                        
+                        <div className="AddCredBtn VaultUI-Footer-Utility-Button">
+                            <GrAddCircle className="VaultUI-Footer-Svg-Icon"/>
+                            <p className="hidden lg:block">Add a cred</p>
+                        </div>
+                        
+                        <div className="DownloadAllBtn VaultUI-Footer-Utility-Button">
+                            <p className="hidden lg:block">Download all creds</p>
+                        </div>
+                        
+                        <div className="Settings VaultUI-Footer-Utility-Button">
+                            <p className="hidden lg:block">Settings</p>
+                        </div>
                     </div>
                 </div>
             </div>
