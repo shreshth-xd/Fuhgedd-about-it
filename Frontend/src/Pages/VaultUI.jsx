@@ -295,7 +295,7 @@ const Vault = () =>{
                             <p className="hidden lg:block">Feedback</p>    
                         </div>
                         
-                        {/* <div className="AddCredBtn VaultUI-Footer-Utility-Button">
+                        <div className="AddCredBtn VaultUI-Footer-Utility-Button">
                             <GrAddCircle className="VaultUI-Footer-Svg-Icon"/>
                             <p className="hidden lg:block">Add a cred</p>
                         </div>
@@ -308,7 +308,7 @@ const Vault = () =>{
                         <div className="Settings VaultUI-Footer-Utility-Button">
                             <IoSettingsOutline className="VaultUI-Footer-Svg-Icon"/>
                             <p className="hidden lg:block">Settings</p>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </div>
