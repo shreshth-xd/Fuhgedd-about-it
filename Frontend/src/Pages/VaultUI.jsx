@@ -309,6 +309,7 @@ const Vault = () =>{
                             <IoSettingsOutline className="VaultUI-Footer-Svg-Icon"/>
                             <p className="hidden lg:block">Settings</p>
                         </div>
+                        
                     </div>
                 </div>
             </div>
