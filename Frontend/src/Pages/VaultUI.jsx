@@ -239,7 +239,12 @@ const Vault = () =>{
 
                     {vaults.map((vault)=>(
                         <div className="vaultNode px-4 py-4 h-44 w-full bg-white rounded-3xl shadow-[4px_8px_4px_4px_rgba(0, 0, 0, 0.25)]" key={vault._id}>
-                            <h1 className="text-2xl jersey-25 hover:text-blue-500 hover:underline inline">{vault.name}</h1>
+                            
+                            <h1 onClick={()=> window.location.href = `/Vault/${vault._id}`} 
+                            className={`text-2xl jersey-25 ${window.location.pathname === `/Vault/${vault._id}` ? "text-blue-500" : "text-black"} hover:underline inline`}>
+                                {vault.name}
+                            </h1>
+
                             <h2>Cred count: {vault.creds.length}</h2>
                         </div>
                     ))}
@@ -400,7 +405,7 @@ const Vault = () =>{
                                 setNewCredValue("");
                                 setNewCredAlgorithm("AES-256-GCM");
                             }}
-                            
+
                             className="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded text-white">
                             Cancel
                         </button>
