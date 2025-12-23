@@ -389,8 +389,10 @@ const Vault = () =>{
                     )}
 
                     <div className="flex gap-x-2 justify-end">
+
                         <button
                             type="button"
+
                             onClick={() => {
                                 setIsCreateCredModalOpen(false);
                                 setCreateCredError("");
@@ -398,8 +400,8 @@ const Vault = () =>{
                                 setNewCredValue("");
                                 setNewCredAlgorithm("AES-256-GCM");
                             }}
-                            className="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded text-white"
-                        >
+                            
+                            className="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded text-white">
                             Cancel
                         </button>
                         <button
