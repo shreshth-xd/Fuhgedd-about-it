@@ -248,7 +248,7 @@ const Vault = () =>{
                             }else{
                                 return setSidebar("hidden")
                             }
-                        }} className="lg:hidden NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/></button>
+                        }} className="lg:hidden absolute lg:relative NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/></button>
                     
                     </div>
 
