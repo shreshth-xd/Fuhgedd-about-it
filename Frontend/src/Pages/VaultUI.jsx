@@ -234,7 +234,7 @@ const Vault = () =>{
     return(
         <>
             <div className="ParentContainer flex h-[100vh] w-[100vw] m-0 relative bg-white">
-                <div className={`SideBar w-[322px] h-full gap-y-3 overflow-y-auto bg-[#000] ${Sidebar} self-start px-4 py-7 relative z-10 left-0 flex flex-col items-center`}>
+                <div className={`SideBar w-[322px] h-full gap-y-3 overflow-y-auto bg-[#000] ${Sidebar} self-start px-4 py-7 absolute lg:relative z-10 left-0 flex flex-col items-center`}>
                     <div className="SideBarHeader p-4 flex items-center justify-between w-full h-16 gap-x-1.5 bg-[#FCFF31] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
                         
                         <div className="ProfilePicAndUsername flex items-center gap-x-1">
@@ -248,7 +248,7 @@ const Vault = () =>{
                             }else{
                                 return setSidebar("hidden")
                             }
-                        }} className="lg:hidden absolute lg:relative NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/></button>
+                        }} className="lg:hidden NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/></button>
                     
                     </div>
 
