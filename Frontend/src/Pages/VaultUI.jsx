@@ -304,7 +304,7 @@ const Vault = () =>{
                     </div>
                     
                     
-                    <div className="buttons h-1/6 bg-[rgb(242,242,242)] border-2 p-5 flex gap-x-5 justify-between items-center border-black rounded-[39px] mx-[40px] mb-[14px]">
+                    <div className="buttons h-1/6 w-[fit-content] mx-auto bg-[rgb(242,242,242)] border-2 p-5 flex gap-x-5 justify-between items-center border-black rounded-[39px] mb-[14px]">
                         <div className="DeleteAllBtn VaultUI-Footer-Utility-Button">
                             <MdOutlineDeleteSweep className="VaultUI-Footer-Svg-Icon"/>
                             <p className="hidden lg:block">Delete all</p>
