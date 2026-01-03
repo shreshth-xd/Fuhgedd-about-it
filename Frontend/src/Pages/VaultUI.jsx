@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import {useParams} from "react-router-dom"
 
 
+// React icons
 import { MdOutlineDeleteSweep } from "react-icons/md";
 import { BsLayoutTextSidebar } from "react-icons/bs";
 import { AiOutlineHome } from "react-icons/ai";
@@ -9,10 +10,12 @@ import { VscFeedback } from "react-icons/vsc";
 import { PiDownloadBold } from "react-icons/pi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { GrAddCircle } from "react-icons/gr";
-import PasswordModal from "../Components/PasswordModal";
-import DialogBox from "../Components/DialogBox";
 import { MdDelete } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
+
+// Password modal and dialog box component
+import PasswordModal from "../Components/PasswordModal";
+import DialogBox from "../Components/DialogBox";
 
 const Vault = () =>{
     const {id} = useParams();
