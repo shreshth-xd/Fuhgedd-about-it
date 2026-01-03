@@ -274,7 +274,7 @@ const Vault = () =>{
                                 return setSidebar("hidden")
                             }
                         }} className="NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/><p className="hidden lg:block">Vaults</p></button>
-                        <button onClick={()=>window.location.href="/app"} className="NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><AiOutlineHome/><p className="hidden lg:block">Home</p></button>
+                        <button onClick={()=>window.location.href="/app"} className="NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><AiOutlineHome/><p className="hidden lg:block">Vaults Dashboard</p></button>
                     </div>
 
 
