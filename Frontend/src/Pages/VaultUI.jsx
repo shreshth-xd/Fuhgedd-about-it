@@ -235,9 +235,13 @@ const Vault = () =>{
         <>
             <div className="ParentContainer flex h-[100vh] w-[100vw] m-0 relative bg-white">
                 <div className={`SideBar w-[322px] h-full gap-y-3 overflow-y-auto bg-[#1d3660] ${Sidebar} self-start px-4 py-7 relative z-10 left-0 flex flex-col items-center`}>
-                    <div className="SideBarHeader p-4 flex items-center w-full h-16 gap-x-1.5 bg-[#FCFF31] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
-                        <CgProfile className="profile-pic h-8 w-8"/>
-                        <h2>{username}</h2>
+                    <div className="SideBarHeader p-4 flex items-center justify-between w-full h-16 gap-x-1.5 bg-[#FCFF31] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+                        
+                        <div className="ProfilePicAndUsername">
+                            <CgProfile className="profile-pic h-8 w-8"/>
+                            <h2>{username}</h2>
+                        </div>
+                        
                         <button onClick={()=>{
                             if(Sidebar==="hidden"){
                                 return setSidebar("block")
@@ -245,6 +249,7 @@ const Vault = () =>{
                                 return setSidebar("hidden")
                             }
                         }} className="lg:hidden NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/></button>
+                    
                     </div>
 
                     {vaults.map((vault)=>(
