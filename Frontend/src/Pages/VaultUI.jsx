@@ -238,6 +238,13 @@ const Vault = () =>{
                     <div className="SideBarHeader p-4 flex items-center w-full h-16 gap-x-1.5 bg-[#FCFF31] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
                         <CgProfile className="profile-pic h-8 w-8"/>
                         <h2>{username}</h2>
+                        <button onClick={()=>{
+                            if(Sidebar==="hidden"){
+                                return setSidebar("block")
+                            }else{
+                                return setSidebar("hidden")
+                            }
+                        }} className="lg:hidden NavButton rounded-[26px] px-[28px] py-[12px] flex items-center gap-x-1.5 bg-[#e5eafa] shadow-[0_4px_12px_rgba(0,0,0,0.4)]"><BsLayoutTextSidebar/></button>
                     </div>
 
                     {vaults.map((vault)=>(
