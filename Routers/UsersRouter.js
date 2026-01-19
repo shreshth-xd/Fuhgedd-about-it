@@ -1,6 +1,5 @@
 const express = require("express");
 const {signUp, signIn, GetUser, logout} = require("../Controllers/UserControllers");
-const app = express();
 const router = express.Router();
 const {RestrictToLoggedInUsersOnly} = require("../Middlewares/Authentication");
 
