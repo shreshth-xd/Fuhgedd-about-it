@@ -19,7 +19,6 @@ import DialogBox from "../Components/DialogBox";
 
 const Vault = () =>{
     const {id} = useParams();
-    console.log(id)
     const [Sidebar, setSidebar] = useState("hidden");
     const [vaults, setVaults] = useState([]);
     const [creds, setCreds] = useState([]);
@@ -40,7 +39,7 @@ const Vault = () =>{
     const [createCredError, setCreateCredError] = useState("");
 
     // Feedback modal state
-    // const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+    const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
     
     const [username, setUsername] = useState("");
 
@@ -273,7 +272,7 @@ const Vault = () =>{
                     ))}
 
                 </div>
-
+                
                 <div className="FrontElements flex grow flex-col w-full">
                     <div className="NavBar gap-x-4 jersey-25 w-full h-[75px] bg-gray-400 px-4.5 py-1 flex items-center">
                         <button onClick={()=>{
@@ -319,12 +318,12 @@ const Vault = () =>{
                             <p className="hidden lg:block">Delete all</p>
                         </div>
 
-                        <div className="FeedbackBtn VaultUI-Footer-Utility-Button">
+                        <div className="FeedbackBtn VaultUI-Footer-Utility-Button" onClick={() => setIsFeedbackOpen(true)}>
                             <VscFeedback className="VaultUI-Footer-Svg-Icon"/>
                             <p className="hidden lg:block">Feedback</p>    
                         </div>
                         
-                        <div className="AddCredBtn VaultUI-Footer-Utility-Button" onClick={setIsCreateCredModalOpen(true)}>
+                        <div className="AddCredBtn VaultUI-Footer-Utility-Button" onClick={() => setIsCreateCredModalOpen(true)}>
                             <GrAddCircle className="VaultUI-Footer-Svg-Icon"/>
                             <p className="hidden lg:block">Add a cred</p>
                         </div>
@@ -443,7 +442,7 @@ const Vault = () =>{
                 </form>
             </DialogBox>
 
-            {/* <DialogBox isOpen={isFeedbackOpen} onClose={setIsFeedbackOpen(false)}></DialogBox> */}
+            <DialogBox isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)}></DialogBox>
         </>
     )
 }
