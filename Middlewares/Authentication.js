@@ -1,12 +1,12 @@
 const jwt = require("jsonwebtoken")
-const {setUser, getUser} = require("../Services/JWTAuth")
+const {getUser} = require("../Services/JWTAuth")
 
 async function RestrictToLoggedInUsersOnly(req, res, next){
     const token = req.cookies?.JWT_token;
     if(!token) return res.status(404).json({"Status":"User not found"})
     
     try{
-        let decodedPayload = jwt.verify(token, process.env.JWT_SIG)
+        let decodedPayload = getUser(token)
         req.user = decodedPayload;
         next()
     }catch(error){
