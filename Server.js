@@ -5,11 +5,11 @@ const path = require("node:path");
 const fs = require("node:fs");
 const app = express();
 const cors = require("cors");
-const {RestrictToLoggedInUsersOnly} = require("./Middlewares/Authentication")
+const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser")
+const {RestrictToLoggedInUsersOnly} = require("./Middlewares/Authentication")
 
 // DB Schemas
-const mongoose = require("mongoose");
 const {User} = require("./Models/User.mjs");
 const vault = require("./Models/Vault.mjs");
 const cred = require("./Models/Cred.mjs");
