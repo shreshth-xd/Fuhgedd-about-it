@@ -23,8 +23,8 @@ const Vault = () =>{
     const [Sidebar, setSidebar] = useState("hidden");
     const [vaults, setVaults] = useState([]);
     const [creds, setCreds] = useState([]);
-    const [retrievalStatus, setRetrievalStatus] = useState("");
-    const [VaultBgColor, setVaultBgColor] = useState();
+    // const [retrievalStatus, setRetrievalStatus] = useState("");
+    // const [VaultBgColor, setVaultBgColor] = useState();
     
     // Password modal state for decryption
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
@@ -39,8 +39,14 @@ const Vault = () =>{
     const [newCredAlgorithm, setNewCredAlgorithm] = useState("AES-256-GCM");
     const [createCredError, setCreateCredError] = useState("");
 
+    // Feedback modal state
+    // const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+    
     const [username, setUsername] = useState("");
 
+
+
+    // To load the creds and user profile once the page has been loaded
     useEffect(()=>{
         if(!id) return
 
@@ -231,6 +237,8 @@ const Vault = () =>{
         }
     }
 
+
+
     return(
         <>
             <div className="ParentContainer flex h-[100vh] w-[100vw] m-0 relative bg-white">
@@ -265,6 +273,7 @@ const Vault = () =>{
                     ))}
 
                 </div>
+
                 <div className="FrontElements flex grow flex-col w-full">
                     <div className="NavBar gap-x-4 jersey-25 w-full h-[75px] bg-gray-400 px-4.5 py-1 flex items-center">
                         <button onClick={()=>{
@@ -315,7 +324,7 @@ const Vault = () =>{
                             <p className="hidden lg:block">Feedback</p>    
                         </div>
                         
-                        <div className="AddCredBtn VaultUI-Footer-Utility-Button">
+                        <div className="AddCredBtn VaultUI-Footer-Utility-Button" onClick={setIsCreateCredModalOpen(true)}>
                             <GrAddCircle className="VaultUI-Footer-Svg-Icon"/>
                             <p className="hidden lg:block">Add a cred</p>
                         </div>
@@ -433,6 +442,8 @@ const Vault = () =>{
                     </div>
                 </form>
             </DialogBox>
+
+            {/* <DialogBox isOpen={isFeedbackOpen} onClose={setIsFeedbackOpen(false)}></DialogBox> */}
         </>
     )
 }
