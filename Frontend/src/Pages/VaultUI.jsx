@@ -348,7 +348,6 @@ const Vault = () =>{
                         
                     </div>
                 </div>
-            </div>
 
             <PasswordModal
                 isOpen={isPasswordModalOpen}
@@ -443,28 +442,29 @@ const Vault = () =>{
                         <button
                             type="submit"
                             className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white"
-                        >
+                            >
                             Create
                         </button>
                     </div>
                 </form>
             </DialogBox>
 
-            <DialogBox isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} title="Give us your feedback" onSubmit={HandleFeedbackSubmit}>
-                <div className="FeedbackBoxContainer flex flex-col gap-y-4">
-                    <label htmlFor="feedback">Tell us what do you think we can improve?</label>
-                    <textarea  id="feedback" className="resize-none border-2 rounded-[8px] border-[#c3bebe] bg-[#404040b3]"></textarea>
+            <DialogBox isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} title="Give us your feedback">
+                <form action="#" className="FeedbackBoxContainer flex flex-col gap-y-4" onSubmit={HandleFeedbackSubmit}>
+                    <label htmlFor="feedback" className="text-sm font-semibold">Tell us what do you think we can improve?</label>
+                    <textarea id="feedback" className="resize-none border-2 rounded-[8px] p-1.5 border-[#c3bebe] bg-[#404040b3]"></textarea>
                     <div className="flex items-center gap-x-2">
                         <input type="submit" value="Submit" className="px-3 py-1.5 rounded-[8px] p-0.5 text-amber-50 bg-red-700 sm:bg-red-500 hover:bg-red-700"/>
                         <input type="reset" value="Clear" className="px-3 py-1.5 rounded-[8px] text-black bg-amber-50"/>
                     </div>
-                </div>
+                </form>
             </DialogBox>
 
             <PopUp isOpen={isFeedbackSubmitted} onClose={() => setIsFeedbackSubmitted(false)}>
                 <p>Feedback submitted successfully!</p>
             </PopUp>
 
+        </div>
 
         </>
     )
