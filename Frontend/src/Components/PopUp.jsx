@@ -4,7 +4,7 @@ const PopUp = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed bottom-2 z-50 bg-black text-white px-6 py-3 rounded-xl shadow-lg flex items-center self-center justify-between gap-x-3 w-2/4 mx-[39vw] backdrop-blur-sm">
+        <div className="fixed bottom-2 z-50 bg-black text-white px-6 py-3 left-[25%] rounded-xl shadow-lg flex items-center justify-between gap-x-3 w-2/4 backdrop-blur-sm">
             {children}
             <button
                 onClick={onClose}
