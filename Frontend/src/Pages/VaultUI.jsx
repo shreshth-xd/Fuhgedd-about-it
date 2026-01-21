@@ -41,6 +41,7 @@ const Vault = () =>{
 
     // Feedback modal state
     const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+    const [isFeedbackSubmitted, setIsFeedbackSubmitted] = useState(false);
     
     const [username, setUsername] = useState("");
 
@@ -240,6 +241,7 @@ const Vault = () =>{
 
     const HandleFeedbackSubmit = async () =>{
         setIsFeedbackOpen(false);
+        setIsFeedbackSubmitted(true);
     }
 
 
@@ -458,6 +460,12 @@ const Vault = () =>{
                     </div>
                 </div>
             </DialogBox>
+
+            <PopUp isOpen={isFeedbackSubmitted} onClose={() => setIsFeedbackSubmitted(false)}>
+                <p>Feedback submitted successfully!</p>
+            </PopUp>
+
+
         </>
     )
 }
