@@ -16,6 +16,7 @@ import { CgProfile } from "react-icons/cg";
 // Password modal and dialog box component
 import PasswordModal from "../Components/PasswordModal";
 import DialogBox from "../Components/DialogBox";
+import PopUp from "../Components/PopUp";
 
 const Vault = () =>{
     const {id} = useParams();
@@ -237,6 +238,11 @@ const Vault = () =>{
     }
 
 
+    const HandleFeedbackSubmit = async () =>{
+        setIsFeedbackOpen(false);
+    }
+
+
 
     return(
         <>
@@ -442,7 +448,16 @@ const Vault = () =>{
                 </form>
             </DialogBox>
 
-            <DialogBox isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)}></DialogBox>
+            <DialogBox isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} title="Give us your feedback" onSubmit={HandleFeedbackSubmit}>
+                <div className="FeedbackBoxContainer flex flex-col gap-y-4">
+                    <label htmlFor="feedback">Tell us what do you think we can improve?</label>
+                    <textarea  id="feedback" className="resize-none border-2 rounded-[8px] border-[#c3bebe] bg-[#404040b3]"></textarea>
+                    <div className="flex items-center gap-x-2">
+                        <input type="submit" value="Submit" className="px-3 py-1.5 rounded-[8px] p-0.5 text-amber-50 bg-red-700 sm:bg-red-500 hover:bg-red-700"/>
+                        <input type="reset" value="Clear" className="px-3 py-1.5 rounded-[8px] text-black bg-amber-50"/>
+                    </div>
+                </div>
+            </DialogBox>
         </>
     )
 }
