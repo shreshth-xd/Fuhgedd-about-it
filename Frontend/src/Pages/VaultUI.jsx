@@ -244,6 +244,10 @@ const Vault = () =>{
         setIsFeedbackSubmitted(true);
     }
 
+    const DeleteAllCreds = () =>{
+        
+    }
+
 
 
     return(
