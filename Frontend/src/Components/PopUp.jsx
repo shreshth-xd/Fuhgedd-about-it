@@ -1,6 +1,6 @@
 import React from "react";
 
-const ErrorBox = ({ isOpen, onClose, children }) => {
+const PopUp = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
 
     return (
@@ -17,4 +17,4 @@ const ErrorBox = ({ isOpen, onClose, children }) => {
 };
 
 
-export default ErrorBox;
+export default PopUp;
