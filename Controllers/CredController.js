@@ -8,9 +8,6 @@ const bcrypt = require("bcrypt")
 
 
 
-
-
-
 function deriveKey(password, salt) {
     return crypto.pbkdf2Sync(
         password,
@@ -126,10 +123,7 @@ async function EncryptCreds(req, res){
             return res.status(401).json({ error: "Invalid master password" });
         }
 
-        // Derive encryption key using user's salt
         const encryptionKey = deriveKey(password, user.salt);
-
-        // Ensure creds is an array
         const credsArray = Array.isArray(creds) ? creds : [creds];
         
         // Encrypt each credential based on selected algorithm
@@ -214,7 +208,6 @@ async function DecryptCred(req, res){
             return res.status(400).json({ error: "Credential ID is required" });
         }
 
-        // Fetch user from database (JWT payload has 'id', not '_id')
         const user = await User.findById(req.user.id);
         if (!user) {
             return res.status(404).json({ error: "User not found" });
@@ -235,7 +228,7 @@ async function DecryptCred(req, res){
             return res.status(404).json({ error: "Credential not found" });
         }
 
-        // Verify the credential belongs to the user (JWT payload has 'id', not '_id')
+
         if (credential.user.toString() !== req.user.id.toString()) {
             return res.status(403).json({ error: "Unauthorized access to credential" });
         }
@@ -300,13 +293,13 @@ async function DecryptCred(req, res){
                     error: "Camellia decryption is not natively supported in Node.js. A third-party library would be required." 
                 });
                 
-            default:
-                // For non-encrypted credentials or unknown algorithms, return as-is
-                return res.status(200).json({ 
-                    decryptedValue: credential.cred,
-                    purpose: credential.purpose,
-                    message: "Credential retrieved" 
-                });
+            // default:
+            //     // For non-encrypted credentials or unknown algorithms, return as-is
+            //     return res.status(200).json({ 
+            //         decryptedValue: credential.cred,
+            //         purpose: credential.purpose,
+            //         message: "Credential retrieved" 
+            //     });
         }
 
         return res.status(200).json({ 
@@ -462,4 +455,12 @@ async function GetCreds(req,res){
     }
 }
 
-module.exports = {EncryptCreds, GetCreds, DecryptCred, CreateCred};
+async function DeleteCred(req, res){
+    return res.status(200).json({"Status":"The delete cred API is yet to be built."});
+}
+
+async function DeleteCreds(req, res){
+    return res.status(200).json({"Status":"The delete creds API is yet to be built."});
+}
+
+module.exports = {EncryptCreds, GetCreds, DecryptCred, CreateCred, DeleteCred, DeleteCreds};
