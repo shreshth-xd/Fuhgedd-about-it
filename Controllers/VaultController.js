@@ -102,5 +102,4 @@ async function DeleteAllVaults(req, res){
     }
 }
 
-
 module.exports = {GetVaults, CreateVault, DeleteVault, DeleteAllVaults}

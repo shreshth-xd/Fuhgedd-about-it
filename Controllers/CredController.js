@@ -456,10 +456,18 @@ async function GetCreds(req,res){
 }
 
 async function DeleteCred(req, res){
+    const credId = req.body.credId;
+    const vaultId = req.body.vaultId;
+    const userId = req.user.id;
+
     return res.status(200).json({"Status":"The delete cred API is yet to be built."});
 }
 
 async function DeleteCreds(req, res){
+    const vaults = req.body.vaults;
+
+    vaults = Array.isArray(vaults) ? vaults : [vaults]; 
+
     return res.status(200).json({"Status":"The delete creds API is yet to be built."});
 }
 

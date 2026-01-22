@@ -11,6 +11,7 @@ import PasswordModal from "../Components/PasswordModal";
 import { MdDelete } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdDeleteSweep } from "react-icons/md";
+import PopUp from "../Components/PopUp";
 
 const MainPage = () => {
     
@@ -101,7 +102,7 @@ const MainPage = () => {
         if(DeleteReq.ok){
             setVaultBoxes(currVaults => []);
         }else{
-            setVaultCreationStatus(DeleteReq.Status);
+            setVaultCreationStatus(Res.Status);
             setIsVaultCreationErrorBoxOpen(true);
         }
     }
@@ -362,9 +363,6 @@ const MainPage = () => {
                                                     Twofish
                                                 </option>
                                                 <option className="flex items-center justify-between px-1 py-1.5">
-                                                    Camellia
-                                                </option>
-                                                <option className="flex items-center justify-between px-1 py-1.5">
                                                     AES-256-CBC
                                                 </option>
                                                 <option className="flex items-center justify-between px-1 py-1.5">
@@ -397,13 +395,13 @@ const MainPage = () => {
 
             </DialogBox>
 
-                <ErrorBox
+                <PopUp
                     isOpen={isVaultCreationErrorBoxOpen}
                     onClose={()=> 
                         setIsVaultCreationErrorBoxOpen(false)
                 }>               
                     <p>{vaultCreationStatus}</p>
-                </ErrorBox>
+                </PopUp>
 
                 <PasswordModal
                     isOpen={isPasswordModalOpen}

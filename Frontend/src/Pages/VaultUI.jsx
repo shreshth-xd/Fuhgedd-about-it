@@ -24,7 +24,6 @@ const Vault = () =>{
     const [vaults, setVaults] = useState([]);
     const [creds, setCreds] = useState([]);
     // const [retrievalStatus, setRetrievalStatus] = useState("");
-    // const [VaultBgColor, setVaultBgColor] = useState();
     
     // Password modal state for decryption
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
@@ -417,7 +416,6 @@ const Vault = () =>{
                         >
                             <option value="AES-256-GCM">AES-256-GCM</option>
                             <option value="Twofish">Twofish</option>
-                            <option value="Camellia">Camellia</option>
                             <option value="AES-256-CBC">AES-256-CBC</option>
                             <option value="ChaCha20-Poly1305">ChaCha20-Poly1305</option>
                         </select>
