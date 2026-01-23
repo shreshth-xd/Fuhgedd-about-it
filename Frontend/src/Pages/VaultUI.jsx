@@ -23,7 +23,7 @@ const Vault = () =>{
     const [Sidebar, setSidebar] = useState("hidden");
     const [vaults, setVaults] = useState([]);
     const [creds, setCreds] = useState([]);
-    // const [retrievalStatus, setRetrievalStatus] = useState("");
+    const [retrievalStatus, setRetrievalStatus] = useState("");
     
     // Password modal state for decryption
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
@@ -243,9 +243,18 @@ const Vault = () =>{
         setIsFeedbackSubmitted(true);
     }
 
-    const DeleteAllCreds = () =>{
-        
+    const DeleteCred = async (credId) =>{
+        const req = await fetch("/cred/deleteCred", {
+            method: "DELETE",
+            body: JSON.stringify({"vaultId":id, "credId": credId}),
+            headers: {"Content-Type": "application/json"},
+            credentials: "include"
+        })
+
+        const res = await req.json();
+        console.log(res)
     }
+
 
 
 
@@ -309,7 +318,7 @@ const Vault = () =>{
                                         >
                                             Copy
                                         </button>
-                                        <button className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] flex-1/6"><MdDelete/></button>
+                                        <button onClick={() => DeleteCred(cred._id)} className="DeleteBtn p-2 flex items-center justify-center form-btn xl:h-[35px] xl:w-[90px] md:text-white bg-red-600 text-white hover:font-semibold rounded-[4px] flex-1/6"><MdDelete/></button>
                                     </div>
                                 </div>
                             ))
