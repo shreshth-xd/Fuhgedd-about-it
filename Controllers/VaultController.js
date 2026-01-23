@@ -12,7 +12,7 @@ const crypto = require("crypto");
 async function GetVaults(req, res){
     const token = req.cookies?.JWT_token;
     if(!token){
-        return res.status(401).json({ Status: "JWT token not found" });
+        return res.status(401).json({"Status":"JWT token not found"});
     }
 
     try{
