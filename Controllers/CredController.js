@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const {cred} = require("../Models/Cred.mjs")
 const {getUser} = require("../Services/JWTAuth")
-const {User} = require("../Models/User.mjs")
 const bcrypt = require("bcrypt")
 
-
+const {User} = require("../Models/User.mjs")
+const {Vault} = require("../Models/Vault.mjs")
+const {cred} = require("../Models/Cred.mjs")
 
 function deriveKey(password, salt) {
     return crypto.pbkdf2Sync(
@@ -385,14 +384,6 @@ async function CreateCred(req, res){
                 algo = "twofish";
                 break;
                 
-            case "Camellia":
-                const camelliaResult = encryptCamellia(value, encryptionKey);
-                encrypted = camelliaResult.encrypted;
-                iv = camelliaResult.iv;
-                authTag = camelliaResult.authTag;
-                algo = "camellia";
-                break;
-                
             default:
                 return res.status(400).json({ error: `Unsupported algorithm: ${algorithm}` });
         }
@@ -458,17 +449,28 @@ async function GetCreds(req,res){
 async function DeleteCred(req, res){
     const credId = req.body.credId;
     const vaultId = req.body.vaultId;
-    const userId = req.user.id;
 
-    return res.status(200).json({"Status":"The delete cred API is yet to be built."});
+    await cred.deleteOne({_id: credId});
+    const vault = await Vault.find({_id: vaultId});
+    console.log(vault.creds)
+    vault.creds = vault.creds.filter((cred) => cred.toString()!==credId)
+    await vault.save();
+
+    return res.status(200).json({"Status":"Credential deleted successfully"});
 }
 
 async function DeleteCreds(req, res){
-    const vaults = req.body.vaults;
+    const creds = req.body.creds;
+    creds = Array.isArray(creds) ? creds : [creds]
 
-    vaults = Array.isArray(vaults) ? vaults : [vaults]; 
+    for (const cred of creds){
+        await cred.deleteOne({_id: cred._id})
+    }
 
-    return res.status(200).json({"Status":"The delete creds API is yet to be built."});
+    const VaultId = req.body.VaultId;
+    await Vault.deleteOne({_id: VaultId})
+
+    return res.status(200).json({"Status":"All the creds were deleted succesfully."});
 }
 
 module.exports = {EncryptCreds, GetCreds, DecryptCred, CreateCred, DeleteCred, DeleteCreds};
