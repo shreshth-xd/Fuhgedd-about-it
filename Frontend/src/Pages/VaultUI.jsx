@@ -255,6 +255,20 @@ const Vault = () =>{
         console.log(res)
     }
 
+    const DeleteCreds = async () =>{
+        const req = await fetch("/cred/deleteCreds", {
+            method: "DELETE",
+            body: JSON.stringify({"vaultId":id}),
+            headers: {"Content-Type": "application/json"},
+            credentials: "include"
+        })
+
+        const res = await req.json();
+        if (res.ok){
+            window.location.href = "/app"
+        }
+    }
+
 
 
 
