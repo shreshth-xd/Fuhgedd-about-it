@@ -452,7 +452,7 @@ async function DeleteCred(req, res){
 
     await cred.deleteOne({_id: credId});
     const vault = await Vault.find({_id: vaultId});
-    console.log(vault.creds)
+    // console.log(vault.creds)
     vault.creds = vault.creds.filter((cred) => cred.toString()!==credId)
     await vault.save();
 
@@ -468,8 +468,13 @@ async function DeleteCreds(req, res){
     for (const cred of creds){
         await cred.deleteOne({_id: cred._id})
     }
-    await Vault.deleteOne({_id: VaultId})
-    
+    await Vault.deleteOne({_id: vaultId})
+
+    const userId = req.user.id;
+    const user = await User.findOne({_id: userId});
+    user.vaults = user.vaults.filter((vault) => vault.toString()!=vaultId)       
+    await user.save();
+
     return res.status(200).json({"Status":"All the creds were deleted succesfully."});
 }
 
