@@ -79,7 +79,11 @@ async function DeleteVault(req, res){
         await cred.deleteMany({ vault: VaultId });
         await Vault.findByIdAndDelete(VaultId);
         
-        
+        const userId = req.user.id;
+        const user = await User.findOne({_id: userId});
+        user.vaults = user.vaults.filter((vault) => vault.toString()!=VaultId);
+        await user.save();
+
         res.status(200).json({"Status":"Vault deleted successfully"})
     }catch(error){
         res.status(401).json({"Status":"Something went wrong"})
@@ -90,14 +94,23 @@ async function DeleteVault(req, res){
 // To delete all the present vaults with a single click
 async function DeleteAllVaults(req, res){
     try{
-        const Vaults = req.vaults;        
+        const userId = req.user.id;
+
+        const Vaults = await Vault.find({user: userId})
+        console.log(Vaults)
         for (const node of Vaults) {
             await cred.deleteMany({ vault: node._id });
             await Vault.findByIdAndDelete(node._id);
         }
 
+        const user = await User.findOne({_id: userId});
+        user.vaults = user.vaults.map((vaults) => [])       
+        await user.save();
+        
         res.status(200).json({"Status":"Deleted all the vaults successfully"})
     }catch(error){
+        // console.log(error)
+        console.log(req.user)
         res.status(401).json({"Status": "Something went wrong"})
     }
 }
