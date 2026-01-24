@@ -93,7 +93,7 @@ const MainPage = () => {
 
 
     const DeleteAllVaults = async () =>{
-        const DeleteReq = fetch("/vault/deleteAllVaults", {
+        const DeleteReq = await fetch("/vault/deleteAllVaults", {
             method: "DELETE",
             credentials: "include"
         })
