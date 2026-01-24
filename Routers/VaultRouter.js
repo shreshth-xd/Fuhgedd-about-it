@@ -4,9 +4,9 @@ const {GetVaults, CreateVault, DeleteVault, DeleteAllVaults} = require("../Contr
 const {RestrictToLoggedInUsersOnly} = require("../Middlewares/Authentication")
 
 router.get("/getVaults", RestrictToLoggedInUsersOnly, GetVaults);
-router.post("/createVault", CreateVault);
-router.delete("/deleteVault/:id", DeleteVault);
-router.delete("/deleteAllVaults", DeleteAllVaults);
+router.post("/createVault", RestrictToLoggedInUsersOnly, CreateVault);
+router.delete("/deleteVault/:id", RestrictToLoggedInUsersOnly, DeleteVault);
+router.delete("/deleteAllVaults", RestrictToLoggedInUsersOnly, DeleteAllVaults);
 
 
 module.exports = router;
