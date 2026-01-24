@@ -460,16 +460,16 @@ async function DeleteCred(req, res){
 }
 
 async function DeleteCreds(req, res){
-    const creds = req.body.creds;
-    creds = Array.isArray(creds) ? creds : [creds]
+
+    const vaultId = req.body.vaultId;
+    const vault = await Vault.findOne({_id: vaultId})
+    const creds = vault.creds;
 
     for (const cred of creds){
         await cred.deleteOne({_id: cred._id})
     }
-
-    const VaultId = req.body.VaultId;
     await Vault.deleteOne({_id: VaultId})
-
+    
     return res.status(200).json({"Status":"All the creds were deleted succesfully."});
 }
 
