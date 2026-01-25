@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken")
 const {getUser} = require("../Services/JWTAuth")
 
 async function RestrictToLoggedInUsersOnly(req, res, next){
