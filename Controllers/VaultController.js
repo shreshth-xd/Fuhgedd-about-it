@@ -109,7 +109,7 @@ async function DeleteAllVaults(req, res){
         
         res.status(200).json({"Status":"Deleted all the vaults successfully"})
     }catch(error){
-        // console.log(error)
+        console.log(error)
         console.log(req.user)
         res.status(401).json({"Status": "Something went wrong"})
     }
