@@ -292,12 +292,12 @@ const MainPage = () => {
                     )}
 
                     {status === "empty" && (
-                            <div className="NoVaultParent w-full h-auto mt-34 flex flex-col">
+                            <div className="NoVaultParent w-full h-auto flex flex-col">
                                 <div className="NavigationButtons">
                                     <AppNavBar/>
                                     <hr className="text-white"/>
                                 </div>
-                                <div className="NoVaultBox h-72 w-96 mx-auto">
+                                <div className="NoVaultBox h-72 w-96 mt-34 mx-auto">
                                     <div className="UpperBar pt-2 px-2 w-full h-14 flex items-center justify-end border-2 border-black bg-linear-90 from-[#1a4bbf] to-[#020887]">
                                         <svg width="35" height="43" viewBox="0 0 35 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M17.5 0.5C26.8757 0.5 34.5 8.32165 34.5 18C34.5 27.6784 26.8757 35.5 17.5 35.5C8.12434 35.5 0.5 27.6784 0.5 18C0.5 8.32165 8.12434 0.5 17.5 0.5Z" fill="#F4FFAA" stroke="#F4FFAA"/>
