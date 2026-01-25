@@ -95,22 +95,20 @@ async function DeleteVault(req, res){
 async function DeleteAllVaults(req, res){
     try{
         const userId = req.user.id;
-
         const Vaults = await Vault.find({user: userId})
-        console.log(Vaults)
+        
         for (const node of Vaults) {
             await cred.deleteMany({ vault: node._id });
             await Vault.findByIdAndDelete(node._id);
         }
-
-        const user = await User.findOne({_id: userId});
-        user.vaults = user.vaults.map((vaults) => [])       
-        await user.save();
+        
+        await User.findByIdAndUpdate(userId, {
+            $set: { vaults: [] }
+        })
         
         res.status(200).json({"Status":"Deleted all the vaults successfully"})
     }catch(error){
-        console.log(error)
-        console.log(req.user)
+        // console.log(error)
         res.status(401).json({"Status": "Something went wrong"})
     }
 }
