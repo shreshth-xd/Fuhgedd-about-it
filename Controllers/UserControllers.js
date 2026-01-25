@@ -47,6 +47,7 @@ async function signIn(req, res){
                 secure: false,
                 path: "/"
             })
+            req.user = token;
             return res.status(200).json({"Status":"Signed in successfully"})
         }
     }catch(error){
