@@ -3,4 +3,3 @@ node_modules
 tailwind.config.js
 public\css\output.css
 .env
-*.png
