@@ -27,20 +27,20 @@ The name implies that just give in your credentials to us as we attempt to provi
 
 <h3>Homepage:</h3>
 <p>To onboard users to my web-app</p>
-![alt text](image.png)
+<img src="image.png">
 <br>
 
 <h3>Sign-in page:</h3>
-![alt text](image-1.png)
+<img src="image-1.png">
 <br>
 
 <h3>Vaults dashboard:</h3>
-![alt text](image-3.png)
+<img src="image-3.png">
 <br>
 
 <h3>Vault creation dialog box:</h3>
-![alt text](image-2.png)
+<img src="image-2.png">
 <br>
 
 <h3>Credential dashboard:</h3>
-![alt text](image-4.png)
+<img src="image-4.png">
